@@ -209,8 +209,13 @@ export async function POST(req: Request) {
     });
     if (result.error) {
       console.error('Resend error', result.error);
+      // TEMP: surface the real Resend error so we can debug the refusal.
+      // Roll back to a generic message once the root cause is fixed.
+      const reason =
+        (result.error as { message?: string })?.message ??
+        'Email service refused.';
       return NextResponse.json(
-        { error: 'Email service refused. Please try the mailto fallback below.' },
+        { error: `Email service refused: ${reason}` },
         { status: 500 },
       );
     }
