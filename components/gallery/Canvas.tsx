@@ -149,8 +149,13 @@ export function Canvas({ work, index, total }: CanvasProps) {
 
           <div className="relative flex min-h-0 flex-1 items-center justify-center p-5 md:p-8">
             <div
-              className="relative h-full w-full overflow-hidden"
+              className="relative w-full overflow-hidden"
               style={{
+                // videos + posters are captured at 1440×900 → 8:5.
+                // Locking the frame to that ratio keeps it hugging the
+                // media instead of letterboxing inside a tall container.
+                aspectRatio: '8 / 5',
+                maxHeight: '100%',
                 borderRadius: 10,
                 background: 'var(--color-bg-deep)',
                 boxShadow:

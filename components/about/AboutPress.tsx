@@ -80,8 +80,7 @@ export function AboutPress() {
           transition={{ duration: 0.8, ease, delay: 0.2 }}
           className="mt-6 max-w-[52ch] font-serif italic text-[17px] leading-[1.55] text-ink-muted md:text-[19px]"
         >
-          Two cuttings that keep the receipts. The feature, and the original
-          founder note.
+          See Sprout featured in the press.
         </motion.p>
       </div>
 
