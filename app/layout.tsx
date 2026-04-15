@@ -42,13 +42,58 @@ export const metadata: Metadata = {
   },
   description:
     'Bespoke, highly personalised websites for people who hate templates. Hand-built on Vercel with zero monthly hosting cost.',
+  applicationName: 'johnnybuildstech',
+  authors: [{ name: 'Jonathan', url: 'https://johnnybuildstech.com/about' }],
+  creator: 'Jonathan',
+  publisher: 'johnnybuildstech',
+  keywords: [
+    'bespoke website designer',
+    'hand-coded websites',
+    'Next.js developer',
+    'Vercel website',
+    'ADHD app development',
+    'service site design',
+    'landing page designer',
+    'johnnybuildstech',
+  ],
+  icons: {
+    icon: '/icon.png',
+    apple: '/apple-icon.png',
+  },
   openGraph: {
     type: 'website',
     siteName: 'johnnybuildstech',
     url: 'https://johnnybuildstech.com',
     title: 'johnnybuildstech — building websites that feel alive',
     description:
-      'Bespoke, highly personalised websites for ADHD brains, solo founders, clinicians and service businesses.',
+      'Bespoke, hand-built websites for ADHD brains, solo founders, clinicians and service businesses. Hosted on Vercel at £0/mo.',
+    locale: 'en_GB',
+    images: [
+      {
+        url: '/opengraph-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'johnnybuildstech — building websites that feel alive',
+        type: 'image/png',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'johnnybuildstech — building websites that feel alive',
+    description:
+      'Bespoke, hand-built websites for ADHD brains, solo founders, clinicians and service businesses.',
+    images: ['/twitter-image.png'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 };
 

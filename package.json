@@ -28,6 +28,7 @@
     "react-dom": "latest",
     "rehype-pretty-code": "latest",
     "remark-gfm": "latest",
+    "resend": "^6.11.0",
     "shiki": "latest",
     "zod": "latest"
   },
@@ -43,6 +44,7 @@
     "next-sitemap": "latest",
     "playwright": "^1.59.1",
     "postcss": "latest",
+    "sharp": "^0.34.5",
     "tailwindcss": "latest",
     "tsx": "^4.21.0",
     "typescript": "latest"

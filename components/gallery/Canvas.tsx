@@ -111,14 +111,16 @@ export function Canvas({ work, index, total }: CanvasProps) {
               </p>
             </div>
 
-            <div className="mt-10 space-y-5">
-              <MetaRow label="Year" value={String(work.year)} />
-              <MetaRow label="Client" value={work.client} />
-              <MetaRow label="Work" value={work.category} />
-              <MetaRow
-                label="Live"
-                value={work.url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')}
-              />
+            <div className="mt-6 space-y-5 md:mt-10">
+              <div className="hidden space-y-5 md:block">
+                <MetaRow label="Year" value={String(work.year)} />
+                <MetaRow label="Client" value={work.client} />
+                <MetaRow label="Work" value={work.category} />
+                <MetaRow
+                  label="Live"
+                  value={work.url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')}
+                />
+              </div>
 
               <a
                 href={work.url}
