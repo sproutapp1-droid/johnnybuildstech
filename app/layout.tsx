@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Manrope, DM_Mono, Fraunces, Homemade_Apple } from 'next/font/google';
+import Script from 'next/script';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Nav } from '@/components/shared/Nav';
@@ -115,6 +116,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Footer />
         <Analytics />
         <SpeedInsights />
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-05CDSZMDR4"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-05CDSZMDR4');
+          `}
+        </Script>
       </body>
     </html>
   );
