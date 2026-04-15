@@ -91,20 +91,57 @@ export function ContactForm() {
     setStatus('sending');
     setServerError(null);
 
+    // 2-second timing guard — real humans take longer than that to fill
+    // in a form. Drop silently if anything submits faster.
+    if (Date.now() - mountedAtRef.current < 2000) {
+      setSentAt(new Date());
+      setStatus('sent');
+      return;
+    }
+
+    const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
+    if (!accessKey) {
+      setServerError(
+        "Form isn't configured yet. Please use the mailto fallback below.",
+      );
+      setStatus('error');
+      return;
+    }
+
+    // Honeypot — silently succeed if filled so bots think it worked.
+    if ((companyRef.current?.value ?? '').trim().length > 0) {
+      setSentAt(new Date());
+      setStatus('sent');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('access_key', accessKey);
+    formData.append('subject', `[johnnybuildstech] ${fields.name} · ${fields.projectType}`);
+    formData.append('from_name', `${fields.name} · johnnybuildstech`);
+    // Web3Forms treats `email` as the Reply-To address.
+    formData.append('email', fields.email);
+    formData.append('Name', fields.name);
+    formData.append('Email', fields.email);
+    formData.append('Project type', fields.projectType);
+    formData.append('Budget', fields.budget || '—');
+    formData.append('Message', fields.message);
+    formData.append('Source', 'johnnybuildstech.com/contact');
+    // Web3Forms' own spam trap — leave empty.
+    formData.append('botcheck', '');
+
     try {
-      const res = await fetch('/api/contact', {
+      const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({
-          ...fields,
-          company: companyRef.current?.value ?? '',
-          clientMountedAt: mountedAtRef.current,
-        }),
+        body: formData,
       });
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
+      const data = (await res.json().catch(() => ({}))) as {
+        success?: boolean;
+        message?: string;
+      };
+      if (!res.ok || !data.success) {
         setServerError(
-          data?.error ??
+          data.message ??
             'Something went sideways. Try again, or use the mailto below.',
         );
         setStatus('error');
