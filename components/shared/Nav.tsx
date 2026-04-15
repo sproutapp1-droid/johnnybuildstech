@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -47,7 +48,15 @@ export function Nav() {
             color: 'var(--color-ink)',
           }}
         >
-          <span className="mr-1 inline-block h-1.5 w-1.5 translate-y-[-1px] rounded-full bg-[color:var(--color-accent)]" />
+          <Image
+            src="/brand/jbt.png"
+            alt="jbt monogram"
+            width={507}
+            height={422}
+            priority
+            className="mr-2 h-6 w-auto translate-y-[-1px] select-none"
+            style={{ mixBlendMode: 'multiply' }}
+          />
           <span className="font-medium italic">johnny</span>
           <span className="text-ink-muted">buildstech</span>
         </Link>

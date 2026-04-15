@@ -171,7 +171,8 @@ export function Canvas({ work, index, total }: CanvasProps) {
                   fill
                   priority={index === 0}
                   sizes="(max-width: 768px) 100vw, 60vw"
-                  className="object-cover object-top"
+                  className="object-contain object-center"
+                  style={{ background: 'var(--color-bg-deep)' }}
                 />
               ) : (
                 <>
