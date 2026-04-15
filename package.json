@@ -1,0 +1,50 @@
+{
+  "name": "johnnybuildstech",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "postbuild": "next-sitemap"
+  },
+  "dependencies": {
+    "@vercel/analytics": "latest",
+    "@vercel/speed-insights": "latest",
+    "class-variance-authority": "latest",
+    "clsx": "latest",
+    "fumadocs-core": "latest",
+    "fumadocs-mdx": "latest",
+    "gsap": "latest",
+    "lenis": "latest",
+    "lucide-react": "latest",
+    "motion": "latest",
+    "next": "latest",
+    "next-themes": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "rehype-pretty-code": "latest",
+    "remark-gfm": "latest",
+    "shiki": "latest",
+    "zod": "latest"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.5",
+    "@tailwindcss/postcss": "latest",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "autoprefixer": "latest",
+    "eslint": "latest",
+    "eslint-config-next": "latest",
+    "next-sitemap": "latest",
+    "playwright": "^1.59.1",
+    "postcss": "latest",
+    "tailwindcss": "latest",
+    "tsx": "^4.21.0",
+    "typescript": "latest"
+  }
+}

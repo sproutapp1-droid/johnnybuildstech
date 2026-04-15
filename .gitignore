@@ -1,0 +1,34 @@
+node_modules/
+.next/
+out/
+.env
+.env.local
+.env.*.local
+.DS_Store
+*.log
+.vercel
+.turbo
+next-env.d.ts
+/public/sitemap*.xml
+/public/robots.txt
+.source/
+
+# capture pipeline raw files
+public/screenshots/**/raw.webm
+
+# helper script outputs (disposable)
+public/screenshots/**/full.png
+frame_*.jpg
+scripts/inspect-*.ts
+
+# local reference assets (not part of production)
+App images/
+Website inspiration/
+.claude/
+palette-mockups.html
+Examples of work/
+Examples of work App/
+Examples of work App.zip
+public/screenshots/*.png
+public/screenshots/*.jpg
+public/screenshots/**/hero.png

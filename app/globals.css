@@ -1,0 +1,147 @@
+@import "tailwindcss";
+
+@theme {
+  /* ─── Rust & Cream palette (locked 2026-04-15) ─── */
+  --color-bg: #F5ECD9;
+  --color-bg-deep: #E8D9B7;
+  --color-ink: #2C1D12;
+  --color-ink-muted: #7A5B3F;
+  --color-accent: #B8421F;
+  --color-accent-dim: #953519;
+  --color-gold: #C48A3A;
+  --color-gold-dim: #A1702A;
+
+  /* legacy aliases so prior components keep compiling */
+  --color-fg: #2C1D12;
+  --color-muted: #7A5B3F;
+  --color-available: #6B8F3F;
+
+  /* fonts injected via next/font */
+  --font-display: var(--font-manrope), system-ui, sans-serif;
+  --font-serif: var(--font-fraunces), "Fraunces", Georgia, serif;
+  --font-hand: var(--font-homemade), "Homemade Apple", "Caveat", cursive;
+  --font-mono: var(--font-dm-mono), ui-monospace, monospace;
+
+  --radius-panel: 1.25rem;
+  --radius-canvas: 18px;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+:root {
+  color-scheme: light;
+}
+
+html,
+body {
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "ss01", "ss02";
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-bg);
+}
+
+/* ─── Paper grain (subtle, ~3%) ─────────────────────── */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.38;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.17 0 0 0 0 0.11 0 0 0 0 0.07 0 0 0 0.35 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  background-size: 260px 260px;
+}
+
+/* warm vignette so the cream doesn't feel flat at edges */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background: radial-gradient(
+    120% 80% at 50% 0%,
+    transparent 55%,
+    rgba(154, 110, 60, 0.08) 100%
+  );
+}
+
+/* ─── Custom cursor support (if enabled) ─── */
+html.custom-cursor,
+html.custom-cursor body,
+html.custom-cursor a,
+html.custom-cursor button,
+html.custom-cursor [role="button"],
+html.custom-cursor [role="link"] {
+  cursor: none;
+}
+
+/* ─── Gallery canvas helpers ─── */
+.gallery-canvas-frame {
+  /* layered shadow: soft ground + crisp paper lift */
+  box-shadow:
+    0 1px 0 rgba(44, 29, 18, 0.04),
+    0 2px 6px rgba(44, 29, 18, 0.06),
+    0 30px 60px -24px rgba(44, 29, 18, 0.35),
+    inset 0 0 0 1px rgba(196, 138, 58, 0.35);
+}
+
+.gallery-canvas-frame::before {
+  /* inner paper-grain, slightly stronger than body grain */
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.18 0 0 0 0 0.12 0 0 0 0 0.07 0 0 0 0.22 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  background-size: 200px 200px;
+}
+
+/* handwritten underline squiggle beneath "alive" */
+.alive-smudge {
+  position: absolute;
+  left: 6%;
+  right: 2%;
+  bottom: -0.02em;
+  height: 0.14em;
+  background: currentColor;
+  opacity: 0.32;
+  border-radius: 50%;
+  transform: skewX(-10deg);
+  filter: blur(0.4px);
+  pointer-events: none;
+}
+
+/* reduced motion fallback */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  /* unpin and flatten the gallery deck */
+  .gallery-canvas {
+    position: relative !important;
+    top: auto !important;
+    height: 85vh !important;
+    margin-bottom: 1.5rem !important;
+  }
+}
