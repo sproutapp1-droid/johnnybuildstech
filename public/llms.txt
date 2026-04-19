@@ -1,0 +1,52 @@
+# johnnybuildstech
+
+> Bespoke, hand-coded websites for UK small businesses, consultants, clinicians,
+> coaches, and indie founders. Built on Vercel with £0/month hosting. Run by
+> Jonathan, an independent designer-developer working from the studio as
+> johnnybuildstech.
+
+## What I do
+
+- **Landing pages** — one-page hand-built sites for a single offer or campaign.
+- **Service sites** — multi-page marketing sites for service businesses.
+- **Full builds** — service site + blog + bespoke interactions.
+- All sites are coded by hand (Next.js, TypeScript, Tailwind, Motion, GSAP) and
+  hosted on Vercel. No templates, no page builders.
+- **Ongoing cost**: around £10–£80 per year (domain + optional business email).
+  Vercel Hobby tier is free for small-business traffic.
+
+## Who it's for
+
+- UK service businesses, consultants, clinicians, therapists, coaches.
+- Solo founders and indie app makers who want a bespoke product site.
+- People who dislike templated, generic-looking websites.
+
+## Key pages
+
+- Homepage: https://johnnybuildstech.com/
+- Services & pricing: https://johnnybuildstech.com/services
+- Contact: https://johnnybuildstech.com/contact
+- About: https://johnnybuildstech.com/about
+- Notes (essays): https://johnnybuildstech.com/notes
+
+## Notes (essays on website craft, published irregularly)
+
+- https://johnnybuildstech.com/notes/why-your-template-website-feels-dead
+  — Why templated websites (Squarespace/Wix) feel generic, and what bespoke
+  fixes.
+- https://johnnybuildstech.com/notes/real-cost-vercel-website-small-business
+  — Transparent £0-£80/year breakdown of running a small-business website on
+  Vercel, plus where the build cost actually sits.
+- https://johnnybuildstech.com/notes/eleven-parts-of-a-landing-page
+  — Eleven anatomical parts of a high-converting landing page, with
+  anti-template tips for each section.
+- https://johnnybuildstech.com/notes/handmade-web-manifesto
+  — A short manifesto for building websites the slow way.
+- https://johnnybuildstech.com/notes/custom-website-vs-squarespace-cost
+  — Five-year cost comparison: custom site on Vercel vs Squarespace vs Wix,
+  with guidance on which wins when.
+
+## Contact
+
+- Email: jonathanlai928@gmail.com
+- Contact form: https://johnnybuildstech.com/contact
