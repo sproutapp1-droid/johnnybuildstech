@@ -5,7 +5,6 @@ import {
   type ReactNode,
   useEffect,
   useId,
-  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -62,7 +61,12 @@ export function ContactForm() {
   const [serverError, setServerError] = useState<string | null>(null);
   const [sentAt, setSentAt] = useState<Date | null>(null);
   const companyRef = useRef<HTMLInputElement>(null); // honeypot
-  const enquiryNo = useMemo(randomEnquiryNo, []);
+  // Generated post-mount so SSR and client markup match. A null placeholder
+  // renders on the server and is swapped in after hydration.
+  const [enquiryNo, setEnquiryNo] = useState<string | null>(null);
+  useEffect(() => {
+    setEnquiryNo(randomEnquiryNo());
+  }, []);
 
   const setField = (k: keyof Fields) => (value: string) => {
     setFields((f) => ({ ...f, [k]: value }));
@@ -343,7 +347,7 @@ function SentReceipt({
 }: {
   name: string;
   at: Date | null;
-  enquiryNo: string;
+  enquiryNo: string | null;
 }) {
   const reduce = useReducedMotion();
   const stamped = at ?? new Date();
@@ -740,16 +744,17 @@ function RuledLabel({
 }
 
 function FieldError({ id, error }: { id: string; error?: string }) {
+  const reduce = useReducedMotion();
   return (
     <AnimatePresence>
       {error ? (
         <motion.p
           id={id}
           role="alert"
-          initial={{ opacity: 0, y: -4 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -4 }}
-          transition={{ duration: 0.25, ease }}
+          initial={reduce ? false : { opacity: 0, y: -4 }}
+          animate={reduce ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+          exit={reduce ? { opacity: 0 } : { opacity: 0, y: -4 }}
+          transition={{ duration: reduce ? 0 : 0.25, ease }}
           className="mt-2 font-mono text-[10.5px] uppercase tracking-[0.22em]"
           style={{ color: 'var(--color-accent)' }}
         >
@@ -796,6 +801,7 @@ function WaxSendButton({
         {status !== 'sending' ? (
           <>
             <span
+              data-testid="send-dot"
               className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-60"
               style={{ background: 'var(--color-bg)' }}
             />

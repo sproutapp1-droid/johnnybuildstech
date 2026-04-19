@@ -33,6 +33,18 @@
   color-scheme: light;
 }
 
+/* Honour prefers-reduced-motion for any Tailwind CSS keyframe animation
+   (animate-spin, animate-ping, animate-pulse, animate-bounce). Complements
+   the Motion-library useReducedMotion guards we apply in-component. */
+@media (prefers-reduced-motion: reduce) {
+  .animate-spin,
+  .animate-ping,
+  .animate-pulse,
+  .animate-bounce {
+    animation: none !important;
+  }
+}
+
 html,
 body {
   background: var(--color-bg);

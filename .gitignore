@@ -32,3 +32,9 @@ Examples of work App.zip
 public/screenshots/*.png
 public/screenshots/*.jpg
 public/screenshots/**/hero.png
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

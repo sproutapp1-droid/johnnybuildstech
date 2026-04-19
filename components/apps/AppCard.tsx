@@ -1,7 +1,13 @@
 'use client';
 
 import Image from 'next/image';
-import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
+import {
+  motion,
+  useMotionValue,
+  useReducedMotion,
+  useSpring,
+  useTransform,
+} from 'motion/react';
 import type { MouseEvent } from 'react';
 import type { AppEntry } from '@/lib/apps';
 
@@ -181,6 +187,7 @@ function CopyColumn({
 /* RIGHT — phone tray with mouse-tilt + floating idle animation */
 /* ────────────────────────────────────────────────────────── */
 function PhoneTray({ app }: { app: AppEntry }) {
+  const reduce = useReducedMotion();
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
   const rotX = useSpring(useTransform(my, [-0.5, 0.5], [6, -6]), {
@@ -262,17 +269,24 @@ function PhoneTray({ app }: { app: AppEntry }) {
               {/* gentle idle bob on the middle phone */}
               <motion.div
                 animate={
-                  idx === 1
-                    ? { y: [0, -4, 0] }
-                    : idx === 0
-                      ? { rotate: [-2.5, -2, -2.5] }
-                      : { rotate: [2.5, 2, 2.5] }
+                  reduce
+                    ? undefined
+                    : idx === 1
+                      ? { y: [0, -4, 0] }
+                      : idx === 0
+                        ? { rotate: [-2.5, -2, -2.5] }
+                        : { rotate: [2.5, 2, 2.5] }
                 }
-                transition={{
-                  duration: 6 + idx * 0.8,
-                  repeat: Infinity,
-                  ease: 'easeInOut',
-                }}
+                transition={
+                  reduce
+                    ? undefined
+                    : {
+                        duration: 6 + idx * 0.8,
+                        repeat: Infinity,
+                        ease: 'easeInOut',
+                      }
+                }
+                data-testid="app-phone-screen"
                 className="overflow-hidden rounded-[26px] border"
                 style={{
                   borderColor: 'rgba(44, 29, 18, 0.12)',
