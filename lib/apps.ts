@@ -75,6 +75,8 @@ export const APPS: AppEntry[] = [
     audience:
       'ADHD households · families · flatmates · parents · anyone who struggles to start',
     web: 'https://www.tidywell-app.com',
+    appStore: 'https://apps.apple.com/us/app/tidywell-chore-tracker/id6761951172',
+    playStore: 'https://play.google.com/store/apps/details?id=com.tidywell.app',
     shots: ['/apps/tidywell/01.png', '/apps/tidywell/02.png', '/apps/tidywell/03.png'],
     accent: '#2e3a27',
   },
