@@ -279,78 +279,124 @@ export default function PebbleLanding() {
 
       {/* ─── THE PROBLEM ──────────────────────────────────────── */}
       <ScrollIn className="relative mx-auto max-w-[1200px] px-6 py-24 md:px-16 md:py-36">
-        <p
-          className="pebble-mono text-[11px] uppercase"
-          style={{ letterSpacing: '0.22em', color: 'var(--pebble-ink-muted)' }}
-        >
-          the problem
-        </p>
-        <h2
-          className="pebble-serif mt-6 max-w-[24ch] text-[36px] font-medium leading-[1.08] md:text-[64px] md:leading-[1.04]"
-          style={{ color: 'var(--pebble-ink)' }}
-        >
-          most symptom apps feel like spreadsheets.
-        </h2>
-        <SectionRule
-          className="mt-8 h-2 w-32"
-          style={{ color: 'var(--pebble-rule)' }}
-        />
-        <p
-          className="pebble-hand mt-7 max-w-[34ch] text-[28px] leading-[1.2] md:text-[36px]"
-          style={{
-            color: 'var(--pebble-terracotta)',
-            transform: 'rotate(-0.4deg)',
-            transformOrigin: 'left center',
-          }}
-        >
-          2,000-symptom checklists. mood rainbows. daily questionnaires. trackers built for the app, not for you.
-        </p>
-        <div className="mt-10 grid gap-12 md:grid-cols-[1fr_1fr] md:gap-20">
-          <p
-            className="pebble-serif text-[19px] leading-[1.6]"
-            style={{ color: 'var(--pebble-ink)' }}
-          >
-            you log for two weeks. you forget. you give up. then your appointment
-            comes and you sit in the waiting room trying to remember what
-            wednesday was like, three weeks ago.
-          </p>
-          <p
-            className="pebble-serif text-[19px] leading-[1.6] italic"
-            style={{ color: 'var(--pebble-ink-muted)' }}
-          >
-            and the doctor gets six minutes. they cannot read your 47-page export.
-            so what was the point of logging at all?
-          </p>
+        <div className="grid gap-14 md:grid-cols-[1.15fr_1fr] md:items-center md:gap-16 lg:gap-20">
+          {/* LEFT — all the prose, stacked top to bottom */}
+          <div>
+            <p
+              className="pebble-mono text-[11px] uppercase"
+              style={{ letterSpacing: '0.22em', color: 'var(--pebble-ink-muted)' }}
+            >
+              the problem
+            </p>
+            <h2
+              className="pebble-serif mt-6 max-w-[18ch] text-[36px] font-medium leading-[1.08] md:text-[56px] md:leading-[1.04]"
+              style={{ color: 'var(--pebble-ink)' }}
+            >
+              most symptom apps feel like spreadsheets.
+            </h2>
+            <SectionRule
+              className="mt-8 h-2 w-32"
+              style={{ color: 'var(--pebble-rule)' }}
+            />
+            <p
+              className="pebble-hand mt-7 max-w-[28ch] text-[26px] leading-[1.2] md:text-[32px]"
+              style={{
+                color: 'var(--pebble-terracotta)',
+                transform: 'rotate(-0.4deg)',
+                transformOrigin: 'left center',
+              }}
+            >
+              2,000-symptom checklists. mood rainbows. daily questionnaires. trackers built for the app, not for you.
+            </p>
+            <p
+              className="pebble-serif mt-10 max-w-[44ch] text-[18px] leading-[1.6]"
+              style={{ color: 'var(--pebble-ink)' }}
+            >
+              you log for two weeks. you forget. you give up. then your appointment
+              comes and you sit in the waiting room trying to remember what
+              wednesday was like, three weeks ago.
+            </p>
+            <p
+              className="pebble-serif mt-5 max-w-[44ch] text-[18px] leading-[1.6] italic"
+              style={{ color: 'var(--pebble-ink-muted)' }}
+            >
+              and the doctor gets six minutes. they cannot read your 47-page export.
+              so what was the point of logging at all?
+            </p>
+          </div>
+
+          {/* RIGHT — phone showing chaotic history dump, plus snarky annotation */}
+          <div className="relative hidden md:flex md:items-center md:justify-center">
+            <div className="relative">
+              <PhoneMockup variant="history" size="md" rotation={-5} bobDelay={0.3} />
+              <p
+                className="pebble-hand absolute"
+                style={{
+                  color: 'var(--pebble-terracotta)',
+                  fontSize: 22,
+                  lineHeight: 1.15,
+                  transform: 'rotate(-3deg)',
+                  bottom: '-12%',
+                  right: '-6%',
+                  maxWidth: 200,
+                  textAlign: 'right',
+                }}
+              >
+                what other apps
+                <br />
+                give your doctor.
+              </p>
+            </div>
+          </div>
         </div>
       </ScrollIn>
 
       {/* ─── THE RECEIPT (peak moment) ────────────────────────── */}
       <ScrollIn className="relative mx-auto max-w-[1200px] px-6 py-24 md:px-16 md:py-36">
-        {/* small "this is what you log" phone, absolutely positioned in the
-            empty top-left next to the tall receipt (no gap changes) */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute hidden md:block"
-          style={{ top: '12%', left: '6%', zIndex: 5 }}
-        >
-          <div style={{ transform: 'rotate(-6deg)' }}>
-            <PhoneMockup variant="today" size="sm" rotation={-6} bobDelay={1.2} />
-          </div>
-          <p
-            className="pebble-hand mt-3 text-center"
-            style={{
-              color: 'var(--pebble-terracotta)',
-              fontSize: 22,
-              lineHeight: 1.1,
-              transform: 'rotate(-3deg)',
-            }}
-          >
-            this is what you log
-          </p>
-        </div>
-
-        <div className="grid gap-16 md:grid-cols-[1fr_1.1fr] md:items-center md:gap-24">
+        <div className="grid gap-16 md:grid-cols-[1fr_1.1fr] md:items-start md:gap-24">
           <div>
+            {/* "this is what you log" phone, wrapped in a tilted paper card,
+                sits in column flow above the heading so it doesn't float */}
+            <div className="hidden md:block mb-12">
+              <div
+                className="relative inline-block"
+                style={{
+                  padding: '18px 16px 22px',
+                  background: 'var(--pebble-paper-deep)',
+                  boxShadow:
+                    '0 1px 0 rgba(28,26,24,0.04), 0 4px 12px rgba(28,26,24,0.08), 0 28px 50px -22px rgba(28,26,24,0.32)',
+                  transform: 'rotate(-4deg)',
+                  border: '1px solid var(--pebble-rule)',
+                }}
+              >
+                {/* tape strip at top of paper card */}
+                <span
+                  aria-hidden
+                  className="absolute"
+                  style={{
+                    left: '50%',
+                    top: -10,
+                    transform: 'translateX(-50%) rotate(2deg)',
+                    width: 60,
+                    height: 14,
+                    background: 'rgba(196, 138, 58, 0.36)',
+                    boxShadow: 'inset 0 0 0 1px rgba(160, 110, 50, 0.22)',
+                  }}
+                />
+                <PhoneMockup variant="today" size="sm" rotation={0} bobDelay={1.2} />
+                <p
+                  className="pebble-hand mt-3 text-center"
+                  style={{
+                    color: 'var(--pebble-terracotta)',
+                    fontSize: 18,
+                    lineHeight: 1.1,
+                  }}
+                >
+                  this is what you log
+                </p>
+              </div>
+            </div>
+
             <p
               className="pebble-mono text-[11px] uppercase"
               style={{ letterSpacing: '0.22em', color: 'var(--pebble-terracotta)' }}

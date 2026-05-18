@@ -1,7 +1,8 @@
-/* Pebble the mascot. Single source of truth: the app's iOS icon
- * (icon.png) — chosen by the product owner as the canonical mark
- * everywhere on the marketing site. The `state` prop is retained
- * for API stability but no longer swaps the image.
+/* Pebble the mascot — the floating, transparent-cutout version.
+ *
+ * Uses the per-state PNGs from the React Native app (transparent
+ * backgrounds, mascot only, no app-icon chrome). icon.png is reserved
+ * for splash screens INSIDE phone frames, not for floating mascots.
  *
  * `glow` adds the terracotta brief-printing wash beneath the mascot. */
 
@@ -11,7 +12,6 @@ type State = 'idle' | 'printing' | 'flare' | 'vacation' | 'onboarding' | 'loggin
 
 type Props = {
   size?: number;
-  /** Retained for API stability — does not currently change the image. */
   state?: State;
   glow?: boolean;
   className?: string;
@@ -21,6 +21,7 @@ type Props = {
 
 export function Pebble({
   size = 64,
+  state = 'idle',
   glow = false,
   className,
   style,
@@ -52,8 +53,8 @@ export function Pebble({
         />
       )}
       <Image
-        src="/apps/pebble/icon.png"
-        alt="Pebble app icon"
+        src={`/apps/pebble/mascot/${state}.png`}
+        alt="Pebble mascot"
         width={size * 2}
         height={size * 2}
         priority={priority}
