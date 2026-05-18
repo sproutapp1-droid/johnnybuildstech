@@ -27,12 +27,12 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Pebble — a quiet symptom tracker for chronic illness',
+  title: 'Pebble: a quiet symptom tracker for chronic illness',
   description:
     "Pebble is a beautifully simplistic symptom tracker for chronic illness and ADHD/AuDHD. Log in 30 seconds. Walk into your appointment with a one-page brief your doctor reads in 60. Data never leaves your phone.",
   alternates: { canonical: 'https://johnnybuildstech.com/apps/pebble' },
   openGraph: {
-    title: 'Pebble — a quiet symptom tracker for chronic illness',
+    title: 'Pebble: a quiet symptom tracker for chronic illness',
     description:
       'Log how you feel in under a minute. Before appointments, Pebble prints a one-page brief that reads like a human wrote it. No accounts. No cloud. No analytics, ever.',
     type: 'website',

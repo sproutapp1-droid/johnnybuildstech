@@ -3,9 +3,9 @@ import Link from 'next/link';
 import { LegalPage } from '@/components/pebble/LegalPage';
 
 export const metadata: Metadata = {
-  title: 'Support — Pebble',
+  title: 'Support: Pebble',
   description:
-    "Help with Pebble — the local-first symptom tracker. Frequently asked questions, how to back up your data, how to delete everything, and how to contact a real human.",
+    "Help with Pebble, the local-first symptom tracker. Frequently asked questions, how to back up your data, how to delete everything, and how to contact a real human.",
   alternates: { canonical: 'https://johnnybuildstech.com/apps/pebble/support' },
   robots: { index: true, follow: true },
 };
@@ -15,11 +15,11 @@ export default function PebbleSupport() {
     <LegalPage
       eyebrow="support · for pebble"
       title="how can we help?"
-      intro="Pebble is a small app, so this is a small support page. If your question isn't covered below, email us — a real human reads every message."
+      intro="Pebble is a small app, so this is a small support page. If your question isn't covered below, email us. A real human reads every message."
     >
       <h2>get help directly</h2>
       <p>
-        Email <a href="mailto:pebble.symptom.app@gmail.com">pebble.symptom.app@gmail.com</a> — that&rsquo;s the address a real person checks. We aim to reply within two working days.
+        Email <a href="mailto:pebble.symptom.app@gmail.com">pebble.symptom.app@gmail.com</a>. That&rsquo;s the address a real person checks. We aim to reply within two working days.
       </p>
       <ul>
         <li>
@@ -33,7 +33,7 @@ export default function PebbleSupport() {
           <a href="mailto:pebble.symptom.app@gmail.com?subject=Pebble%20feature%20request">
             send the idea
           </a>{' '}
-          — every email is read
+          (every email is read)
         </li>
         <li>
           <strong>privacy / data request:</strong>{' '}
@@ -66,7 +66,7 @@ export default function PebbleSupport() {
       <p>
         For a portable copy that doesn&rsquo;t rely on Apple or Google, use{' '}
         <strong>Settings → Export</strong> inside the app to generate a Brief
-        PDF or full data archive (premium tier) that you can save anywhere —
+        PDF or full data archive (premium tier) that you can save anywhere:
         Files, iCloud Drive, Google Drive, email it to yourself.
       </p>
 
@@ -88,7 +88,7 @@ export default function PebbleSupport() {
 
       <h3>I lost my phone. Can you restore my data?</h3>
       <p>
-        We can&rsquo;t — and we want to be honest about that. Pebble has no
+        We can&rsquo;t, and we want to be honest about that. Pebble has no
         server. Your data was never copied to us, so there is nothing for us to
         restore. If you had iCloud or Google backup enabled, restoring your new
         phone from that backup will restore Pebble&rsquo;s data along with
@@ -105,7 +105,7 @@ export default function PebbleSupport() {
 
       <h3>does pebble work without internet?</h3>
       <p>
-        Yes — everything except (a) the optional Weather factor (which needs an
+        Yes, everything except (a) the optional Weather factor (which needs an
         internet connection to fetch barometric pressure from Open-Meteo) and
         (b) the initial purchase verification when you subscribe. Day-to-day
         logging, the Brief, and history all work fully offline.
@@ -127,7 +127,7 @@ export default function PebbleSupport() {
 
       <h3>I don&rsquo;t see my condition listed during onboarding.</h3>
       <p>
-        Pick &ldquo;something else&rdquo; on the conditions screen — that gives
+        Pick &ldquo;something else&rdquo; on the conditions screen. That gives
         you a free-text field and starts you with an empty symptom list, which
         you can fill in as you go. The pre-seeded condition list is for the
         most common chronic conditions, not a complete medical taxonomy.

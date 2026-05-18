@@ -3,9 +3,9 @@ import Link from 'next/link';
 import { LegalPage } from '@/components/pebble/LegalPage';
 
 export const metadata: Metadata = {
-  title: 'Privacy policy — Pebble',
+  title: 'Privacy policy: Pebble',
   description:
-    'Pebble has no server. Symptom data lives on your phone in a local database — never transmitted, never synced. Full privacy policy.',
+    'Pebble has no server. Symptom data lives on your phone in a local database, never transmitted, never synced. Full privacy policy.',
   alternates: { canonical: 'https://johnnybuildstech.com/apps/pebble/privacy' },
   robots: { index: true, follow: true },
 };
@@ -18,7 +18,7 @@ export default function PebblePrivacy() {
     <LegalPage
       eyebrow={`effective ${EFFECTIVE} · updated ${UPDATED}`}
       title="privacy policy"
-      intro="Pebble is built on a single principle: your health data stays on your phone. This policy explains exactly what that means, what does leave your device, and what doesn't. Short version below — full detail beneath."
+      intro="Pebble is built on a single principle: your health data stays on your phone. This policy explains exactly what that means, what does leave your device, and what doesn't. Short version below, full detail beneath."
     >
       <p>
         Pebble has no server. Your symptom logs, voice notes, photos and Brief
@@ -59,7 +59,7 @@ export default function PebblePrivacy() {
         This data is included in your phone&rsquo;s standard backup (iCloud
         Backup on iOS, Google One backup on Android) <strong>only if</strong> you
         have enabled those backups yourself. Pebble does not control those
-        backups — they are operated by Apple or Google under their respective
+        backups, which are operated by Apple or Google under their respective
         privacy policies. When you uninstall Pebble, this data is deleted from
         your phone along with the app.
       </p>
@@ -70,8 +70,8 @@ export default function PebblePrivacy() {
       <h3>1. Weather lookup (optional, only if enabled)</h3>
       <p>
         If you turn on the Weather factor and grant location permission, Pebble
-        sends your approximate (coarse) location — accurate to roughly your
-        town, not your address — to <a href="https://open-meteo.com">Open-Meteo</a>{' '}
+        sends your approximate (coarse) location (accurate to roughly your
+        town, not your address) to <a href="https://open-meteo.com">Open-Meteo</a>{' '}
         to fetch local barometric pressure, temperature, and humidity. These
         values can correlate with flare patterns for some people.
       </p>
@@ -79,7 +79,7 @@ export default function PebblePrivacy() {
         <li>we do <strong>not</strong> send your name, email, device ID, or any symptom data</li>
         <li>
           Open-Meteo&rsquo;s privacy policy:{' '}
-          <a href="https://open-meteo.com/en/terms">open-meteo.com/en/terms</a> —
+          <a href="https://open-meteo.com/en/terms">open-meteo.com/en/terms</a>.
           they state they do not log personal data
         </li>
         <li>
@@ -139,8 +139,8 @@ export default function PebblePrivacy() {
             <td>speech recognition</td>
             <td>to transcribe voice notes</td>
             <td>
-              <strong>iOS:</strong> Apple&rsquo;s on-device speech recognition —
-              audio is not sent to Apple. <strong>Android:</strong> uses
+              <strong>iOS:</strong> Apple&rsquo;s on-device speech recognition.
+              Audio is not sent to Apple. <strong>Android:</strong> uses
               Google&rsquo;s speech recognition service, which transmits short
               audio clips to Google for transcription under{' '}
               <a href="https://policies.google.com/privacy">Google&rsquo;s privacy policy</a>.
@@ -150,12 +150,12 @@ export default function PebblePrivacy() {
           </tr>
           <tr>
             <td>location (approximate)</td>
-            <td>optional — only if you enable the Weather factor</td>
+            <td>optional, only if you enable the Weather factor</td>
             <td>coarse location sent to Open-Meteo (above). Never stored by us.</td>
           </tr>
           <tr>
             <td>calendar (read-only)</td>
-            <td>optional — to spot upcoming appointments and pre-warm your Brief</td>
+            <td>optional, to spot upcoming appointments and pre-warm your Brief</td>
             <td>
               read once per day from your phone&rsquo;s calendar. Appointment
               text is not stored beyond a local cache of upcoming entries. Never uploaded.
@@ -177,7 +177,7 @@ export default function PebblePrivacy() {
       <p>
         Pebble is not directed at children under 16. If you believe a child has
         installed Pebble and you are their parent or guardian, simply uninstall
-        the app — there is no account or server-side data to delete.
+        the app. There is no account or server-side data to delete.
       </p>
 
       <h2>your rights (UK / EU GDPR, CCPA)</h2>

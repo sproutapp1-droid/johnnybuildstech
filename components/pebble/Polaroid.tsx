@@ -95,7 +95,7 @@ function PhoneSketch({ variant }: { variant: Variant }) {
   return <HistorySketch />;
 }
 
-function TodaySketch() {
+export function TodaySketch() {
   return (
     <div className="relative h-full w-full" style={{ padding: '20px 16px' }}>
       {/* top bar */}
@@ -206,7 +206,7 @@ function Slider({ label, pos, value }: { label: string; pos: number; value: stri
   );
 }
 
-function BriefSketch() {
+export function BriefSketch() {
   return (
     <div className="relative h-full w-full overflow-hidden" style={{ padding: '20px 12px' }}>
       <p
@@ -257,7 +257,7 @@ function BriefSketch() {
   );
 }
 
-function HistorySketch() {
+export function HistorySketch() {
   const rows = [
     { date: 'may 16', e: 40, p: 60, m: 70 },
     { date: 'may 15', e: 60, p: 30, m: 70 },

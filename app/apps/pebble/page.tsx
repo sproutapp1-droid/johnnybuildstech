@@ -3,6 +3,8 @@ import { WaitlistForm } from '@/components/pebble/WaitlistForm';
 import { Receipt } from '@/components/pebble/Receipt';
 import { Polaroid } from '@/components/pebble/Polaroid';
 import { Pebble } from '@/components/pebble/Pebble';
+import { PhoneMockup } from '@/components/pebble/PhoneMockup';
+import { HeroPhones } from '@/components/pebble/HeroPhones';
 import {
   MarginRule,
   SectionRule,
@@ -21,10 +23,12 @@ const CONDITIONS = [
   'migraine',
   'ME/CFS',
   'fibromyalgia',
+  'chronic pain',
   'IBS',
   'IBD',
   'ADHD',
   'AuDHD',
+  'absolutely any symptom you want to track',
 ];
 
 const WHAT_IT_DOES = [
@@ -55,7 +59,7 @@ const HOW = [
     n: '01',
     title: 'open pebble',
     body:
-      'no signup. no profile. you land on today — a single page that knows what you care about.',
+      'no signup. no profile. you land on today, a single page that knows what you care about.',
   },
   {
     n: '02',
@@ -105,7 +109,7 @@ const FAQS = [
   },
   {
     q: 'how is this different from bearable, daylio, or human health?',
-    a: 'those are spreadsheets in disguise — 2,000-symptom pickers, mood rainbows, dashboards. pebble does almost nothing. three sliders, a symptom row, a one-page brief for your doctor. that is the whole product. if you want to chart 40 datapoints daily, those apps are for you.',
+    a: 'those are spreadsheets in disguise: 2,000-symptom pickers, mood rainbows, dashboards. pebble does almost nothing. three sliders, a symptom row, a one-page brief for your doctor. that is the whole product. if you want to chart 40 datapoints daily, those apps are for you.',
   },
   {
     q: 'is my data really only on my phone?',
@@ -117,11 +121,11 @@ const FAQS = [
   },
   {
     q: 'how much will it cost?',
-    a: 'lifetime unlock at launch, around £24.99 / $29.99, paid once. there will also be a monthly and yearly option for people who prefer that. the doctor brief itself is free for everyone, forever — the paid tier unlocks unlimited factors, voice notes, and the full data export.',
+    a: 'lifetime unlock at launch, around £24.99 / $29.99, paid once. there will also be a monthly and yearly option for people who prefer that. the doctor brief itself is free for everyone, forever. the paid tier unlocks unlimited factors, voice notes, and the full data export.',
   },
   {
     q: 'when does it launch?',
-    a: 'app store + play store submission is in early 2026. waitlist members get the launch discount and a quiet email when it goes live — nothing in between.',
+    a: 'app store + play store submission is in early 2026. waitlist members get the launch discount and a quiet email when it goes live. nothing in between.',
   },
   {
     q: 'i don’t want to subscribe to your emails forever. is the waitlist email-spam-y?',
@@ -144,106 +148,132 @@ export default function PebbleLanding() {
         id="top"
         className="relative mx-auto max-w-[1200px] px-6 pt-32 pb-20 md:px-16 md:pt-44 md:pb-28"
       >
-        <HeroReveal>
-          <p
-            className="pebble-mono text-[11px] uppercase"
-            style={{ letterSpacing: '0.24em', color: 'var(--pebble-ink-muted)' }}
-          >
-            a symptom tracker · launching 2026
-          </p>
-
-          <h1
-            className="pebble-serif mt-7 text-[44px] font-medium leading-[1.04] tracking-[-0.012em] md:text-[80px] md:leading-[0.98]"
-            style={{ color: 'var(--pebble-ink)' }}
-          >
-            tracking your health
-            <br />
-            <span className="relative inline-block">
-              shouldn&rsquo;t feel like
-              <HandUnderline
-                aria-hidden
-                className="absolute left-0 right-0 h-3"
-                style={{
-                  bottom: -10,
-                  color: 'var(--pebble-terracotta)',
-                  width: '100%',
-                }}
-                delay={900}
-              />
-            </span>
-            <br />
-            <span
-              className="pebble-hand inline-block"
-              style={{
-                color: 'var(--pebble-terracotta)',
-                fontSize: '0.92em',
-                fontWeight: 600,
-                transform: 'rotate(-2deg)',
-                lineHeight: 1,
-                marginTop: '0.2em',
-              }}
+        <div className="grid gap-16 md:grid-cols-[1.1fr_1fr] md:items-start md:gap-12 lg:gap-20">
+          <HeroReveal>
+            <p
+              className="pebble-mono text-[11px] uppercase"
+              style={{ letterSpacing: '0.24em', color: 'var(--pebble-ink-muted)' }}
             >
-              a second job.
-            </span>
-          </h1>
+              a symptom tracker · launching 2026
+            </p>
 
-          <p
-            className="pebble-serif mt-10 max-w-[58ch] text-[19px] leading-[1.55] md:text-[22px]"
-            style={{ color: 'var(--pebble-ink)' }}
-          >
-            pebble is a beautifully simplistic symptom tracker for chronic
-            illness — and the brains they live in. log in 30 seconds. before
-            your appointment, walk in with a one-page brief your doctor
-            actually reads.
-          </p>
+            <h1
+              className="pebble-serif mt-7 text-[44px] font-medium leading-[1.04] tracking-[-0.012em] md:text-[68px] md:leading-[0.98] lg:text-[80px]"
+              style={{ color: 'var(--pebble-ink)' }}
+            >
+              tracking your health
+              <br />
+              <span className="relative inline-block">
+                shouldn&rsquo;t feel like
+                <HandUnderline
+                  aria-hidden
+                  className="absolute left-0 right-0 h-3"
+                  style={{
+                    bottom: -10,
+                    color: 'var(--pebble-terracotta)',
+                    width: '100%',
+                  }}
+                  delay={900}
+                />
+              </span>
+              <br />
+              <span
+                className="pebble-hand inline-block"
+                style={{
+                  color: 'var(--pebble-terracotta)',
+                  fontSize: '0.92em',
+                  fontWeight: 600,
+                  transform: 'rotate(-2deg)',
+                  lineHeight: 1,
+                  marginTop: '0.2em',
+                }}
+              >
+                a second job.
+              </span>
+            </h1>
 
-          <div id="waitlist" className="mt-12 max-w-[460px] scroll-mt-32">
-            <WaitlistForm surface="hero" />
+            <p
+              className="pebble-serif mt-10 max-w-[52ch] text-[18px] leading-[1.55] md:text-[20px]"
+              style={{ color: 'var(--pebble-ink)' }}
+            >
+              pebble is a beautifully simplistic symptom tracker for chronic
+              illness, and the brains they live in. log in 30 seconds. before
+              your appointment, walk in with a one-page brief your doctor
+              actually reads.
+            </p>
+
+            <div id="waitlist" className="mt-12 max-w-[460px] scroll-mt-32">
+              <WaitlistForm surface="hero" />
+            </div>
+
+            {/* margin note */}
+            <p
+              className="pebble-serif mt-12 max-w-[36ch] text-[15px] italic"
+              style={{ color: 'var(--pebble-ink-muted)' }}
+            >
+              no account. no cloud. no analytics, ever. your symptom data lives on your phone and only your phone.
+            </p>
+          </HeroReveal>
+
+          {/* right column — double phone showcase, hidden on mobile to avoid
+              shrinking the hero copy */}
+          <div className="hidden md:block">
+            <HeroPhones />
           </div>
-
-          {/* margin note */}
-          <p
-            className="pebble-serif mt-12 max-w-[36ch] text-[15px] italic"
-            style={{ color: 'var(--pebble-ink-muted)' }}
-          >
-            no account. no cloud. no analytics, ever. your symptom data lives on your phone and only your phone.
-          </p>
-        </HeroReveal>
-
-        {/* Pebble idle, top-right */}
-        <div className="pointer-events-none absolute right-6 top-24 hidden md:block lg:right-10 lg:top-32">
-          <Pebble size={96} state="idle" priority />
         </div>
       </section>
 
-      {/* ─── CONDITIONS STRIP (social proof) ──────────────────── */}
+      {/* ─── CONDITIONS STRIP (social proof, horizontal marquee) ─ */}
       <ScrollIn className="relative border-y" style={{ borderColor: 'var(--pebble-rule)' }}>
-        <div className="mx-auto max-w-[1200px] px-6 py-10 md:px-16 md:py-14">
+        <div className="mx-auto max-w-[1200px] px-6 pt-10 md:px-16 md:pt-14">
           <p
             className="pebble-mono text-[11px] uppercase"
             style={{ letterSpacing: '0.22em', color: 'var(--pebble-ink-muted)' }}
           >
-            built for —
+            built for
           </p>
-          <ul className="mt-5 flex flex-wrap items-baseline gap-x-7 gap-y-3">
-            {CONDITIONS.map((c, i) => (
-              <li
-                key={c}
-                className="pebble-serif flex items-baseline gap-3 text-[18px] md:text-[22px]"
-                style={{ color: 'var(--pebble-ink)' }}
+        </div>
+        <div
+          className="relative mt-5 overflow-hidden py-6 md:mt-7 md:py-10"
+          style={{
+            // soft paper fade at both edges so the loop point hides
+            maskImage:
+              'linear-gradient(to right, transparent 0, black 6%, black 94%, transparent 100%)',
+            WebkitMaskImage:
+              'linear-gradient(to right, transparent 0, black 6%, black 94%, transparent 100%)',
+          }}
+          aria-label="Conditions Pebble is built for"
+        >
+          <div className="pebble-marquee" role="list">
+            {[0, 1].map((copy) => (
+              <ul
+                key={copy}
+                aria-hidden={copy === 1}
+                className="flex items-baseline gap-x-10 pr-10"
               >
-                <span>{c}</span>
-                {i < CONDITIONS.length - 1 && (
-                  <span
-                    aria-hidden
-                    style={{ color: 'var(--pebble-rule)', fontSize: 14 }}
+                {CONDITIONS.map((c) => (
+                  <li
+                    key={`${copy}-${c}`}
+                    role="listitem"
+                    className="pebble-serif flex shrink-0 items-baseline gap-10 text-[22px] md:text-[28px]"
+                    style={{ color: 'var(--pebble-ink)' }}
                   >
-                    ·
-                  </span>
-                )}
-              </li>
+                    <span style={{ whiteSpace: 'nowrap' }}>{c}</span>
+                    <span
+                      aria-hidden
+                      style={{
+                        color: 'var(--pebble-terracotta)',
+                        fontSize: 18,
+                        opacity: 0.6,
+                      }}
+                    >
+                      ·
+                    </span>
+                  </li>
+                ))}
+              </ul>
             ))}
-          </ul>
+          </div>
         </div>
       </ScrollIn>
 
@@ -265,6 +295,16 @@ export default function PebbleLanding() {
           className="mt-8 h-2 w-32"
           style={{ color: 'var(--pebble-rule)' }}
         />
+        <p
+          className="pebble-hand mt-7 max-w-[34ch] text-[28px] leading-[1.2] md:text-[36px]"
+          style={{
+            color: 'var(--pebble-terracotta)',
+            transform: 'rotate(-0.4deg)',
+            transformOrigin: 'left center',
+          }}
+        >
+          2,000-symptom checklists. mood rainbows. daily questionnaires. trackers built for the app, not for you.
+        </p>
         <div className="mt-10 grid gap-12 md:grid-cols-[1fr_1fr] md:gap-20">
           <p
             className="pebble-serif text-[19px] leading-[1.6]"
@@ -286,6 +326,29 @@ export default function PebbleLanding() {
 
       {/* ─── THE RECEIPT (peak moment) ────────────────────────── */}
       <ScrollIn className="relative mx-auto max-w-[1200px] px-6 py-24 md:px-16 md:py-36">
+        {/* small "this is what you log" phone, absolutely positioned in the
+            empty top-left next to the tall receipt (no gap changes) */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute hidden md:block"
+          style={{ top: '12%', left: '6%', zIndex: 5 }}
+        >
+          <div style={{ transform: 'rotate(-6deg)' }}>
+            <PhoneMockup variant="today" size="sm" rotation={-6} bobDelay={1.2} />
+          </div>
+          <p
+            className="pebble-hand mt-3 text-center"
+            style={{
+              color: 'var(--pebble-terracotta)',
+              fontSize: 22,
+              lineHeight: 1.1,
+              transform: 'rotate(-3deg)',
+            }}
+          >
+            this is what you log
+          </p>
+        </div>
+
         <div className="grid gap-16 md:grid-cols-[1fr_1.1fr] md:items-center md:gap-24">
           <div>
             <p
@@ -309,7 +372,7 @@ export default function PebbleLanding() {
               style={{ color: 'var(--pebble-ink)' }}
             >
               not a 47-page spreadsheet. a one-page narrative your doctor reads in
-              60 seconds — with what is changed since last visit, what may have
+              60 seconds, with what is changed since last visit, what may have
               contributed, and a quote you wanted them to hear.
             </p>
             <p
@@ -579,7 +642,7 @@ export default function PebbleLanding() {
                 className="pebble-serif text-[17px] leading-[1.6] italic md:text-[18px]"
                 style={{ color: 'var(--pebble-ink-muted)' }}
               >
-                — {a.response}
+                {a.response}
               </p>
             </div>
           ))}
@@ -681,7 +744,7 @@ export default function PebbleLanding() {
           className="pebble-serif mt-4 text-[18px] italic"
           style={{ color: 'var(--pebble-ink-muted)' }}
         >
-          — i&rsquo;ll be here.
+          i&rsquo;ll be here.
         </p>
       </ScrollIn>
     </>

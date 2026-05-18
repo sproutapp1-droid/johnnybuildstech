@@ -1,6 +1,7 @@
-/* Pebble the mascot. Uses the real PNG asset sheet from the
- * app (idle / printing / flare / vacation / onboarding / logging).
- * No mouth. The metaphor: a worry stone.
+/* Pebble the mascot. Single source of truth: the app's iOS icon
+ * (icon.png) — chosen by the product owner as the canonical mark
+ * everywhere on the marketing site. The `state` prop is retained
+ * for API stability but no longer swaps the image.
  *
  * `glow` adds the terracotta brief-printing wash beneath the mascot. */
 
@@ -10,6 +11,7 @@ type State = 'idle' | 'printing' | 'flare' | 'vacation' | 'onboarding' | 'loggin
 
 type Props = {
   size?: number;
+  /** Retained for API stability — does not currently change the image. */
   state?: State;
   glow?: boolean;
   className?: string;
@@ -19,7 +21,6 @@ type Props = {
 
 export function Pebble({
   size = 64,
-  state = 'idle',
   glow = false,
   className,
   style,
@@ -51,8 +52,8 @@ export function Pebble({
         />
       )}
       <Image
-        src={`/apps/pebble/mascot/${state}.png`}
-        alt="Pebble — the app's mascot"
+        src="/apps/pebble/icon.png"
+        alt="Pebble app icon"
         width={size * 2}
         height={size * 2}
         priority={priority}

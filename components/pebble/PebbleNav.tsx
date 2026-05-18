@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
 import { Pebble } from './Pebble';
 
@@ -17,6 +18,29 @@ export function PebbleNav() {
   const { scrollY } = useScroll();
   const opacity = useTransform(scrollY, [0, 80], [0, 1]);
   const isLanding = pathname === '/apps/pebble';
+
+  // Lenis (mounted in the root layout) doesn't reset scroll on Next.js
+  // client-side navigation, so /apps/pebble/privacy etc. open mid-page.
+  // Force the viewport back to the top on every route change, and on
+  // bfcache restoration (browser back/forward).
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    // No hash → scroll to top. Hash → leave the anchor scroll alone.
+    if (!window.location.hash) {
+      window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+    }
+  }, [pathname]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const onPageShow = (e: PageTransitionEvent) => {
+      if (e.persisted && !window.location.hash) {
+        window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+      }
+    };
+    window.addEventListener('pageshow', onPageShow);
+    return () => window.removeEventListener('pageshow', onPageShow);
+  }, []);
 
   return (
     <header className="pointer-events-none fixed inset-x-0 top-0 z-50">

@@ -149,6 +149,23 @@
   transform: rotate(var(--rot, 0deg)) translateY(-8px) scale(1.02);
 }
 
+/* ── horizontal marquee (conditions strip) ── */
+.pebble-marquee {
+  display: flex;
+  width: max-content;
+  animation: pebble-marquee 60s linear infinite;
+  will-change: transform;
+}
+
+.pebble-marquee:hover {
+  animation-play-state: paused;
+}
+
+@keyframes pebble-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
 /* ── reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
   .ink-stroke {
@@ -163,6 +180,7 @@
   }
   .polaroid { transition: none; }
   .polaroid:hover { transform: rotate(var(--rot, 0deg)); }
+  .pebble-marquee { animation: none; transform: translateX(0); }
 }
 
 /* ── focus ring (accessibility — terracotta) ── */

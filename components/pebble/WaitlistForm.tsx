@@ -104,7 +104,7 @@ export function WaitlistForm({ surface = 'hero' }: { surface?: 'hero' | 'footer'
               className="pebble-hand mt-3"
               style={{ color: 'var(--pebble-ink-muted)', fontSize: 24, fontStyle: 'italic' }}
             >
-              — pebble
+              pebble
             </p>
           </motion.div>
         ) : (

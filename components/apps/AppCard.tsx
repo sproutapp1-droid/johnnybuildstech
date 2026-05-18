@@ -214,7 +214,8 @@ function WaitlistPill({ app }: { app: AppEntry }) {
 
 /* ────────────────────────────────────────────────────────── */
 /* Waitlist tray — replaces PhoneTray when shots is empty      */
-/* Used for pre-launch apps where we don't have screenshots.   */
+/* Renders an iPhone-frame mockup with the app icon centered   */
+/* as a placeholder for the real screenshot.                   */
 /* ────────────────────────────────────────────────────────── */
 function WaitlistTray({ app }: { app: AppEntry }) {
   const reduce = useReducedMotion();
@@ -225,12 +226,12 @@ function WaitlistTray({ app }: { app: AppEntry }) {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-10%' }}
         transition={{ duration: 1, ease, delay: 0.15 }}
-        className="relative flex items-center justify-center rounded-3xl p-10 md:p-14"
+        className="relative flex items-center justify-center rounded-3xl p-8 md:p-12"
         style={{
           background: 'var(--color-bg-deep)',
           boxShadow:
             '0 1px 0 rgba(122, 91, 63, 0.08), 0 30px 60px -36px rgba(44, 29, 18, 0.35)',
-          minHeight: 360,
+          minHeight: 420,
         }}
       >
         {/* gold corner marks */}
@@ -248,44 +249,137 @@ function WaitlistTray({ app }: { app: AppEntry }) {
           />
         ))}
 
-        {/* mascot with terracotta wash */}
-        <div className="relative flex flex-col items-center text-center">
+        {/* warm terracotta wash behind the phone */}
+        <span
+          aria-hidden
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              `radial-gradient(60% 60% at 50% 45%, ${app.accent}1f 0%, transparent 70%)`,
+          }}
+        />
+
+        {/* phone frame */}
+        <motion.div
+          animate={reduce ? undefined : { y: [0, -6, 0], rotate: [-3.5, -3, -3.5] }}
+          transition={
+            reduce
+              ? undefined
+              : { duration: 5.2, repeat: Infinity, ease: 'easeInOut' }
+          }
+          className="relative z-10"
+          style={{
+            width: 232,
+            aspectRatio: '9 / 19.5',
+            background: '#1C1A18',
+            borderRadius: 36,
+            padding: 6,
+            boxShadow:
+              '0 1px 0 rgba(255,255,255,0.08) inset, 0 30px 50px -22px rgba(28,26,24,0.45)',
+            transform: 'rotate(-3.5deg)',
+          }}
+        >
+          {/* inner screen */}
+          <div
+            className="relative h-full w-full overflow-hidden"
+            style={{
+              background: '#F4EFE6',
+              borderRadius: 30,
+            }}
+          >
+            {/* notch */}
+            <span
+              aria-hidden
+              className="absolute"
+              style={{
+                left: '50%',
+                top: 10,
+                transform: 'translateX(-50%)',
+                width: 78,
+                height: 22,
+                background: '#1C1A18',
+                borderRadius: 14,
+              }}
+            />
+
+            {/* faint dot grid inside */}
+            <div
+              aria-hidden
+              className="absolute inset-0"
+              style={{
+                backgroundImage:
+                  'radial-gradient(circle at 1px 1px, rgba(28,26,24,0.08) 1px, transparent 1.5px)',
+                backgroundSize: '14px 14px',
+                pointerEvents: 'none',
+                opacity: 0.55,
+              }}
+            />
+
+            {/* icon + wordmark, centered like a splash */}
+            <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
+              <Image
+                src="/apps/pebble/icon.png"
+                alt={`${app.name} icon`}
+                width={180}
+                height={180}
+                sizes="100px"
+                style={{ width: 100, height: 100 }}
+                priority={false}
+              />
+              <p
+                className="mt-5 font-serif"
+                style={{
+                  color: '#1C1A18',
+                  fontSize: 22,
+                  fontWeight: 500,
+                  letterSpacing: '-0.01em',
+                }}
+              >
+                {app.name.toLowerCase()}
+              </p>
+              <p
+                className="mt-1 font-serif italic"
+                style={{ color: '#5B554D', fontSize: 12 }}
+              >
+                a quiet symptom tracker
+              </p>
+            </div>
+          </div>
+
+          {/* side button silhouettes */}
           <span
             aria-hidden
-            className="absolute inset-0 -z-10 mx-auto"
+            className="absolute"
             style={{
-              background:
-                `radial-gradient(circle at center, ${app.accent}40 0%, transparent 60%)`,
-              filter: 'blur(20px)',
+              left: -2,
+              top: '22%',
+              width: 3,
+              height: 36,
+              background: '#1C1A18',
+              borderRadius: 2,
             }}
           />
-          <motion.div
-            animate={reduce ? undefined : { y: [0, -6, 0] }}
-            transition={
-              reduce ? undefined : { duration: 4.4, repeat: Infinity, ease: 'easeInOut' }
-            }
-          >
-            <Image
-              src="/apps/pebble/mascot/idle.png"
-              alt={`${app.name} mascot`}
-              width={180}
-              height={180}
-              sizes="180px"
-              priority={false}
-            />
-          </motion.div>
+          <span
+            aria-hidden
+            className="absolute"
+            style={{
+              right: -2,
+              top: '24%',
+              width: 3,
+              height: 60,
+              background: '#1C1A18',
+              borderRadius: 2,
+            }}
+          />
+        </motion.div>
+
+        {/* pre-launch label, bottom */}
+        <div className="absolute bottom-5 left-0 right-0 text-center">
           <p
-            className="mt-8 font-mono text-[10px] uppercase tracking-[0.24em]"
-            style={{ color: 'var(--color-gold-dim)' }}
+            className="font-mono text-[10px] uppercase"
+            style={{ letterSpacing: '0.24em', color: 'var(--color-gold-dim)' }}
           >
-            ─ pre-launch
-          </p>
-          <p
-            className="mt-4 max-w-[28ch] font-serif text-[20px] leading-[1.35] md:text-[22px]"
-            style={{ color: 'var(--color-ink)' }}
-          >
-            screenshots arriving soon. join the waitlist for the launch
-            discount.
+            pre-launch · mockup
           </p>
         </div>
       </motion.div>
