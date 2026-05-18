@@ -1,0 +1,173 @@
+/* ─────────────────────────────────────────────────────────────
+ * Pebble theme — scoped under [data-pebble]
+ *
+ * Distinct from the johnnybuildstech rust&cream theme. Same warmth
+ * family, but a different notebook: softer paper, cooler ink,
+ * terracotta where the main site uses rust. Notebook substrate
+ * (paper grain, dot grid, hand-drawn margin rule) applies only
+ * inside [data-pebble] so the rest of the site is untouched.
+ * ───────────────────────────────────────────────────────────── */
+
+[data-pebble] {
+  /* ── palette (light) ── */
+  --pebble-paper: #F4EFE6;
+  --pebble-paper-deep: #EAE2D2;
+  --pebble-receipt: #EDE6D7;
+  --pebble-ink: #1C1A18;
+  --pebble-ink-muted: #5B554D;
+  --pebble-ink-faint: rgba(28, 26, 24, 0.42);
+  --pebble-rule: rgba(28, 26, 24, 0.28);
+  --pebble-terracotta: #C66A4E;
+  --pebble-terracotta-deep: #A85638;
+  --pebble-sage: #7A9A7E;
+  --pebble-mascot: #9C8B7A;
+  --pebble-mascot-band: #7D6E5E;
+
+  /* ── fonts (injected via next/font as CSS variables) ── */
+  --pebble-serif: var(--font-source-serif), 'Source Serif 4', Georgia, serif;
+  --pebble-hand: var(--font-caveat), 'Caveat', 'Homemade Apple', cursive;
+  --pebble-mono: var(--font-plex-mono), 'IBM Plex Mono', ui-monospace, monospace;
+
+  /* ── rhythm ── */
+  --pebble-ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+  position: relative;
+  min-height: 100vh;
+  background: var(--pebble-paper);
+  color: var(--pebble-ink);
+  font-family: var(--pebble-serif);
+  font-feature-settings: 'ss01', 'liga', 'kern';
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* paint over the body bg so the johnnybuildstech rust doesn't peek */
+[data-pebble]::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: var(--pebble-paper);
+  z-index: -2;
+  pointer-events: none;
+}
+
+/* ── paper grain — sits above the bg, below content ── */
+[data-pebble]::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='280' height='280'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.86' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.11 0 0 0 0 0.1 0 0 0 0 0.09 0 0 0 0.28 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  background-size: 280px 280px;
+}
+
+@media (prefers-contrast: more) {
+  [data-pebble]::after { display: none; }
+}
+
+/* ── dot grid — fixed, behind content ── */
+.pebble-dotgrid {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    rgba(28, 26, 24, 0.10) 1px,
+    transparent 1.5px
+  );
+  background-size: 22px 22px;
+  background-position: 0 0;
+  mask-image: linear-gradient(to bottom, transparent, black 6%, black 94%, transparent);
+}
+
+/* ── selection in terracotta ── */
+[data-pebble] ::selection {
+  background: var(--pebble-terracotta);
+  color: var(--pebble-paper);
+}
+
+/* ── handwritten utilities ── */
+.pebble-hand {
+  font-family: var(--pebble-hand);
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.pebble-serif {
+  font-family: var(--pebble-serif);
+}
+
+.pebble-mono {
+  font-family: var(--pebble-mono);
+}
+
+/* ── ink-stroke draw animation ── */
+.ink-stroke {
+  stroke-dasharray: var(--len, 200);
+  stroke-dashoffset: var(--len, 200);
+  animation: ink-draw 700ms var(--pebble-ease) forwards;
+}
+
+.ink-stroke[data-delay] { animation-delay: var(--delay); }
+
+@keyframes ink-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+/* ── pebble blink ── */
+@keyframes pebble-blink {
+  0%, 92%, 100% { transform: scaleY(1); }
+  94%, 98% { transform: scaleY(0.1); }
+}
+.pebble-eye {
+  transform-origin: center;
+  animation: pebble-blink 9s ease-in-out infinite;
+}
+.pebble-eye:nth-of-type(2) { animation-delay: 0.05s; }
+
+/* ── receipt line-print animation ── */
+@keyframes receipt-print {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.receipt-line {
+  opacity: 0;
+  animation: receipt-print 320ms var(--pebble-ease) forwards;
+  animation-delay: calc(var(--i, 0) * 90ms + 200ms);
+}
+
+/* ── polaroid hover lift ── */
+.polaroid {
+  transition: transform 700ms var(--pebble-ease);
+  will-change: transform;
+}
+.polaroid:hover {
+  transform: rotate(var(--rot, 0deg)) translateY(-8px) scale(1.02);
+}
+
+/* ── reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .ink-stroke {
+    stroke-dashoffset: 0;
+    animation: none;
+  }
+  .pebble-eye { animation: none; }
+  .receipt-line {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+  .polaroid { transition: none; }
+  .polaroid:hover { transform: rotate(var(--rot, 0deg)); }
+}
+
+/* ── focus ring (accessibility — terracotta) ── */
+[data-pebble] :focus-visible {
+  outline: 2px solid var(--pebble-terracotta);
+  outline-offset: 3px;
+  border-radius: 2px;
+}

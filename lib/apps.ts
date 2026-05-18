@@ -11,6 +11,10 @@ export type AppEntry = {
   playStore?: string;
   shots: string[];
   accent: string;
+  /** When 'waitlist', AppCard swaps store badges for a "join waitlist" pill
+   *  pointing to `waitlistHref`. Defaults to 'live'. */
+  status?: 'live' | 'waitlist';
+  waitlistHref?: string;
 };
 
 export const APPS: AppEntry[] = [
@@ -127,5 +131,27 @@ export const APPS: AppEntry[] = [
       '/apps/skip-or-buy/03.png',
     ],
     accent: '#0a0a0a',
+  },
+  {
+    slug: 'pebble',
+    name: 'Pebble',
+    subtitle: 'quiet symptom tracker · for chronic illness + ADHD',
+    problem:
+      "Most symptom apps feel like spreadsheets. You log for two weeks, you forget, you give up — then your appointment comes and you sit in the waiting room trying to remember what Wednesday was like, three weeks ago.",
+    solution:
+      "A beautifully simplistic tracker for people with chronic illness (POTS, EDS, MCAS, endometriosis, PMDD, long COVID, migraine, fibromyalgia, ME/CFS) — often comorbid with ADHD or AuDHD. Log in 30 seconds. Before your appointment, Pebble prints a one-page Brief your doctor reads in 60. Data never leaves the phone.",
+    features: [
+      '30-second log — three sliders, tap symptoms, done',
+      'A narrative Brief your doctor reads in 60 seconds, not a chart dump',
+      'On-device only — no accounts, no cloud, no analytics, ever',
+      "Quiet correlations: when sleep, weather or your cycle line up with a flare, you see a margin note — no heatmaps",
+    ],
+    audience:
+      'Chronically ill adults · ADHD/AuDHD brains · carers tracking on behalf · anyone who has bounced off Bearable',
+    web: 'https://johnnybuildstech.com/apps/pebble',
+    shots: [],
+    accent: '#C66A4E',
+    status: 'waitlist',
+    waitlistHref: '/apps/pebble#waitlist',
   },
 ];

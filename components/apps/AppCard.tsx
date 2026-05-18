@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import {
   motion,
   useMotionValue,
@@ -45,7 +46,7 @@ export function AppCard({ app, index, total }: Props) {
 
       <div className="grid gap-12 md:grid-cols-[1.1fr_1fr] md:gap-16 lg:gap-24">
         <CopyColumn app={app} index={index} total={total} />
-        <PhoneTray app={app} />
+        {app.shots.length > 0 ? <PhoneTray app={app} /> : <WaitlistTray app={app} />}
       </div>
     </motion.li>
   );
@@ -177,8 +178,124 @@ function CopyColumn({
         custom={7}
         className="mt-8"
       >
-        <StoreBadges app={app} />
+        {app.status === 'waitlist' ? <WaitlistPill app={app} /> : <StoreBadges app={app} />}
       </motion.div>
+    </div>
+  );
+}
+
+/* ────────────────────────────────────────────────────────── */
+/* Waitlist pill — replaces store badges for pre-launch apps   */
+/* ────────────────────────────────────────────────────────── */
+function WaitlistPill({ app }: { app: AppEntry }) {
+  return (
+    <div className="flex flex-wrap items-center gap-3">
+      <motion.a
+        href={app.waitlistHref ?? `/apps/${app.slug}`}
+        whileHover={{ y: -2, x: 2 }}
+        transition={{ duration: 0.2, ease }}
+        className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 font-mono text-[11px] uppercase tracking-[0.18em]"
+        style={{ background: app.accent, color: '#F8F3E9' }}
+      >
+        join the waitlist
+        <span aria-hidden>→</span>
+      </motion.a>
+      <Link
+        href={`/apps/${app.slug}`}
+        className="inline-flex items-center gap-2 rounded-full border px-4 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-ink transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
+        style={{ borderColor: 'rgba(44, 29, 18, 0.2)' }}
+      >
+        read more
+        <span aria-hidden>↗</span>
+      </Link>
+    </div>
+  );
+}
+
+/* ────────────────────────────────────────────────────────── */
+/* Waitlist tray — replaces PhoneTray when shots is empty      */
+/* Used for pre-launch apps where we don't have screenshots.   */
+/* ────────────────────────────────────────────────────────── */
+function WaitlistTray({ app }: { app: AppEntry }) {
+  const reduce = useReducedMotion();
+  return (
+    <div className="relative">
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-10%' }}
+        transition={{ duration: 1, ease, delay: 0.15 }}
+        className="relative flex items-center justify-center rounded-3xl p-10 md:p-14"
+        style={{
+          background: 'var(--color-bg-deep)',
+          boxShadow:
+            '0 1px 0 rgba(122, 91, 63, 0.08), 0 30px 60px -36px rgba(44, 29, 18, 0.35)',
+          minHeight: 360,
+        }}
+      >
+        {/* gold corner marks */}
+        {(
+          ['left-3 top-3 border-l border-t',
+            'right-3 top-3 border-r border-t',
+            'bottom-3 left-3 border-b border-l',
+            'bottom-3 right-3 border-b border-r'] as const
+        ).map((pos) => (
+          <span
+            key={pos}
+            aria-hidden
+            className={`absolute h-3 w-3 ${pos}`}
+            style={{ borderColor: 'var(--color-gold)' }}
+          />
+        ))}
+
+        {/* mascot with terracotta wash */}
+        <div className="relative flex flex-col items-center text-center">
+          <span
+            aria-hidden
+            className="absolute inset-0 -z-10 mx-auto"
+            style={{
+              background:
+                `radial-gradient(circle at center, ${app.accent}40 0%, transparent 60%)`,
+              filter: 'blur(20px)',
+            }}
+          />
+          <motion.div
+            animate={reduce ? undefined : { y: [0, -6, 0] }}
+            transition={
+              reduce ? undefined : { duration: 4.4, repeat: Infinity, ease: 'easeInOut' }
+            }
+          >
+            <Image
+              src="/apps/pebble/mascot/idle.png"
+              alt={`${app.name} mascot`}
+              width={180}
+              height={180}
+              sizes="180px"
+              priority={false}
+            />
+          </motion.div>
+          <p
+            className="mt-8 font-mono text-[10px] uppercase tracking-[0.24em]"
+            style={{ color: 'var(--color-gold-dim)' }}
+          >
+            ─ pre-launch
+          </p>
+          <p
+            className="mt-4 max-w-[28ch] font-serif text-[20px] leading-[1.35] md:text-[22px]"
+            style={{ color: 'var(--color-ink)' }}
+          >
+            screenshots arriving soon. join the waitlist for the launch
+            discount.
+          </p>
+        </div>
+      </motion.div>
+
+      <div
+        className="mt-3 text-right font-mono text-[10px] uppercase tracking-[0.22em]"
+        style={{ color: 'var(--color-gold-dim)' }}
+      >
+        {app.name.toLowerCase()} · waitlist open
+      </div>
     </div>
   );
 }
