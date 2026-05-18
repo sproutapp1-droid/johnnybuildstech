@@ -13,6 +13,13 @@ import {
 } from '@/components/pebble/InkMarks';
 import { HeroReveal, ScrollIn, FAQItem } from './page.client';
 
+const HEALTHKIT_BULLETS = [
+  'sleep hours, the night before each log',
+  'resting heart rate and hrv trends',
+  'steps and active minutes',
+  'cycle data, if you would rather not retype it',
+];
+
 const CONDITIONS = [
   'POTS',
   'EDS',
@@ -561,6 +568,107 @@ export default function PebbleLanding() {
               </div>
             </div>
           ))}
+        </div>
+      </ScrollIn>
+
+      {/* ─── APPLE HEALTH (opt-in, off by default) ───────────── */}
+      <ScrollIn
+        id="apple-health"
+        className="relative mx-auto max-w-[1200px] scroll-mt-32 px-6 py-24 md:px-16 md:py-36"
+      >
+        <div className="grid gap-16 md:grid-cols-[1.1fr_1fr] md:items-start md:gap-20">
+          <div>
+            <p
+              className="pebble-mono text-[11px] uppercase"
+              style={{ letterSpacing: '0.22em', color: 'var(--pebble-ink-muted)' }}
+            >
+              apple health · optional
+            </p>
+            <h2
+              className="pebble-serif mt-6 max-w-[22ch] text-[36px] font-medium leading-[1.06] md:text-[56px]"
+              style={{ color: 'var(--pebble-ink)' }}
+            >
+              if your watch already tracks it, pebble can read it.
+            </h2>
+            <SectionRule className="mt-8 h-2 w-32" style={{ color: 'var(--pebble-rule)' }} />
+
+            <p
+              className="pebble-serif mt-8 max-w-[44ch] text-[18px] leading-[1.6]"
+              style={{ color: 'var(--pebble-ink)' }}
+            >
+              you already wear something that logs sleep and heart rate. pebble
+              can pull those numbers in from apple health, so the brief shows
+              what your body was doing the night before a flare, not what you
+              tried to remember.
+            </p>
+
+            <ul className="mt-8 space-y-3 pebble-serif text-[17px]"
+              style={{ color: 'var(--pebble-ink)' }}
+            >
+              {HEALTHKIT_BULLETS.map((line) => (
+                <li key={line} className="flex items-start gap-3">
+                  <Tick className="mt-1 flex-none" size={20} style={{ color: 'var(--pebble-terracotta)' }} />
+                  <span>{line}</span>
+                </li>
+              ))}
+            </ul>
+
+            {/* the "we know this cuts against our philosophy" beat */}
+            <p
+              className="pebble-hand mt-10 max-w-[34ch] text-[22px] leading-[1.25] md:text-[26px]"
+              style={{
+                color: 'var(--pebble-terracotta)',
+                transform: 'rotate(-0.4deg)',
+                transformOrigin: 'left center',
+              }}
+            >
+              this is the one part of pebble that talks to another app.
+            </p>
+            <p
+              className="pebble-serif mt-5 max-w-[46ch] text-[17px] leading-[1.6]"
+              style={{ color: 'var(--pebble-ink)' }}
+            >
+              the rest of pebble is offline by design. apple health is not. so
+              this whole feature is <em>off by default</em>. you turn it on in
+              settings, you pick which categories pebble can read, and you can
+              turn the whole thing off again with one tap. pebble forgets what
+              it pulled in.
+            </p>
+            <p
+              className="pebble-serif mt-4 max-w-[46ch] text-[16px] italic"
+              style={{ color: 'var(--pebble-ink-muted)' }}
+            >
+              read-only. pebble never writes back to apple health. android gets
+              the same thing via health connect at launch.
+            </p>
+          </div>
+
+          {/* right column — phone mockup placeholder (splash variant until
+              the real settings → apple health screenshot is dropped in).
+              Sticky so it stays beside the long left column on tall viewports. */}
+          <div className="relative hidden md:flex md:justify-center md:pt-8 lg:pt-12">
+            <div
+              className="relative md:sticky"
+              style={{ top: '7rem' }}
+            >
+              <PhoneMockup variant="splash" size="md" rotation={4} bobDelay={0.6} />
+              <p
+                className="pebble-hand mt-8 text-center"
+                style={{
+                  color: 'var(--pebble-terracotta)',
+                  fontSize: 20,
+                  lineHeight: 1.2,
+                  transform: 'rotate(-2deg)',
+                  maxWidth: 220,
+                  marginInline: 'auto',
+                }}
+              >
+                settings → apple health.
+                <br />
+                off by default.
+              </p>
+            </div>
+          </div>
         </div>
       </ScrollIn>
 
