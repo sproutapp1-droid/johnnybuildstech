@@ -97,18 +97,27 @@ function PhoneSketch({ variant }: { variant: Variant }) {
 
 export function TodaySketch() {
   return (
-    <div className="relative h-full w-full" style={{ padding: '20px 16px' }}>
+    <div className="relative h-full w-full" style={{ padding: '18px 14px 14px 22px' }}>
+      {/* hand-drawn left margin rule */}
+      <svg
+        aria-hidden
+        viewBox="0 0 2 200"
+        preserveAspectRatio="none"
+        className="absolute"
+        style={{ left: 14, top: 14, bottom: 14, width: 1.5, color: 'var(--pebble-terracotta)' }}
+      >
+        <path d="M1 2 C 0.6 50, 1.4 110, 1 198" stroke="currentColor" strokeWidth="0.6" fill="none" opacity="0.55" />
+      </svg>
+
       {/* top bar */}
-      <div className="flex items-center justify-between" style={{ fontSize: 11 }}>
+      <div className="flex items-center justify-between" style={{ fontSize: 10 }}>
         <span style={{ color: 'var(--pebble-ink-muted)' }}>≡</span>
-        <span className="pebble-hand" style={{ fontSize: 18, color: 'var(--pebble-ink)' }}>
-          today
-        </span>
+        <span style={{ color: 'var(--pebble-ink-muted)', letterSpacing: '0.02em' }}>today</span>
         <span
           style={{
             color: 'var(--pebble-terracotta)',
-            fontSize: 10,
-            textTransform: 'lowercase',
+            fontSize: 9,
+            fontStyle: 'italic',
           }}
         >
           brief
@@ -116,67 +125,137 @@ export function TodaySketch() {
       </div>
 
       {/* date */}
-      <div className="mt-5">
+      <div className="mt-4">
         <p
           className="pebble-hand"
-          style={{ fontSize: 14, color: 'var(--pebble-ink-muted)', fontStyle: 'italic' }}
+          style={{ fontSize: 13, color: 'var(--pebble-ink)', lineHeight: 1 }}
         >
           Tuesday · may 16
         </p>
-        <svg viewBox="0 0 200 4" className="mt-1 h-1 w-2/3" preserveAspectRatio="none">
+        <svg viewBox="0 0 200 4" className="mt-1 h-1 w-1/2" preserveAspectRatio="none">
           <path
             d="M2 2 C 60 1, 120 3, 198 2"
             stroke="currentColor"
             strokeWidth="1"
             fill="none"
-            opacity="0.4"
+            opacity="0.5"
           />
         </svg>
       </div>
 
-      <p className="mt-4" style={{ fontSize: 10, color: 'var(--pebble-ink-muted)' }}>
+      <p
+        className="mt-3"
+        style={{ fontSize: 9, color: 'var(--pebble-ink)' }}
+      >
         how are you, really?
       </p>
 
       {/* three sliders */}
-      <div className="mt-4 space-y-4">
-        <Slider label="energy" pos={28} value="4" />
-        <Slider label="pain" pos={62} value="6" />
-        <Slider label="mood" pos={78} value="7" />
+      <div className="mt-3 space-y-3">
+        <Slider label="energy" pos={32} value="4" />
+        <Slider label="pain" pos={68} value="6" />
+        <MoodSliderRow pos={74} value="7" />
       </div>
 
-      {/* rows */}
-      <div className="mt-5 space-y-2" style={{ fontSize: 9, color: 'var(--pebble-ink-muted)' }}>
-        <p>+ symptoms</p>
-        <p>+ today's meds</p>
-        <p>+ today's factors</p>
+      {/* notebook rows */}
+      <div className="mt-3 space-y-1.5">
+        <NotebookSketchRow label="symptoms" summary="1 today" />
+        <NotebookSketchRow label="today's meds" summary="3 of 4" />
+        <NotebookSketchRow label="cycle" summary="day 1" />
+        <p
+          className="pebble-hand"
+          style={{ fontSize: 9, color: 'var(--pebble-ink-muted)', fontStyle: 'italic' }}
+        >
+          + more to add
+        </p>
       </div>
 
       {/* done stamp */}
-      <div className="absolute bottom-5 left-1/2 -translate-x-1/2 text-center">
-        <svg width="100" height="3" viewBox="0 0 100 3" preserveAspectRatio="none">
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-center">
+        <svg width="76" height="3" viewBox="0 0 100 3" preserveAspectRatio="none">
           <path d="M2 2 C 30 1, 70 2.5, 98 2" stroke="currentColor" strokeWidth="1" fill="none" />
         </svg>
-        <p className="pebble-hand" style={{ fontSize: 14, marginTop: 2 }}>
+        <p className="pebble-hand" style={{ fontSize: 12, marginTop: 1, lineHeight: 1 }}>
           done · 14s
         </p>
-        <svg width="100" height="3" viewBox="0 0 100 3" preserveAspectRatio="none">
+        <svg width="76" height="3" viewBox="0 0 100 3" preserveAspectRatio="none">
           <path d="M2 2 C 30 1, 70 2.5, 98 2" stroke="currentColor" strokeWidth="1" fill="none" />
         </svg>
       </div>
 
       {/* pebble in corner */}
-      <div className="absolute bottom-3 right-3">
-        <Pebble size={20} />
+      <div className="absolute bottom-2 right-2">
+        <Pebble size={18} />
       </div>
     </div>
   );
 }
 
-function Slider({ label, pos, value }: { label: string; pos: number; value: string }) {
+function MoodSliderRow({ pos, value }: { pos: number; value: string }) {
   return (
-    <div className="flex items-center gap-2" style={{ fontSize: 10 }}>
-      <span style={{ width: 38, color: 'var(--pebble-ink)' }}>{label}</span>
+    <div>
+      <Slider label="mood" pos={pos} value={value} emoji="🙂" />
+      <div
+        aria-hidden
+        className="flex justify-between"
+        style={{
+          fontSize: 7,
+          marginLeft: 40,
+          marginRight: 14,
+          marginTop: 1,
+          opacity: 0.55,
+          filter: 'saturate(0.85)',
+        }}
+      >
+        <span>😴</span>
+        <span>😔</span>
+        <span>😐</span>
+        <span>🙂</span>
+        <span>😄</span>
+      </div>
+    </div>
+  );
+}
+
+function NotebookSketchRow({ label, summary }: { label: string; summary: string }) {
+  return (
+    <div
+      className="flex items-baseline gap-1.5"
+      style={{ fontSize: 9, color: 'var(--pebble-ink)' }}
+    >
+      <span style={{ color: 'var(--pebble-ink-muted)', fontSize: 7 }}>✕</span>
+      <span>{label}</span>
+      <span className="flex-1" aria-hidden>
+        <svg viewBox="0 0 100 2" preserveAspectRatio="none" className="block h-px w-full">
+          <path
+            d="M2 1 C 25 0.6, 75 1.4, 98 1"
+            stroke="currentColor"
+            strokeWidth="0.7"
+            fill="none"
+            opacity="0.35"
+          />
+        </svg>
+      </span>
+      <span style={{ color: 'var(--pebble-ink-muted)', fontSize: 8 }}>{summary}</span>
+      <span style={{ color: 'var(--pebble-ink-muted)', fontSize: 8 }}>→</span>
+    </div>
+  );
+}
+
+function Slider({
+  label,
+  pos,
+  value,
+  emoji,
+}: {
+  label: string;
+  pos: number;
+  value: string;
+  emoji?: string;
+}) {
+  return (
+    <div className="flex items-center gap-2" style={{ fontSize: 9 }}>
+      <span style={{ width: 32, color: 'var(--pebble-ink)' }}>{label}</span>
       <div className="relative flex-1">
         <svg viewBox="0 0 100 4" className="h-1 w-full" preserveAspectRatio="none">
           <path
@@ -193,65 +272,120 @@ function Slider({ label, pos, value }: { label: string; pos: number; value: stri
             fill="none"
           />
         </svg>
-        <span
-          className="absolute top-1/2 -translate-y-1/2 h-2 w-2 rounded-full"
-          style={{
-            left: `calc(${pos}% - 4px)`,
-            background: 'var(--pebble-terracotta)',
-          }}
-        />
+        {emoji ? (
+          <span
+            aria-hidden
+            className="absolute top-1/2 -translate-y-1/2"
+            style={{
+              left: `calc(${pos}% - 7px)`,
+              fontSize: 11,
+              lineHeight: 1,
+              filter: 'saturate(0.85)',
+            }}
+          >
+            {emoji}
+          </span>
+        ) : (
+          <span
+            className="absolute top-1/2 -translate-y-1/2 h-2 w-2 rounded-full"
+            style={{
+              left: `calc(${pos}% - 4px)`,
+              background: 'var(--pebble-terracotta)',
+            }}
+          />
+        )}
       </div>
-      <span style={{ width: 12, textAlign: 'right' }}>{value}</span>
+      <span style={{ width: 10, textAlign: 'right', color: 'var(--pebble-ink-muted)' }}>{value}</span>
     </div>
   );
 }
 
 export function BriefSketch() {
   return (
-    <div className="relative h-full w-full overflow-hidden" style={{ padding: '20px 12px' }}>
-      <p
-        className="text-center pebble-mono"
-        style={{ fontSize: 8, letterSpacing: '0.18em', textTransform: 'uppercase' }}
+    <div className="relative h-full w-full overflow-hidden" style={{ padding: '18px 12px 14px 22px' }}>
+      {/* hand-drawn left margin rule */}
+      <svg
+        aria-hidden
+        viewBox="0 0 2 200"
+        preserveAspectRatio="none"
+        className="absolute"
+        style={{ left: 14, top: 14, bottom: 14, width: 1.5, color: 'var(--pebble-terracotta)' }}
       >
-        patient-generated
-        <br />
-        symptom summary
-      </p>
-      <svg viewBox="0 0 200 2" className="my-2 h-px w-full" preserveAspectRatio="none">
-        <line x1="0" y1="1" x2="200" y2="1" stroke="currentColor" strokeWidth="0.6" />
+        <path d="M1 2 C 0.6 50, 1.4 110, 1 198" stroke="currentColor" strokeWidth="0.6" fill="none" opacity="0.55" />
       </svg>
 
+      {/* top bar */}
+      <div className="flex items-center justify-between" style={{ fontSize: 10 }}>
+        <span style={{ color: 'var(--pebble-ink-muted)' }}>≡</span>
+        <span style={{ color: 'var(--pebble-ink-muted)' }}>brief</span>
+        <span style={{ width: 12 }} />
+      </div>
+
+      {/* hand title */}
+      <div className="mt-4">
+        <div className="flex items-baseline gap-1">
+          <p className="pebble-hand" style={{ fontSize: 16, lineHeight: 1, color: 'var(--pebble-ink)' }}>
+            brief
+          </p>
+          <span
+            style={{ fontSize: 8, color: 'var(--pebble-ink-muted)', fontStyle: 'italic' }}
+          >
+            · may 11 – may 17
+          </span>
+        </div>
+        <svg viewBox="0 0 200 4" className="mt-1 h-1 w-1/3" preserveAspectRatio="none">
+          <path d="M2 2 C 60 1, 120 3, 198 2" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.5" />
+        </svg>
+      </div>
+
+      {/* receipt body */}
       <p
-        className="pebble-mono mt-3"
-        style={{ fontSize: 7, letterSpacing: '0.14em', textTransform: 'uppercase' }}
+        className="pebble-mono mt-4"
+        style={{ fontSize: 6.5, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--pebble-terracotta)' }}
       >
         the pattern
       </p>
-      <p className="pebble-mono mt-1" style={{ fontSize: 7, lineHeight: 1.5 }}>
+      <p className="pebble-mono mt-1" style={{ fontSize: 7, lineHeight: 1.5, color: 'var(--pebble-ink)' }}>
         energy averaged 4/10 this week,
-        down from 6/10. pain peaked at
-        8/10 wednesday, correlated with
-        poor sleep the night before.
+        <br />down from 6. pain peaked 8/10
+        <br />wednesday, after 4h sleep.
       </p>
 
       <p
         className="pebble-mono mt-3"
-        style={{ fontSize: 7, letterSpacing: '0.14em', textTransform: 'uppercase' }}
+        style={{ fontSize: 6.5, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--pebble-terracotta)' }}
       >
         what may have contributed
       </p>
-      <p className="pebble-mono mt-1" style={{ fontSize: 7, lineHeight: 1.5 }}>
-        • skipped mestinon (3x)
-        <br />• 4h sleep average
-        <br />• period day 1
+      <p className="pebble-mono mt-1" style={{ fontSize: 7, lineHeight: 1.5, color: 'var(--pebble-ink)' }}>
+        · skipped mestinon (3x)
+        <br />· 4h sleep average
+        <br />· period day 1
       </p>
 
-      {/* perforated edge bottom */}
-      <div
-        className="absolute bottom-2 left-0 right-0 text-center"
-        style={{ fontSize: 9, letterSpacing: '0.4em', color: 'var(--pebble-ink-muted)' }}
+      <p
+        className="pebble-mono mt-3"
+        style={{ fontSize: 6.5, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--pebble-terracotta)' }}
       >
-        · · · · · · · ·
+        what's changed
+      </p>
+      <p className="pebble-mono mt-1" style={{ fontSize: 7, lineHeight: 1.5, color: 'var(--pebble-ink)' }}>
+        new symptom: brain fog (4 days).
+      </p>
+
+      {/* quiet action buttons */}
+      <div
+        className="absolute left-0 right-0 flex justify-center gap-3"
+        style={{ bottom: 14, fontSize: 7, color: 'var(--pebble-ink-muted)', fontStyle: 'italic' }}
+      >
+        <span>copy text</span>
+        <span>pdf</span>
+        <span>share</span>
+      </div>
+
+      {/* pebble corner */}
+      <div className="absolute bottom-2 right-2">
+        <Pebble size={16} />
       </div>
     </div>
   );
@@ -259,29 +393,69 @@ export function BriefSketch() {
 
 export function HistorySketch() {
   const rows = [
-    { date: 'may 16', e: 40, p: 60, m: 70 },
-    { date: 'may 15', e: 60, p: 30, m: 70 },
-    { date: 'may 14', e: 30, p: 80, m: 40 },
-    { date: 'may 13', e: 50, p: 50, m: 60 },
-    { date: 'may 12', e: 70, p: 20, m: 80 },
+    { date: 'tue · may 16', note: 'fatigue, brain fog', e: 40, p: 60, m: 70, period: true, dots: 2 as const },
+    { date: 'mon · may 15', note: 'fatigue, joints', e: 30, p: 70, m: 40, period: false, dots: 2 as const },
+    { date: 'sun · may 14', note: '—', e: 60, p: 30, m: 70, period: false, dots: 1 as const },
+    { date: 'sat · may 13', note: 'nausea', e: 50, p: 50, m: 60, period: false, dots: 2 as const },
+    { date: 'fri · may 12', note: 'fatigue, pain', e: 20, p: 80, m: 30, period: false, dots: 0 as const },
+    { date: 'thu · may 11', note: 'headache', e: 30, p: 60, m: 50, period: false, dots: 1 as const },
   ];
   return (
-    <div className="relative h-full w-full" style={{ padding: '20px 16px' }}>
-      <p className="pebble-hand" style={{ fontSize: 18 }}>
-        history
-      </p>
-      <svg viewBox="0 0 200 4" className="mt-1 h-1 w-2/3" preserveAspectRatio="none">
-        <path d="M2 2 C 60 1, 120 3, 198 2" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.4" />
+    <div className="relative h-full w-full" style={{ padding: '18px 12px 14px 22px' }}>
+      {/* margin rule */}
+      <svg
+        aria-hidden
+        viewBox="0 0 2 200"
+        preserveAspectRatio="none"
+        className="absolute"
+        style={{ left: 14, top: 14, bottom: 14, width: 1.5, color: 'var(--pebble-terracotta)' }}
+      >
+        <path d="M1 2 C 0.6 50, 1.4 110, 1 198" stroke="currentColor" strokeWidth="0.6" fill="none" opacity="0.55" />
       </svg>
 
-      <div className="mt-4 space-y-3">
-        {rows.map((r) => (
-          <div key={r.date} style={{ fontSize: 9 }}>
-            <p style={{ color: 'var(--pebble-ink-muted)' }}>{r.date}</p>
-            <div className="mt-1 flex gap-2">
+      <div className="flex items-center justify-between" style={{ fontSize: 10 }}>
+        <span style={{ color: 'var(--pebble-ink-muted)' }}>≡</span>
+        <span style={{ color: 'var(--pebble-ink-muted)' }}>history</span>
+        <span style={{ width: 12 }} />
+      </div>
+
+      <p className="pebble-hand mt-3" style={{ fontSize: 14, lineHeight: 1, color: 'var(--pebble-ink)' }}>
+        history
+      </p>
+      <svg viewBox="0 0 200 4" className="mt-1 h-1 w-1/3" preserveAspectRatio="none">
+        <path d="M2 2 C 60 1, 120 3, 198 2" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.5" />
+      </svg>
+
+      <div className="mt-3">
+        {rows.map((r, i) => (
+          <div
+            key={r.date}
+            className="flex items-start gap-2 py-1.5"
+            style={{
+              borderBottom:
+                i === rows.length - 1
+                  ? undefined
+                  : '0.5px dashed rgba(28,26,24,0.18)',
+            }}
+          >
+            <div style={{ width: 54, flexShrink: 0 }}>
+              <p style={{ fontSize: 8, color: 'var(--pebble-ink)', lineHeight: 1.1 }}>{r.date}</p>
+              <p style={{ fontSize: 6.5, color: 'var(--pebble-ink-muted)', lineHeight: 1.2, marginTop: 1 }}>
+                {r.note}
+              </p>
+            </div>
+            <div className="flex flex-col gap-0.5 pt-0.5">
               <HorizonBar value={r.e} />
               <HorizonBar value={r.p} />
               <HorizonBar value={r.m} />
+            </div>
+            <div className="flex-1" />
+            <div className="flex items-center gap-1 pt-1">
+              <ConfidenceDot state={r.dots} />
+              <ConfidenceDot state={r.dots === 2 ? 2 : r.dots === 0 ? 0 : 1} />
+              {r.period && (
+                <span style={{ color: 'var(--pebble-terracotta)', fontSize: 7, fontStyle: 'italic' }}>P</span>
+              )}
             </div>
           </div>
         ))}
@@ -292,7 +466,7 @@ export function HistorySketch() {
 
 function HorizonBar({ value }: { value: number }) {
   return (
-    <svg viewBox="0 0 40 6" className="h-1.5 w-12" preserveAspectRatio="none">
+    <svg viewBox="0 0 40 6" className="h-1 w-10" preserveAspectRatio="none">
       <line x1="0" y1="3" x2="40" y2="3" stroke="currentColor" strokeWidth="0.5" opacity="0.3" />
       <line
         x1="0"
@@ -300,9 +474,29 @@ function HorizonBar({ value }: { value: number }) {
         x2={(value / 100) * 40}
         y2="3"
         stroke="var(--pebble-terracotta)"
-        strokeWidth="1.6"
+        strokeWidth="1.4"
         strokeLinecap="round"
       />
     </svg>
+  );
+}
+
+function ConfidenceDot({ state }: { state: 0 | 1 | 2 }) {
+  // 0 = empty ring, 1 = half, 2 = filled
+  const fill =
+    state === 2 ? 'var(--pebble-terracotta)' : state === 1 ? 'rgba(196,138,58,0.45)' : 'transparent';
+  return (
+    <span
+      aria-hidden
+      style={{
+        width: 5,
+        height: 5,
+        borderRadius: '50%',
+        background: fill,
+        border: '0.6px solid var(--pebble-terracotta)',
+        opacity: 0.85,
+        display: 'inline-block',
+      }}
+    />
   );
 }
