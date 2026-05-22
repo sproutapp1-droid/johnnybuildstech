@@ -10,9 +10,25 @@
 
 import Image from 'next/image';
 import { motion, useReducedMotion } from 'motion/react';
-import { TodaySketch, BriefSketch, HistorySketch } from './Polaroid';
+import {
+  TodaySketch,
+  BriefSketch,
+  HistorySketch,
+  BriefVoiceSketch,
+  VoiceRecordingSketch,
+  DayDetailMomentsSketch,
+  SymptomPickerSketch,
+} from './Polaroid';
 
-type Variant = 'splash' | 'today' | 'brief' | 'history';
+type Variant =
+  | 'splash'
+  | 'today'
+  | 'brief'
+  | 'history'
+  | 'brief-voice'
+  | 'voice-recording'
+  | 'day-detail-moments'
+  | 'symptom-picker';
 type Size = 'sm' | 'md' | 'lg';
 
 const SIZE_MAP: Record<Size, { width: number; borderRadius: number; notchWidth: number }> = {
@@ -116,6 +132,26 @@ export function PhoneMockup({
         {variant === 'history' && (
           <div className="h-full w-full">
             <HistorySketch />
+          </div>
+        )}
+        {variant === 'brief-voice' && (
+          <div className="h-full w-full">
+            <BriefVoiceSketch />
+          </div>
+        )}
+        {variant === 'voice-recording' && (
+          <div className="h-full w-full">
+            <VoiceRecordingSketch />
+          </div>
+        )}
+        {variant === 'day-detail-moments' && (
+          <div className="h-full w-full">
+            <DayDetailMomentsSketch />
+          </div>
+        )}
+        {variant === 'symptom-picker' && (
+          <div className="h-full w-full">
+            <SymptomPickerSketch />
           </div>
         )}
       </div>

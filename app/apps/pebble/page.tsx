@@ -335,7 +335,7 @@ export default function PebbleLanding() {
           {/* RIGHT — phone showing chaotic history dump, plus snarky annotation */}
           <div className="relative hidden md:flex md:items-center md:justify-center">
             <div className="relative">
-              <PhoneMockup variant="history" size="md" rotation={-5} bobDelay={0.3} />
+              <PhoneMockup variant="brief-voice" size="md" rotation={-5} bobDelay={0.3} />
               <p
                 className="pebble-hand absolute"
                 style={{
@@ -343,15 +343,15 @@ export default function PebbleLanding() {
                   fontSize: 22,
                   lineHeight: 1.15,
                   transform: 'rotate(-3deg)',
-                  bottom: '-12%',
-                  right: '-6%',
-                  maxWidth: 200,
+                  bottom: '-10%',
+                  right: '-4%',
+                  maxWidth: 210,
                   textAlign: 'right',
                 }}
               >
-                what other apps
+                your six minutes,
                 <br />
-                give your doctor.
+                summarised.
               </p>
             </div>
           </div>
@@ -362,9 +362,10 @@ export default function PebbleLanding() {
       <ScrollIn className="relative mx-auto max-w-[1200px] px-6 py-24 md:px-16 md:py-36">
         <div className="grid gap-16 md:grid-cols-[1fr_1.1fr] md:items-start md:gap-24">
           <div>
-            {/* "this is what you log" phone, wrapped in a tilted paper card,
-                sits in column flow above the heading so it doesn't float */}
-            <div className="hidden md:block mb-12">
+            {/* Two tilted paper cards, side by side, each with a phone +
+                hand-lettered caption. Tilts go opposite ways so they read
+                as two snapshots on a desk. */}
+            <div className="hidden md:flex md:items-start md:gap-6 mb-12">
               <div
                 className="relative inline-block"
                 style={{
@@ -390,7 +391,7 @@ export default function PebbleLanding() {
                     boxShadow: 'inset 0 0 0 1px rgba(160, 110, 50, 0.22)',
                   }}
                 />
-                <PhoneMockup variant="today" size="sm" rotation={0} bobDelay={1.2} />
+                <PhoneMockup variant="voice-recording" size="sm" rotation={0} bobDelay={1.2} />
                 <p
                   className="pebble-hand mt-3 text-center"
                   style={{
@@ -399,7 +400,45 @@ export default function PebbleLanding() {
                     lineHeight: 1.1,
                   }}
                 >
-                  this is what you log
+                  easily record with voice
+                </p>
+              </div>
+
+              <div
+                className="relative inline-block"
+                style={{
+                  padding: '18px 16px 22px',
+                  background: 'var(--pebble-paper-deep)',
+                  boxShadow:
+                    '0 1px 0 rgba(28,26,24,0.04), 0 4px 12px rgba(28,26,24,0.08), 0 28px 50px -22px rgba(28,26,24,0.32)',
+                  transform: 'rotate(3deg)',
+                  border: '1px solid var(--pebble-rule)',
+                  marginTop: 22,
+                }}
+              >
+                <span
+                  aria-hidden
+                  className="absolute"
+                  style={{
+                    left: '50%',
+                    top: -10,
+                    transform: 'translateX(-50%) rotate(-3deg)',
+                    width: 60,
+                    height: 14,
+                    background: 'rgba(196, 138, 58, 0.36)',
+                    boxShadow: 'inset 0 0 0 1px rgba(160, 110, 50, 0.22)',
+                  }}
+                />
+                <PhoneMockup variant="day-detail-moments" size="sm" rotation={0} bobDelay={1.8} />
+                <p
+                  className="pebble-hand mt-3 text-center"
+                  style={{
+                    color: 'var(--pebble-terracotta)',
+                    fontSize: 18,
+                    lineHeight: 1.1,
+                  }}
+                >
+                  log mood through the day
                 </p>
               </div>
             </div>
@@ -539,7 +578,7 @@ export default function PebbleLanding() {
           {HOW.map((step, i) => (
             <div key={step.n} className="flex flex-col items-center text-center md:items-start md:text-left">
               <Polaroid
-                variant={i === 0 ? 'today' : i === 1 ? 'history' : 'brief'}
+                variant={i === 0 ? 'today' : i === 1 ? 'symptom-picker' : 'brief'}
                 rotation={i === 0 ? -2.5 : i === 1 ? 1.5 : -1.5}
                 caption={`step ${step.n}`}
               />
