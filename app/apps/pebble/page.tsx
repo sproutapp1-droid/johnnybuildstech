@@ -222,9 +222,8 @@ export default function PebbleLanding() {
             </p>
           </HeroReveal>
 
-          {/* right column — double phone showcase, hidden on mobile to avoid
-              shrinking the hero copy */}
-          <div className="hidden md:block">
+          {/* right column — double phone showcase */}
+          <div className="mt-12 md:mt-0">
             <HeroPhones />
           </div>
         </div>
@@ -333,7 +332,7 @@ export default function PebbleLanding() {
           </div>
 
           {/* RIGHT — phone showing chaotic history dump, plus snarky annotation */}
-          <div className="relative hidden md:flex md:items-center md:justify-center">
+          <div className="relative flex items-center justify-center">
             <div className="relative">
               <PhoneMockup variant="brief-voice" size="md" rotation={-5} bobDelay={0.3} />
               <p
@@ -365,7 +364,7 @@ export default function PebbleLanding() {
             {/* Two tilted paper cards, side by side, each with a phone +
                 hand-lettered caption. Tilts go opposite ways so they read
                 as two snapshots on a desk. */}
-            <div className="hidden md:flex md:items-start md:gap-6 mb-12">
+            <div className="flex flex-col items-center gap-10 md:flex-row md:items-start md:gap-6 mb-12">
               <div
                 className="relative inline-block"
                 style={{
@@ -685,7 +684,7 @@ export default function PebbleLanding() {
           {/* right column — phone mockup placeholder (splash variant until
               the real settings → apple health screenshot is dropped in).
               Sticky so it stays beside the long left column on tall viewports. */}
-          <div className="relative hidden md:flex md:justify-center md:pt-8 lg:pt-12">
+          <div className="relative flex justify-center md:pt-8 lg:pt-12">
             <div
               className="relative md:sticky"
               style={{ top: '7rem' }}
