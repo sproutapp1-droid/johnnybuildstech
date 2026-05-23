@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 const EFFECTIVE = '17 May 2026';
-const UPDATED = '17 May 2026';
+const UPDATED = '23 May 2026';
 
 export default function PebblePrivacy() {
   return (
@@ -62,6 +62,46 @@ export default function PebblePrivacy() {
         backups, which are operated by Apple or Google under their respective
         privacy policies. When you uninstall Pebble, this data is deleted from
         your phone along with the app.
+      </p>
+
+      <h2>Apple HealthKit and Health Connect (optional)</h2>
+      <p>
+        If you turn on health data sync in Pebble&rsquo;s settings, the app
+        reads a small set of values from <strong>Apple HealthKit</strong> (on
+        iOS) or <strong>Health Connect</strong> (on Android) to add context to
+        your daily log and Brief:
+      </p>
+      <ul>
+        <li>sleep duration</li>
+        <li>step count</li>
+        <li>resting heart rate</li>
+        <li>cycle / period data, on iOS only and only if you turn on the cycle sub-toggle</li>
+      </ul>
+      <p>
+        This data is read into Pebble&rsquo;s local database on your device. It
+        is <strong>not</strong> transmitted off your device, <strong>not</strong>{' '}
+        shared with any third party, and <strong>not</strong> used for any
+        purpose other than displaying context inside the app.
+      </p>
+      <p>
+        If you turn on the period write-back option in Settings, Pebble writes
+        the period days you log back to HealthKit / Health Connect so other
+        health apps on your phone can see them. Nothing else is written. You
+        can turn write-back off at any time.
+      </p>
+      <p>
+        You can revoke Pebble&rsquo;s HealthKit access entirely from{' '}
+        <strong>iOS Settings → Health → Data Access &amp; Devices → Pebble</strong>,
+        or Health Connect access from the <strong>Health Connect</strong> app
+        on Android, without breaking the rest of Pebble.
+      </p>
+      <p>
+        Apple HealthKit and Health Connect are local APIs operated by Apple and
+        Google respectively under their own privacy policies (
+        <a href="https://www.apple.com/legal/privacy/data/en/health-app/">Apple Health</a>
+        ,{' '}
+        <a href="https://support.google.com/android/answer/12241000">Health Connect</a>
+        ). They do not transmit your health data to a server.
       </p>
 
       <h2>what leaves your device (and only this)</h2>
@@ -165,6 +205,14 @@ export default function PebblePrivacy() {
             <td>notifications</td>
             <td>to send local reminders to log</td>
             <td>local-only. Pebble does not have a push notification server.</td>
+          </tr>
+          <tr>
+            <td>Apple HealthKit / Health Connect</td>
+            <td>optional, to read sleep, steps, resting heart rate, and (on iOS only) cycle data for context</td>
+            <td>
+              read into Pebble&rsquo;s local database on your device. Period
+              write-back is opt-in. Never transmitted off your device.
+            </td>
           </tr>
         </tbody>
       </table>
