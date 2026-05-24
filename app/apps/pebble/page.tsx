@@ -554,6 +554,162 @@ export default function PebbleLanding() {
         </ul>
       </ScrollIn>
 
+      {/* ─── THE BODY MAP (pain location) ─────────────────────── */}
+      <ScrollIn
+        id="body-map"
+        className="relative mx-auto max-w-[1200px] scroll-mt-32 px-6 py-24 md:px-16 md:py-36"
+      >
+        <div className="grid gap-14 md:grid-cols-[1fr_1.05fr] md:items-center md:gap-16 lg:gap-24">
+          {/* LEFT — copy */}
+          <div>
+            <p
+              className="pebble-mono text-[11px] uppercase"
+              style={{ letterSpacing: '0.22em', color: 'var(--pebble-ink-muted)' }}
+            >
+              the body map · optional
+            </p>
+            <h2
+              className="pebble-serif mt-6 max-w-[20ch] text-[36px] font-medium leading-[1.06] md:text-[56px]"
+              style={{ color: 'var(--pebble-ink)' }}
+            >
+              a number for how bad. a map for where.
+            </h2>
+            <SectionRule className="mt-8 h-2 w-32" style={{ color: 'var(--pebble-rule)' }} />
+
+            <p
+              className="pebble-serif mt-8 max-w-[44ch] text-[18px] leading-[1.6]"
+              style={{ color: 'var(--pebble-ink)' }}
+            >
+              pain doesn&rsquo;t fit on a single slider. your migraine is not the same
+              kind of bad as your hip flare. so under the pain slider there is a small
+              affordance — <em>map where it hurts</em> — that opens a body diagram. tap
+              the spots that hurt today. front and back. that&rsquo;s it.
+            </p>
+
+            <p
+              className="pebble-hand mt-7 max-w-[28ch] text-[26px] leading-[1.2] md:text-[30px]"
+              style={{
+                color: 'var(--pebble-terracotta)',
+                transform: 'rotate(-0.4deg)',
+                transformOrigin: 'left center',
+              }}
+            >
+              the slider is severity. the map is shape.
+            </p>
+
+            <ul
+              className="mt-10 space-y-3 pebble-serif text-[16px] leading-[1.55]"
+              style={{ color: 'var(--pebble-ink)' }}
+            >
+              <li className="flex items-start gap-3">
+                <Tick className="mt-1 flex-none" size={20} style={{ color: 'var(--pebble-terracotta)' }} />
+                <span>tap a region to mark, tap it again to unmark</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Tick className="mt-1 flex-none" size={20} style={{ color: 'var(--pebble-terracotta)' }} />
+                <span>anatomical R&nbsp;/&nbsp;L convention, the same way your doctor was trained to read a chart</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Tick className="mt-1 flex-none" size={20} style={{ color: 'var(--pebble-terracotta)' }} />
+                <span>marks are stored as regions, not coordinates — no body-shape assumption baked into your data</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Tick className="mt-1 flex-none" size={20} style={{ color: 'var(--pebble-terracotta)' }} />
+                <span>the brief tucks a tiny front&nbsp;+&nbsp;back diagram with your marks under the pain line, for the doctor</span>
+              </li>
+            </ul>
+
+            <p
+              className="pebble-serif mt-8 max-w-[44ch] text-[16px] italic"
+              style={{ color: 'var(--pebble-ink-muted)' }}
+            >
+              completely optional. leave it untouched and the pain slider works exactly as
+              it always did.
+            </p>
+          </div>
+
+          {/* RIGHT — two phones on paper cards, front + back side by side.
+              Same tape-strip-on-paper treatment as the receipt section so the
+              two compositions read as a family. */}
+          <div className="flex flex-col items-center gap-10 md:flex-row md:items-start md:justify-center md:gap-6">
+            <div
+              className="relative inline-block"
+              style={{
+                padding: '18px 16px 22px',
+                background: 'var(--pebble-paper-deep)',
+                boxShadow:
+                  '0 1px 0 rgba(28,26,24,0.04), 0 4px 12px rgba(28,26,24,0.08), 0 28px 50px -22px rgba(28,26,24,0.32)',
+                transform: 'rotate(-3deg)',
+                border: '1px solid var(--pebble-rule)',
+              }}
+            >
+              <span
+                aria-hidden
+                className="absolute"
+                style={{
+                  left: '50%',
+                  top: -10,
+                  transform: 'translateX(-50%) rotate(2deg)',
+                  width: 60,
+                  height: 14,
+                  background: 'rgba(196, 138, 58, 0.36)',
+                  boxShadow: 'inset 0 0 0 1px rgba(160, 110, 50, 0.22)',
+                }}
+              />
+              <PhoneMockup variant="body-map-front" size="sm" rotation={0} bobDelay={0.4} />
+              <p
+                className="pebble-hand mt-3 text-center"
+                style={{
+                  color: 'var(--pebble-terracotta)',
+                  fontSize: 18,
+                  lineHeight: 1.1,
+                }}
+              >
+                front
+              </p>
+            </div>
+
+            <div
+              className="relative inline-block"
+              style={{
+                padding: '18px 16px 22px',
+                background: 'var(--pebble-paper-deep)',
+                boxShadow:
+                  '0 1px 0 rgba(28,26,24,0.04), 0 4px 12px rgba(28,26,24,0.08), 0 28px 50px -22px rgba(28,26,24,0.32)',
+                transform: 'rotate(3deg)',
+                border: '1px solid var(--pebble-rule)',
+                marginTop: 22,
+              }}
+            >
+              <span
+                aria-hidden
+                className="absolute"
+                style={{
+                  left: '50%',
+                  top: -10,
+                  transform: 'translateX(-50%) rotate(-3deg)',
+                  width: 60,
+                  height: 14,
+                  background: 'rgba(196, 138, 58, 0.36)',
+                  boxShadow: 'inset 0 0 0 1px rgba(160, 110, 50, 0.22)',
+                }}
+              />
+              <PhoneMockup variant="body-map-back" size="sm" rotation={0} bobDelay={1.4} />
+              <p
+                className="pebble-hand mt-3 text-center"
+                style={{
+                  color: 'var(--pebble-terracotta)',
+                  fontSize: 18,
+                  lineHeight: 1.1,
+                }}
+              >
+                back · 3 spots
+              </p>
+            </div>
+          </div>
+        </div>
+      </ScrollIn>
+
       {/* ─── HOW IT WORKS ─────────────────────────────────────── */}
       <ScrollIn
         id="how"

@@ -166,6 +166,17 @@
   to { transform: translateX(-50%); }
 }
 
+/* Body-map marks — a gentle breathe so the eye lands on them without
+   them feeling like a notification badge. Staggered per-mark via
+   inline animation-delay so the cluster never pulses in unison. */
+@keyframes pebble-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.92; }
+  50%      { transform: scale(1.045); opacity: 1; }
+}
+.pebble-pulse {
+  animation: pebble-pulse 2.6s ease-in-out infinite;
+}
+
 /* ── reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
   .ink-stroke {
@@ -181,6 +192,7 @@
   .polaroid { transition: none; }
   .polaroid:hover { transform: rotate(var(--rot, 0deg)); }
   .pebble-marquee { animation: none; transform: translateX(0); }
+  .pebble-pulse { animation: none; }
 }
 
 /* ── focus ring (accessibility — terracotta) ── */

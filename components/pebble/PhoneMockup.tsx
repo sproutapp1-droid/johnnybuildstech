@@ -18,6 +18,8 @@ import {
   VoiceRecordingSketch,
   DayDetailMomentsSketch,
   SymptomPickerSketch,
+  BodyMapFrontSketch,
+  BodyMapBackSketch,
 } from './Polaroid';
 
 type Variant =
@@ -28,7 +30,9 @@ type Variant =
   | 'brief-voice'
   | 'voice-recording'
   | 'day-detail-moments'
-  | 'symptom-picker';
+  | 'symptom-picker'
+  | 'body-map-front'
+  | 'body-map-back';
 type Size = 'sm' | 'md' | 'lg';
 
 const SIZE_MAP: Record<Size, { width: number; borderRadius: number; notchWidth: number }> = {
@@ -152,6 +156,16 @@ export function PhoneMockup({
         {variant === 'symptom-picker' && (
           <div className="h-full w-full">
             <SymptomPickerSketch />
+          </div>
+        )}
+        {variant === 'body-map-front' && (
+          <div className="h-full w-full">
+            <BodyMapFrontSketch />
+          </div>
+        )}
+        {variant === 'body-map-back' && (
+          <div className="h-full w-full">
+            <BodyMapBackSketch />
           </div>
         )}
       </div>

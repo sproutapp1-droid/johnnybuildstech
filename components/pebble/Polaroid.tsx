@@ -1055,3 +1055,365 @@ export function BriefVoiceSketch() {
     </div>
   );
 }
+
+/* ─── Body-map sketches (front + back) ──────────────────────────────
+ *
+ * Shared minimalist line-drawing of a body, sized to fit the inner
+ * phone-screen viewport. Front view shows the silhouette empty with the
+ * "where does it hurt?" chrome — counter, front/back toggle, undo,
+ * done CTA. Back view adds three pulsing ink-mark dots at left shoulder,
+ * lower lumbar, and right calf, matching the worked example in the
+ * doctor brief copy.
+ *
+ * Anatomical convention: R/L marginalia at the top of each silhouette so
+ * the user can see which side a tap will register as. In the front view,
+ * the patient's right shoulder appears on the viewer's left (you are
+ * looking AT them, like a medical chart). Back view is the mirror —
+ * patient's left = viewer's left.
+ *
+ * The silhouette paths are intentionally drawn with slight irregularities
+ * (organic Bézier control points, not perfect curves) so the body reads
+ * as hand-drawn, matching the rest of the Pebble sketch family. */
+
+function BodyMapChrome({
+  counter,
+  counterActive,
+  undoDisabled,
+  toggleActive,
+}: {
+  counter: string;
+  counterActive: boolean;
+  undoDisabled: boolean;
+  toggleActive: 'front' | 'back';
+}) {
+  return (
+    <>
+      {/* top bar — same shape as TodaySketch / BriefSketch */}
+      <div className="flex items-center justify-between" style={{ fontSize: 10 }}>
+        <span style={{ color: 'var(--pebble-ink-muted)' }}>≡</span>
+        <span
+          style={{
+            color: 'var(--pebble-ink-muted)',
+            letterSpacing: '0.02em',
+            fontSize: 9,
+            fontStyle: 'italic',
+          }}
+        >
+          cancel
+        </span>
+      </div>
+
+      {/* title */}
+      <div className="mt-3">
+        <p
+          className="pebble-hand"
+          style={{ fontSize: 13, color: 'var(--pebble-ink)', lineHeight: 1 }}
+        >
+          where does it hurt?
+        </p>
+        <svg viewBox="0 0 200 4" className="mt-1 h-1" style={{ width: 90 }} preserveAspectRatio="none">
+          <path
+            d="M2 2 C 60 1, 120 3, 198 2"
+            stroke="currentColor"
+            strokeWidth="1"
+            fill="none"
+            opacity="0.5"
+          />
+        </svg>
+      </div>
+
+      {/* counter + undo row */}
+      <div className="mt-2 flex items-baseline justify-between" style={{ fontSize: 8.5 }}>
+        <span
+          style={{
+            color: counterActive ? 'var(--pebble-ink)' : 'var(--pebble-ink-muted)',
+            fontStyle: 'italic',
+          }}
+        >
+          {counter}
+        </span>
+        <span
+          style={{
+            color: undoDisabled ? 'var(--pebble-ink-faint)' : 'var(--pebble-terracotta)',
+            fontStyle: 'italic',
+          }}
+        >
+          undo
+        </span>
+      </div>
+
+      {/* front/back toggle, centered */}
+      <div className="mt-2 flex justify-center">
+        <div
+          className="inline-flex overflow-hidden"
+          style={{
+            border: '0.8px solid var(--pebble-ink)',
+            borderRadius: 999,
+            fontSize: 8,
+            letterSpacing: '0.04em',
+          }}
+        >
+          <span
+            style={{
+              padding: '2px 8px',
+              background: toggleActive === 'front' ? 'var(--pebble-ink)' : 'transparent',
+              color: toggleActive === 'front' ? 'var(--pebble-paper)' : 'var(--pebble-ink)',
+            }}
+          >
+            front
+          </span>
+          <span
+            style={{
+              padding: '2px 8px',
+              background: toggleActive === 'back' ? 'var(--pebble-ink)' : 'transparent',
+              color: toggleActive === 'back' ? 'var(--pebble-paper)' : 'var(--pebble-ink)',
+            }}
+          >
+            back
+          </span>
+        </div>
+      </div>
+    </>
+  );
+}
+
+function BodyDoneCTA() {
+  return (
+    <div className="absolute bottom-3 left-1/2 -translate-x-1/2 text-center">
+      <svg width="50" height="3" viewBox="0 0 100 3" preserveAspectRatio="none">
+        <path d="M2 2 C 30 1, 70 2.5, 98 2" stroke="currentColor" strokeWidth="1" fill="none" />
+      </svg>
+      <p className="pebble-hand" style={{ fontSize: 10, marginTop: 1, lineHeight: 1 }}>
+        done
+      </p>
+      <svg width="50" height="3" viewBox="0 0 100 3" preserveAspectRatio="none">
+        <path d="M2 2 C 30 1, 70 2.5, 98 2" stroke="currentColor" strokeWidth="1" fill="none" />
+      </svg>
+    </div>
+  );
+}
+
+/* Shared silhouette paths. The shape is symmetric so the same outline
+ * works for both front and back; the marginalia / hints around it
+ * disambiguate the view. */
+function BodySilhouette({
+  view,
+}: {
+  view: 'front' | 'back';
+}) {
+  const lateralLeft = view === 'front' ? 'R' : 'L';
+  const lateralRight = view === 'front' ? 'L' : 'R';
+  return (
+    <g
+      stroke="var(--pebble-ink)"
+      strokeWidth={1.3}
+      fill="none"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      {/* R / L marginalia — anatomical orientation hint */}
+      <text
+        x={42}
+        y={14}
+        textAnchor="middle"
+        fill="var(--pebble-ink-muted)"
+        stroke="none"
+        style={{ fontSize: 9, fontStyle: 'italic', letterSpacing: '0.06em' }}
+      >
+        {lateralLeft}
+      </text>
+      <text
+        x={198}
+        y={14}
+        textAnchor="middle"
+        fill="var(--pebble-ink-muted)"
+        stroke="none"
+        style={{ fontSize: 9, fontStyle: 'italic', letterSpacing: '0.06em' }}
+      >
+        {lateralRight}
+      </text>
+
+      {/* Head */}
+      <path d="M 120 24 C 145 23 159 42 159 70 C 159 92 146 108 122 110 C 96 110 81 94 81 70 C 81 42 95 23 120 24 Z" />
+      {view === 'front' && (
+        <path d="M 99 100 Q 120 106 141 100" strokeWidth={0.8} opacity={0.42} />
+      )}
+
+      {/* Neck */}
+      <path d="M 108 110 C 108 122 108 128 106 134" />
+      <path d="M 132 110 C 132 122 132 128 134 134" />
+
+      {/* Shoulders */}
+      <path d="M 106 134 C 88 138 70 144 56 154" />
+      <path d="M 134 134 C 152 138 170 144 184 154" />
+      {view === 'front' && (
+        <path d="M 108 140 Q 120 144 132 140" strokeWidth={0.8} opacity={0.4} />
+      )}
+      {view === 'back' && (
+        <>
+          <path d="M 120 140 L 120 356" strokeWidth={0.6} opacity={0.25} strokeDasharray="2 4" />
+          <path d="M 78 174 Q 96 186 102 204" strokeWidth={0.7} opacity={0.38} />
+          <path d="M 162 174 Q 144 186 138 204" strokeWidth={0.7} opacity={0.38} />
+        </>
+      )}
+
+      {/* Torso */}
+      <path d="M 56 154 C 50 164 47 176 46 190 C 50 194 56 196 62 198 C 63 206 64 216 64 226 C 62 246 58 274 56 296 C 54 316 54 338 56 356 C 60 364 70 368 84 368" />
+      <path d="M 184 154 C 190 164 193 176 194 190 C 190 194 184 196 178 198 C 177 206 176 216 176 226 C 178 246 182 274 184 296 C 186 316 186 338 184 356 C 180 364 170 368 156 368" />
+      <path d="M 84 368 C 96 370 120 370 156 368" strokeWidth={0.9} opacity={0.5} />
+      {view === 'back' && (
+        <path d="M 120 368 L 120 394" strokeWidth={0.6} opacity={0.32} strokeDasharray="2 3" />
+      )}
+
+      {/* Left arm */}
+      <path d="M 56 154 C 50 174 44 202 38 236 C 34 266 31 301 30 332 C 32 354 36 372 41 386 C 45 386 49 384 50 380 C 52 356 53 332 52 310 C 53 280 56 246 60 218 C 61 204 63 194 64 184" />
+      <path d="M 41 386 C 36 392 33 398 33 404 C 36 408 42 408 47 406 C 50 402 51 396 49 390" strokeWidth={1.1} />
+
+      {/* Right arm */}
+      <path d="M 184 154 C 190 174 196 202 202 236 C 206 266 209 301 210 332 C 208 354 204 372 199 386 C 195 386 191 384 190 380 C 188 356 187 332 188 310 C 187 280 184 246 180 218 C 179 204 177 194 176 184" />
+      <path d="M 199 386 C 204 392 207 398 207 404 C 204 408 198 408 193 406 C 190 402 189 396 191 390" strokeWidth={1.1} />
+
+      {/* Left leg */}
+      <path d="M 84 368 L 80 410 C 76 452 72 494 70 534 C 69 558 69 578 71 590" />
+      <path d="M 110 368 L 110 410 C 110 446 108 484 106 516 C 105 538 103 558 100 574" />
+      <path d="M 71 590 C 80 594 92 594 100 590 C 99 581 100 576 100 574" strokeWidth={1.1} />
+      {view === 'back' && (
+        <path d="M 73 536 Q 78 544 75 558" strokeWidth={0.7} opacity={0.42} />
+      )}
+      {view === 'front' && (
+        <path d="M 78 448 Q 90 450 100 448" strokeWidth={0.8} opacity={0.42} />
+      )}
+
+      {/* Right leg */}
+      <path d="M 156 368 L 160 410 C 164 452 168 494 170 534 C 171 558 171 578 169 590" />
+      <path d="M 130 368 L 130 410 C 130 446 132 484 134 516 C 135 538 137 558 140 574" />
+      <path d="M 169 590 C 160 594 148 594 140 590 C 141 581 140 576 140 574" strokeWidth={1.1} />
+      {view === 'back' && (
+        <path d="M 167 536 Q 162 544 165 558" strokeWidth={0.7} opacity={0.42} />
+      )}
+      {view === 'front' && (
+        <path d="M 162 448 Q 150 450 140 448" strokeWidth={0.8} opacity={0.42} />
+      )}
+    </g>
+  );
+}
+
+export function BodyMapFrontSketch() {
+  return (
+    <div className="relative h-full w-full" style={{ padding: '18px 14px 14px 22px' }}>
+      {/* hand-drawn left margin rule */}
+      <svg
+        aria-hidden
+        viewBox="0 0 2 200"
+        preserveAspectRatio="none"
+        className="absolute"
+        style={{ left: 14, top: 14, bottom: 14, width: 1.5, color: 'var(--pebble-terracotta)' }}
+      >
+        <path d="M1 2 C 0.6 50, 1.4 110, 1 198" stroke="currentColor" strokeWidth="0.6" fill="none" opacity="0.55" />
+      </svg>
+
+      <BodyMapChrome
+        counter="0 spots marked"
+        counterActive={false}
+        undoDisabled={true}
+        toggleActive="front"
+      />
+
+      {/* body silhouette — fills the middle of the screen */}
+      <div className="mt-2 flex justify-center">
+        <svg
+          viewBox="0 0 240 612"
+          preserveAspectRatio="xMidYMid meet"
+          style={{ width: '92%', height: 'auto', maxHeight: 240 }}
+        >
+          <BodySilhouette view="front" />
+        </svg>
+      </div>
+
+      <BodyDoneCTA />
+    </div>
+  );
+}
+
+export function BodyMapBackSketch() {
+  return (
+    <div className="relative h-full w-full" style={{ padding: '18px 14px 14px 22px' }}>
+      <svg
+        aria-hidden
+        viewBox="0 0 2 200"
+        preserveAspectRatio="none"
+        className="absolute"
+        style={{ left: 14, top: 14, bottom: 14, width: 1.5, color: 'var(--pebble-terracotta)' }}
+      >
+        <path d="M1 2 C 0.6 50, 1.4 110, 1 198" stroke="currentColor" strokeWidth="0.6" fill="none" opacity="0.55" />
+      </svg>
+
+      <BodyMapChrome
+        counter="3 spots marked"
+        counterActive={true}
+        undoDisabled={false}
+        toggleActive="back"
+      />
+
+      <div className="mt-2 flex justify-center">
+        <svg
+          viewBox="0 0 240 612"
+          preserveAspectRatio="xMidYMid meet"
+          style={{ width: '92%', height: 'auto', maxHeight: 240 }}
+        >
+          <BodySilhouette view="back" />
+          {/* THREE PULSING MARKS — left shoulder back, lower lumbar,
+              right calf back. Each <g class="pebble-pulse"> drives the
+              breathe animation defined in globals.css. */}
+          <g
+            className="pebble-pulse"
+            style={{
+              transformBox: 'fill-box',
+              transformOrigin: 'center',
+              animationDelay: '0s',
+            }}
+          >
+            <path
+              d="M 74 158 C 81 156 86 160 86 166 C 86 172 80 175 73 174 C 67 173 64 168 65 162 C 66 158 70 157 74 158 Z"
+              fill="var(--pebble-terracotta)"
+              stroke="rgba(54,18,12,0.5)"
+              strokeWidth={0.5}
+            />
+          </g>
+          <g
+            className="pebble-pulse"
+            style={{
+              transformBox: 'fill-box',
+              transformOrigin: 'center',
+              animationDelay: '0.45s',
+            }}
+          >
+            <path
+              d="M 118 318 C 125 317 130 320 130 326 C 130 333 124 336 118 335 C 112 334 109 329 110 323 C 111 319 114 318 118 318 Z"
+              fill="var(--pebble-terracotta)"
+              stroke="rgba(54,18,12,0.5)"
+              strokeWidth={0.5}
+            />
+          </g>
+          <g
+            className="pebble-pulse"
+            style={{
+              transformBox: 'fill-box',
+              transformOrigin: 'center',
+              animationDelay: '0.9s',
+            }}
+          >
+            <path
+              d="M 155 546 C 162 545 167 548 167 554 C 167 561 161 564 154 563 C 149 562 146 557 147 551 C 148 547 152 546 155 546 Z"
+              fill="var(--pebble-terracotta)"
+              stroke="rgba(54,18,12,0.5)"
+              strokeWidth={0.5}
+            />
+          </g>
+        </svg>
+      </div>
+
+      <BodyDoneCTA />
+    </div>
+  );
+}
