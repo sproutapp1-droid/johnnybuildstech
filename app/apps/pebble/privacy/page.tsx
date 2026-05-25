@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 const EFFECTIVE = '17 May 2026';
-const UPDATED = '23 May 2026';
+const UPDATED = '25 May 2026';
 
 export default function PebblePrivacy() {
   return (
@@ -64,18 +64,17 @@ export default function PebblePrivacy() {
         your phone along with the app.
       </p>
 
-      <h2>Apple HealthKit and Health Connect (optional)</h2>
+      <h2>Apple HealthKit (iOS only, optional)</h2>
       <p>
-        If you turn on health data sync in Pebble&rsquo;s settings, the app
-        reads a small set of values from <strong>Apple HealthKit</strong> (on
-        iOS) or <strong>Health Connect</strong> (on Android) to add context to
-        your daily log and Brief:
+        On iOS, if you turn on health data sync in Pebble&rsquo;s settings, the
+        app reads a small set of values from <strong>Apple HealthKit</strong>{' '}
+        to add context to your daily log and Brief:
       </p>
       <ul>
         <li>sleep duration</li>
         <li>step count</li>
         <li>resting heart rate</li>
-        <li>cycle / period data, on iOS only and only if you turn on the cycle sub-toggle</li>
+        <li>cycle / period data, only if you turn on the cycle sub-toggle</li>
       </ul>
       <p>
         This data is read into Pebble&rsquo;s local database on your device. It
@@ -85,23 +84,26 @@ export default function PebblePrivacy() {
       </p>
       <p>
         If you turn on the period write-back option in Settings, Pebble writes
-        the period days you log back to HealthKit / Health Connect so other
-        health apps on your phone can see them. Nothing else is written. You
-        can turn write-back off at any time.
+        the period days you log back to HealthKit so other health apps on your
+        phone can see them. Nothing else is written. You can turn write-back
+        off at any time.
       </p>
       <p>
         You can revoke Pebble&rsquo;s HealthKit access entirely from{' '}
-        <strong>iOS Settings → Health → Data Access &amp; Devices → Pebble</strong>,
-        or Health Connect access from the <strong>Health Connect</strong> app
-        on Android, without breaking the rest of Pebble.
+        <strong>iOS Settings → Health → Data Access &amp; Devices → Pebble</strong>{' '}
+        without breaking the rest of Pebble.
       </p>
       <p>
-        Apple HealthKit and Health Connect are local APIs operated by Apple and
-        Google respectively under their own privacy policies (
-        <a href="https://www.apple.com/legal/privacy/data/en/health-app/">Apple Health</a>
-        ,{' '}
-        <a href="https://support.google.com/android/answer/12241000">Health Connect</a>
-        ). They do not transmit your health data to a server.
+        Apple HealthKit is a local API operated by Apple under their own{' '}
+        <a href="https://www.apple.com/legal/privacy/data/en/health-app/">privacy policy for the Health app</a>.
+        It does not transmit your health data to a server.
+      </p>
+      <p>
+        <strong>Android note:</strong> the Android version of Pebble does{' '}
+        <strong>not</strong> connect to any platform health store (such as
+        Health Connect). Sleep, steps, resting heart rate, and cycle data on
+        Android are manual-entry only. Nothing about your health is read from
+        or written to a third-party app on Android.
       </p>
 
       <h2>what leaves your device (and only this)</h2>
@@ -207,11 +209,12 @@ export default function PebblePrivacy() {
             <td>local-only. Pebble does not have a push notification server.</td>
           </tr>
           <tr>
-            <td>Apple HealthKit / Health Connect</td>
-            <td>optional, to read sleep, steps, resting heart rate, and (on iOS only) cycle data for context</td>
+            <td>Apple HealthKit (iOS only)</td>
+            <td>optional, to read sleep, steps, resting heart rate, and cycle data for context</td>
             <td>
               read into Pebble&rsquo;s local database on your device. Period
-              write-back is opt-in. Never transmitted off your device.
+              write-back is opt-in. Never transmitted off your device. Android
+              has no equivalent integration in Pebble.
             </td>
           </tr>
         </tbody>
