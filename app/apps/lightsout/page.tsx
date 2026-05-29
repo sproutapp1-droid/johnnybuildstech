@@ -182,7 +182,7 @@ export default function LightsOutLanding() {
               built on the four pillars of CBT-I.
             </p>
             <div id="waitlist" style={{ scrollMarginTop: 96 }}>
-              <WaitlistForm surface="hero" cta="get the launch discount" />
+              <WaitlistForm surface="hero" cta="join the waitlist" />
             </div>
             <p className="margin-note">
               no account. no cloud. no analytics, ever. your sleep data lives on your phone and only

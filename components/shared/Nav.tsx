@@ -17,8 +17,6 @@ export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
-  if (pathname?.startsWith('/apps/pebble') || pathname?.startsWith('/apps/lightsout')) return null;
-
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);
     onScroll();
@@ -39,6 +37,14 @@ export function Nav() {
       document.body.style.overflow = '';
     };
   }, [open]);
+
+  // Hide the shared warm chrome on bespoke per-app routes. Placed AFTER
+  // all hooks so the hook count stays stable across client-side
+  // navigations — an early return before the hooks throws
+  // "rendered fewer hooks than expected" and breaks the navigation.
+  if (pathname?.startsWith('/apps/pebble') || pathname?.startsWith('/apps/lightsout')) {
+    return null;
+  }
 
   const isActive = (href: string) =>
     href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(`${href}/`);
