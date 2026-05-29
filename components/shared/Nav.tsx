@@ -17,7 +17,7 @@ export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
-  if (pathname?.startsWith('/apps/pebble')) return null;
+  if (pathname?.startsWith('/apps/pebble') || pathname?.startsWith('/apps/lightsout')) return null;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);

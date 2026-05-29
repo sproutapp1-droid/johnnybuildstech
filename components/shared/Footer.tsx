@@ -6,7 +6,7 @@ import { Socials } from './Socials';
 
 export function Footer() {
   const pathname = usePathname();
-  if (pathname?.startsWith('/apps/pebble')) return null;
+  if (pathname?.startsWith('/apps/pebble') || pathname?.startsWith('/apps/lightsout')) return null;
   const year = new Date().getFullYear();
   return (
     <footer

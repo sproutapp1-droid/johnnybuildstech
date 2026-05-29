@@ -154,4 +154,26 @@ export const APPS: AppEntry[] = [
     status: 'waitlist',
     waitlistHref: '/apps/pebble#waitlist',
   },
+  {
+    slug: 'lightsout',
+    name: 'Lights Out',
+    subtitle: 'a phone curfew for sleep · CBT-I, fully offline',
+    problem:
+      "You don't have a sleep problem. You have a phone problem. It's 11pm, you meant to sleep an hour ago, and the phone is still in your hand. Willpower loses to an infinite feed every night, and screen-time limits are one tap away from off.",
+    solution:
+      'A bedtime app that shields your phone against distracting apps after dark, behind a calm screen that doesn’t have an easy off switch, then opens into a CBT-I wind-down: a breathing moon, a sleep protocol, and a screen that dims itself. By day the same gentle blocking runs your focus hours. No account, no cloud, no analytics, ever.',
+    features: [
+      'A bedtime shield that actually holds, not a one-tap screen-time limit',
+      'Nine wind-down protocols (4-7-8, NSDR, PMR, a 22-min sleep story) with a breathing moon',
+      'Daytime focus blocks and app limits from the same gentle shield',
+      'Fully offline: no account, no cloud, no analytics or crash reports, ever',
+    ],
+    audience:
+      'Revenge bedtime procrastinators · doomscrollers · shift workers · anyone who has tapped past a screen-time limit',
+    web: 'https://johnnybuildstech.com/apps/lightsout',
+    shots: [],
+    accent: '#D9C7A0',
+    status: 'waitlist',
+    waitlistHref: '/apps/lightsout#waitlist',
+  },
 ];

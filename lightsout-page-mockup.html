@@ -1,0 +1,809 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Lights Out — a phone curfew for sleep</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@1,6..72,200;1,6..72,300;1,6..72,400;1,6..72,500&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+<script async src="https://tally.so/widgets/embed.js"></script>
+<style>
+/* ─────────────────────────────────────────────────────────────
+ * Lights Out — web landing mockup, scoped under [data-lightsout]
+ * Dark cosmic nocturne. Deep navy night sky, breathing moon, sand
+ * moonlight glow, frosted glass on hairlines. Tokens mirror the
+ * app's src/lib/theme.ts. Calm motion only (8s breath), reduced
+ * motion fully honoured.
+ * ───────────────────────────────────────────────────────────── */
+
+[data-lightsout] {
+  /* palette (from theme.ts) */
+  --bg: #04050c;
+  --ink: #0E1220;
+  --raised: #141826;
+  --surface: rgba(232, 228, 218, 0.04);
+  --surface-2: rgba(232, 228, 218, 0.06);
+  --hairline: rgba(232, 228, 218, 0.08);
+  --hairline-strong: rgba(232, 228, 218, 0.14);
+  --text-high: #E8E4DA;
+  --text-med: rgba(232, 228, 218, 0.72);
+  --text-low: rgba(232, 228, 218, 0.48);
+  --moonlight: #7891C7;
+  --sand: #D9C7A0;
+  --sand-soft: rgba(217, 199, 160, 0.14);
+  --sand-glow: rgba(217, 199, 160, 0.42);
+  --lavender: #9E8FB5;
+  --danger: #D87B7B;
+  --success: #9EBE9A;
+
+  --serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --sans: 'Geist', system-ui, -apple-system, sans-serif;
+  --mono: 'Geist Mono', ui-monospace, 'SF Mono', monospace;
+
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --maxw: 1200px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+[data-lightsout] {
+  position: relative;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text-high);
+  font-family: var(--sans);
+  font-weight: 400;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+/* ── night-sky substrate: base navy + accent glows ── */
+[data-lightsout]::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+  background:
+    radial-gradient(120% 80% at 78% -8%, rgba(120, 145, 199, 0.16) 0%, transparent 46%),
+    radial-gradient(90% 60% at 12% 6%, rgba(217, 199, 160, 0.10) 0%, transparent 42%),
+    radial-gradient(140% 120% at 50% 120%, rgba(158, 143, 181, 0.10) 0%, transparent 55%),
+    var(--bg);
+  pointer-events: none;
+}
+
+/* ── starfield: two tiled layers of fine stars ── */
+.lo-stars {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background-image:
+    radial-gradient(1px 1px at 20px 30px, rgba(232,228,218,0.55), transparent),
+    radial-gradient(1px 1px at 130px 80px, rgba(232,228,218,0.40), transparent),
+    radial-gradient(1.4px 1.4px at 200px 160px, rgba(232,228,218,0.50), transparent),
+    radial-gradient(1px 1px at 300px 50px, rgba(120,145,199,0.55), transparent),
+    radial-gradient(1px 1px at 360px 220px, rgba(232,228,218,0.35), transparent),
+    radial-gradient(1.2px 1.2px at 90px 260px, rgba(217,199,160,0.45), transparent);
+  background-repeat: repeat;
+  background-size: 400px 320px;
+  opacity: 0.7;
+  mask-image: linear-gradient(to bottom, black, black 60%, transparent 96%);
+}
+.lo-stars.layer2 {
+  background-size: 560px 480px;
+  opacity: 0.45;
+  animation: lo-drift 240s linear infinite;
+}
+@keyframes lo-drift { to { background-position: 560px 480px; } }
+
+/* a few bright, slowly twinkling stars */
+.lo-twinkle {
+  position: fixed;
+  z-index: -1;
+  width: 2px; height: 2px;
+  border-radius: 50%;
+  background: var(--text-high);
+  box-shadow: 0 0 6px 1px rgba(232,228,218,0.7);
+  animation: lo-tw 6s var(--ease) infinite;
+  pointer-events: none;
+}
+@keyframes lo-tw { 0%,100%{opacity:.2;transform:scale(.8)} 50%{opacity:1;transform:scale(1.3)} }
+
+/* ── layout helpers ── */
+.lo-wrap { max-width: var(--maxw); margin: 0 auto; padding-inline: 24px; }
+@media (min-width: 768px){ .lo-wrap{ padding-inline: 64px; } }
+section { position: relative; z-index: 1; }
+
+.kicker {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--text-low);
+}
+.serif { font-family: var(--serif); font-style: italic; font-weight: 300; }
+.rule {
+  height: 1px; width: 120px;
+  background: linear-gradient(to right, var(--hairline-strong), transparent);
+  border: 0; margin: 28px 0;
+}
+
+h1, h2, h3 { font-family: var(--serif); font-style: italic; font-weight: 300; letter-spacing: -0.01em; }
+
+.accent { color: var(--sand); }
+.glow-text { text-shadow: 0 0 28px var(--sand-glow); }
+
+/* ── nav ── */
+.lo-nav {
+  position: sticky; top: 0; z-index: 50;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  background: rgba(4, 5, 12, 0.62);
+  border-bottom: 1px solid var(--hairline);
+}
+.lo-nav .row { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+.lo-brand { display: flex; align-items: center; gap: 11px; font-family: var(--serif); font-style: italic; font-size: 21px; color: var(--text-high); text-decoration: none; }
+.lo-brand b { font-weight: 400; }
+.lo-navlinks { display: none; gap: 30px; }
+.lo-navlinks a { color: var(--text-med); text-decoration: none; font-size: 14px; transition: color .3s var(--ease); }
+.lo-navlinks a:hover { color: var(--text-high); }
+@media (min-width: 900px){ .lo-navlinks{ display: flex; } }
+.pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--sans); font-size: 14px; font-weight: 500;
+  padding: 10px 20px; border-radius: 999px;
+  background: var(--sand); color: #1a160c;
+  text-decoration: none; border: 0; cursor: pointer;
+  transition: transform .4s var(--ease), box-shadow .4s var(--ease);
+  box-shadow: 0 0 0 0 var(--sand-glow);
+}
+.pill:hover { transform: translateY(-1px); box-shadow: 0 8px 30px -8px var(--sand-glow); }
+.pill.ghost { background: transparent; color: var(--text-high); border: 1px solid var(--hairline-strong); }
+.pill.ghost:hover { border-color: var(--sand); color: var(--sand); box-shadow: none; }
+
+/* ── moon ── */
+.moon-wrap { position: relative; display: inline-grid; place-items: center; }
+.moon-wrap.breathe svg { animation: lo-breath 8s ease-in-out infinite; transform-origin: center; }
+@keyframes lo-breath { 0%,100%{ transform: scale(1); filter: drop-shadow(0 0 22px var(--sand-glow)); } 50%{ transform: scale(1.035); filter: drop-shadow(0 0 40px var(--sand-glow)); } }
+
+/* ── hero ── */
+.hero { padding-top: 120px; padding-bottom: 88px; }
+@media(min-width:768px){ .hero{ padding-top: 168px; padding-bottom: 120px; } }
+.hero-grid { display: grid; gap: 56px; }
+@media(min-width:900px){ .hero-grid{ grid-template-columns: 1.08fr 1fr; align-items: center; gap: 64px; } }
+.hero h1 { font-size: 46px; line-height: 1.05; margin-top: 26px; }
+@media(min-width:768px){ .hero h1{ font-size: 74px; line-height: 0.99; } }
+@media(min-width:1100px){ .hero h1{ font-size: 86px; } }
+.hand-underline { position: relative; display: inline-block; }
+.hand-underline svg { position: absolute; left: -2%; right: 0; bottom: -0.14em; width: 104%; height: 0.34em; color: var(--sand); }
+.hero p.lede { font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 19px; line-height: 1.55; color: var(--text-med); max-width: 50ch; margin-top: 34px; }
+@media(min-width:768px){ .hero p.lede{ font-size: 21px; } }
+.margin-note { font-family: var(--serif); font-style: italic; font-size: 14.5px; color: var(--text-low); max-width: 40ch; margin-top: 40px; padding-left: 16px; border-left: 1px solid var(--hairline-strong); }
+
+/* ── waitlist form ── */
+.waitlist { margin-top: 40px; max-width: 460px; }
+.waitlist form { display: flex; gap: 10px; flex-wrap: wrap; }
+.waitlist input {
+  flex: 1 1 200px; min-width: 0;
+  background: var(--surface); border: 1px solid var(--hairline-strong);
+  border-radius: 12px; padding: 14px 16px; color: var(--text-high);
+  font-family: var(--sans); font-size: 15px; outline: none;
+  transition: border-color .3s var(--ease), background .3s var(--ease);
+}
+.waitlist input::placeholder { color: var(--text-low); }
+.waitlist input:focus { border-color: var(--sand); background: var(--surface-2); }
+.waitlist .pill { padding: 14px 22px; }
+.waitlist .ok { margin-top: 14px; font-size: 14px; color: var(--success); font-family: var(--mono); letter-spacing: .04em; display: none; }
+.waitlist.done .ok { display: block; }
+.waitlist .sub { margin-top: 12px; font-size: 12.5px; color: var(--text-low); }
+
+/* ── phone mockups ── */
+.phone {
+  position: relative;
+  width: 248px; aspect-ratio: 9 / 19.5;
+  border-radius: 38px;
+  background: linear-gradient(160deg, #0b1020, #05070f);
+  border: 1px solid var(--hairline-strong);
+  box-shadow: 0 2px 0 rgba(232,228,218,0.05) inset, 0 40px 80px -30px rgba(0,0,0,0.9), 0 0 60px -20px var(--sand-glow);
+  padding: 12px;
+  overflow: hidden;
+}
+.phone::before { /* notch */
+  content:''; position:absolute; top:12px; left:50%; transform:translateX(-50%);
+  width: 86px; height: 22px; border-radius: 999px; background:#05070f; z-index: 5;
+}
+.phone .screen { position: relative; height: 100%; border-radius: 28px; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 26px 20px; }
+.phone .screen.shield { background: radial-gradient(120% 70% at 50% 14%, rgba(120,145,199,0.16), transparent 60%), #04050c; gap: 14px; }
+.phone .screen.session { background: radial-gradient(90% 60% at 50% 42%, rgba(217,199,160,0.10), transparent 70%), #04050c; }
+.phone .screen.morning { background: linear-gradient(180deg, #1a1530 0%, #3a2740 38%, #b98a5e 100%); }
+.ph-kicker { font-family: var(--mono); font-size: 8.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-low); }
+.ph-title { font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 19px; line-height: 1.12; color: var(--text-high); }
+.ph-body { font-size: 11px; color: var(--text-med); line-height: 1.45; max-width: 22ch; }
+.ph-btn { font-size: 11px; font-weight: 500; padding: 9px 0; width: 100%; border-radius: 999px; }
+.ph-btn.primary { background: var(--sand); color: #1a160c; }
+.ph-btn.ghost { background: transparent; color: var(--text-med); border: 1px solid var(--hairline-strong); }
+.ph-btns { width: 100%; display: grid; gap: 8px; margin-top: auto; }
+
+/* breath circle (in session phone + final cta) */
+.breath { position: relative; width: 122px; aspect-ratio: 1; display: grid; place-items: center; }
+.breath .ring { position: absolute; inset: 0; border-radius: 50%; border: 1px solid var(--sand); opacity: .5; animation: lo-pulse 8s ease-in-out infinite; }
+.breath .ring:nth-child(2){ inset: 16px; opacity:.32; animation-delay: .4s; }
+.breath .ring:nth-child(3){ inset: 34px; opacity:.2; animation-delay: .8s; }
+.breath .core { width: 46px; aspect-ratio:1; border-radius:50%; background: radial-gradient(circle at 40% 35%, var(--sand), rgba(217,199,160,0.4)); box-shadow: 0 0 30px var(--sand-glow); animation: lo-breath 8s ease-in-out infinite; }
+@keyframes lo-pulse { 0%,100%{ transform: scale(.92); opacity:.18; } 50%{ transform: scale(1.06); opacity:.5; } }
+
+.hero-phones { position: relative; display: grid; place-items: center; min-height: 470px; }
+.hero-phones .phone:nth-child(1){ transform: rotate(-5deg) translate(-34px, 8px); z-index: 1; }
+.hero-phones .phone:nth-child(2){ transform: rotate(4deg) translate(40px, -14px); z-index: 2; }
+.float { animation: lo-float 9s ease-in-out infinite; }
+.float.b { animation-delay: 1.2s; }
+@keyframes lo-float { 0%,100%{ translate: 0 0; } 50%{ translate: 0 -12px; } }
+
+/* ── marquee ── */
+.marq-sec { border-block: 1px solid var(--hairline); padding-block: 14px; }
+.marq-mask { overflow: hidden; -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent); mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent); margin-top: 18px; }
+.marq { display: flex; width: max-content; animation: lo-marq 46s linear infinite; }
+.marq:hover { animation-play-state: paused; }
+.marq ul { display: flex; gap: 40px; padding-right: 40px; align-items: baseline; list-style: none; }
+.marq li { font-family: var(--serif); font-style: italic; font-size: 24px; color: var(--text-med); white-space: nowrap; }
+@media(min-width:768px){ .marq li{ font-size: 30px; } }
+.marq .dot { color: var(--sand); opacity: .55; font-size: 16px; }
+@keyframes lo-marq { to { transform: translateX(-50%); } }
+
+/* ── generic section ── */
+.sec { padding-block: 92px; }
+@media(min-width:768px){ .sec{ padding-block: 132px; } }
+.sec h2 { font-size: 34px; line-height: 1.07; margin-top: 24px; }
+@media(min-width:768px){ .sec h2{ font-size: 56px; line-height: 1.03; } }
+.two { display: grid; gap: 52px; }
+@media(min-width:900px){ .two{ grid-template-columns: 1.1fr 1fr; align-items: center; gap: 72px; } }
+.two.rev .col-art { order: -1; }
+.col-art { display: grid; place-items: center; }
+.lede2 { font-family: var(--serif); font-style: italic; font-size: 18px; line-height: 1.6; color: var(--text-med); max-width: 46ch; margin-top: 28px; }
+.handnote { font-family: var(--serif); font-style: italic; font-size: 23px; line-height: 1.25; color: var(--sand); max-width: 26ch; margin-top: 26px; transform: rotate(-0.5deg); }
+@media(min-width:768px){ .handnote{ font-size: 28px; } }
+
+/* glass card */
+.glass { background: var(--surface); border: 1px solid var(--hairline); border-radius: 18px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+
+/* what it does grid */
+.grid2 { display: grid; gap: 36px 56px; margin-top: 56px; }
+@media(min-width:768px){ .grid2{ grid-template-columns: 1fr 1fr; gap: 56px; } }
+.feat .n { font-family: var(--mono); font-size: 12px; letter-spacing: .2em; color: var(--sand); }
+.feat h3 { font-size: 25px; margin-top: 6px; line-height: 1.15; }
+@media(min-width:768px){ .feat h3{ font-size: 30px; } }
+.feat p { margin-top: 14px; font-size: 16px; color: var(--text-med); max-width: 42ch; line-height: 1.6; }
+
+/* protocols chips */
+.protos { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+.proto { font-size: 14px; color: var(--text-med); padding: 9px 16px; border-radius: 999px; border: 1px solid var(--hairline); background: var(--surface); }
+.proto b { color: var(--text-high); font-weight: 500; }
+
+/* how it works */
+.steps { display: grid; gap: 40px; margin-top: 60px; }
+@media(min-width:768px){ .steps{ grid-template-columns: repeat(3,1fr); gap: 36px; } }
+.step .card { padding: 26px; border-radius: 18px; }
+.step .n { font-family: var(--mono); font-size: 12px; letter-spacing: .2em; color: var(--sand); }
+.step h3 { font-size: 22px; margin-top: 14px; }
+.step p { margin-top: 12px; font-size: 15px; color: var(--text-med); line-height: 1.55; }
+.step .ico { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: var(--sand-soft); margin-bottom: 18px; }
+
+/* privacy promise */
+.promise { max-width: 820px; margin: 0 auto; padding: 44px; border-radius: 22px; }
+@media(min-width:768px){ .promise{ padding: 60px; } }
+.promise p.big { font-family: var(--serif); font-style: italic; font-size: 24px; line-height: 1.5; color: var(--text-high); margin-top: 22px; }
+@media(min-width:768px){ .promise p.big{ font-size: 29px; line-height: 1.42; } }
+.promise p.small { font-size: 15px; color: var(--text-low); font-style: italic; font-family: var(--serif); margin-top: 18px; }
+.promise a { color: var(--sand); text-decoration: underline; text-underline-offset: 3px; }
+
+/* not-list */
+.notlist { display: grid; gap: 16px; margin-top: 48px; }
+@media(min-width:768px){ .notlist{ grid-template-columns: 1fr 1fr; gap: 14px 56px; } }
+.notlist li { display: flex; gap: 16px; align-items: flex-start; font-size: 18px; color: var(--text-med); list-style: none; }
+.notlist .x { color: var(--sand); font-family: var(--serif); font-style: italic; font-size: 22px; line-height: 1; margin-top: 2px; flex: none; }
+
+/* voices */
+.voices { display: grid; gap: 44px; margin-top: 56px; }
+.voice { display: grid; gap: 18px; }
+@media(min-width:768px){ .voice{ grid-template-columns: 1.1fr 1fr; align-items: baseline; gap: 56px; } }
+.voice .q { font-family: var(--serif); font-style: italic; font-size: 27px; line-height: 1.25; color: var(--text-high); }
+@media(min-width:768px){ .voice .q{ font-size: 33px; } }
+.voice .a { font-size: 16px; color: var(--text-med); line-height: 1.6; font-family: var(--serif); font-style: italic; }
+
+/* pricing */
+.price-grid { display: grid; gap: 36px; margin-top: 12px; }
+@media(min-width:768px){ .price-grid{ grid-template-columns: 1fr 1fr; align-items: end; gap: 64px; } }
+.price-big { font-family: var(--serif); font-style: italic; font-size: 74px; line-height: .9; color: var(--sand); text-shadow: 0 0 40px var(--sand-glow); }
+@media(min-width:768px){ .price-big{ font-size: 104px; } }
+
+/* faq */
+.faq { max-width: 880px; margin-top: 44px; }
+.faq details { border-bottom: 1px solid var(--hairline); padding: 22px 4px; }
+.faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; gap: 24px; align-items: baseline; font-family: var(--serif); font-style: italic; font-size: 21px; color: var(--text-high); }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary .plus { font-family: var(--mono); color: var(--sand); font-style: normal; font-size: 20px; transition: transform .4s var(--ease); flex: none; }
+.faq details[open] summary .plus { transform: rotate(45deg); }
+.faq p { margin-top: 16px; font-size: 16px; color: var(--text-med); line-height: 1.65; max-width: 66ch; }
+
+/* final cta */
+.final { text-align: center; padding-block: 116px; }
+@media(min-width:768px){ .final{ padding-block: 156px; } }
+.final h2 { font-size: 42px; line-height: 1.04; max-width: 18ch; margin: 24px auto 0; }
+@media(min-width:768px){ .final h2{ font-size: 70px; } }
+
+/* footer */
+.lo-foot { border-top: 1px solid var(--hairline); padding-block: 44px; }
+.lo-foot .row { display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between; align-items: center; }
+.lo-foot a { color: var(--text-low); text-decoration: none; font-size: 13.5px; margin-right: 22px; transition: color .3s var(--ease); }
+.lo-foot a:hover { color: var(--text-high); }
+.lo-foot .copy { font-size: 12.5px; color: var(--text-low); font-family: var(--mono); letter-spacing: .04em; }
+
+/* scroll reveal */
+.reveal { opacity: 0; transform: translateY(22px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
+.reveal.in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .reveal { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body data-lightsout>
+<div class="lo-stars" aria-hidden="true"></div>
+<div class="lo-stars layer2" aria-hidden="true"></div>
+<span class="lo-twinkle" style="top:14%;left:22%"></span>
+<span class="lo-twinkle" style="top:24%;left:74%;animation-delay:1.4s"></span>
+<span class="lo-twinkle" style="top:62%;left:12%;animation-delay:2.7s"></span>
+<span class="lo-twinkle" style="top:78%;left:84%;animation-delay:.7s"></span>
+<span class="lo-twinkle" style="top:40%;left:48%;animation-delay:3.6s"></span>
+
+<!-- crescent moon used in nav -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <radialGradient id="mg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#D9C7A0" stop-opacity="0.32"/>
+      <stop offset="60%" stop-color="#7891C7" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#D9C7A0" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="ms" cx="40%" cy="40%" r="50%">
+      <stop offset="0%" stop-color="#D9C7A0" stop-opacity="1"/>
+      <stop offset="80%" stop-color="#D9C7A0" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#7891C7" stop-opacity="0.55"/>
+    </radialGradient>
+  </defs>
+</svg>
+
+<!-- ───────── NAV ───────── -->
+<nav class="lo-nav">
+  <div class="lo-wrap row">
+    <a class="lo-brand" href="#top">
+      <svg width="26" height="26" viewBox="0 0 140 140" fill="none" aria-hidden="true">
+        <circle cx="70" cy="70" r="66" fill="url(#mg)"/>
+        <path d="M 86 28 C 64 32, 48 50, 48 72 C 48 94, 64 110, 86 114 C 70 116, 50 112, 38 96 C 26 80, 26 60, 38 44 C 50 28, 70 26, 86 28 Z" fill="url(#ms)"/>
+      </svg>
+      <span>lights&nbsp;<b>out</b></span>
+    </a>
+    <div class="lo-navlinks">
+      <a href="#how">how it works</a>
+      <a href="#features">features</a>
+      <a href="#privacy">privacy</a>
+      <a href="#pricing">pricing</a>
+      <a href="#faq">faq</a>
+    </div>
+    <a class="pill" href="#waitlist">join the waitlist</a>
+  </div>
+</nav>
+
+<!-- ───────── HERO ───────── -->
+<section id="top" class="hero">
+  <div class="lo-wrap hero-grid">
+    <div class="reveal in">
+      <p class="kicker">a phone curfew for sleep · launching 2026</p>
+      <h1>
+        your phone is the
+        <br />
+        reason you&rsquo;re
+        <span class="hand-underline">still awake
+          <svg viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true"><path d="M3 14 C 70 6, 150 6, 222 11 C 255 13, 280 11, 297 6" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+        </span>
+        <br />
+        <span class="accent glow-text">so we turn it off.</span>
+      </h1>
+      <p class="lede">
+        lights out is a bedtime app that shields your phone after dark and walks you
+        into sleep with a calm wind-down. by day, the same gentle blocking runs your
+        focus hours. built on the four pillars of CBT-I.
+      </p>
+
+      <div id="waitlist" class="waitlist" style="scroll-margin-top:96px">
+        <form onsubmit="return loSignup(event)">
+          <input type="email" required placeholder="you@email.com" aria-label="email" />
+          <button class="pill" type="submit">get the launch discount</button>
+        </form>
+        <p class="ok">you&rsquo;re on the list. one quiet email when it goes live. that&rsquo;s all.</p>
+        <p class="sub">one email at launch. no newsletter, no drip. then we delete your address.</p>
+      </div>
+
+      <p class="margin-note">no account. no cloud. no analytics, ever. your sleep data lives on your phone and only your phone.</p>
+    </div>
+
+    <div class="hero-phones reveal in">
+      <!-- shield phone -->
+      <div class="phone float">
+        <div class="screen shield">
+          <div class="moon-wrap breathe" style="margin-bottom:4px">
+            <svg width="76" height="76" viewBox="0 0 140 140" fill="none" aria-hidden="true">
+              <circle cx="70" cy="70" r="66" fill="url(#mg)"/>
+              <circle cx="70" cy="70" r="44" fill="url(#ms)"/>
+              <circle cx="58" cy="62" r="4" fill="#D9C7A0" fill-opacity="0.16"/>
+              <circle cx="80" cy="78" r="2.5" fill="#D9C7A0" fill-opacity="0.14"/>
+            </svg>
+          </div>
+          <div class="ph-title">your phone, but only<br/>for sleeping.</div>
+          <div class="ph-body">lights out ends at 7:00 am. you&rsquo;ve got this.</div>
+          <div class="ph-btns">
+            <div class="ph-btn primary">close</div>
+            <div class="ph-btn ghost">request 10 min</div>
+          </div>
+        </div>
+      </div>
+      <!-- session phone -->
+      <div class="phone float b">
+        <div class="screen session">
+          <p class="ph-kicker">wind-down · long exhale</p>
+          <div class="breath" style="margin:18px 0">
+            <span class="ring"></span><span class="ring"></span><span class="ring"></span>
+            <span class="core"></span>
+          </div>
+          <div class="ph-title" style="font-size:16px">breathe out, slowly.</div>
+          <div class="ph-body" style="margin-top:8px">4 in · 7 hold · 8 out</div>
+          <div class="ph-kicker" style="margin-top:auto">06:32 left</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── MARQUEE ───────── -->
+<section class="marq-sec reveal">
+  <div class="lo-wrap"><p class="kicker">made for the nights that get away from you</p></div>
+  <div class="marq-mask" aria-label="what lights out is for">
+    <div class="marq">
+      <ul>
+        <li>1am doomscrolling<span class="dot">·</span></li>
+        <li>just one more video<span class="dot">·</span></li>
+        <li>revenge bedtime procrastination<span class="dot">·</span></li>
+        <li>tiktok holes<span class="dot">·</span></li>
+        <li>checking work at midnight<span class="dot">·</span></li>
+        <li>the 3am phone reach<span class="dot">·</span></li>
+        <li>blue light insomnia<span class="dot">·</span></li>
+      </ul>
+      <ul aria-hidden="true">
+        <li>1am doomscrolling<span class="dot">·</span></li>
+        <li>just one more video<span class="dot">·</span></li>
+        <li>revenge bedtime procrastination<span class="dot">·</span></li>
+        <li>tiktok holes<span class="dot">·</span></li>
+        <li>checking work at midnight<span class="dot">·</span></li>
+        <li>the 3am phone reach<span class="dot">·</span></li>
+        <li>blue light insomnia<span class="dot">·</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── PROBLEM ───────── -->
+<section class="sec reveal">
+  <div class="lo-wrap two">
+    <div>
+      <p class="kicker">the problem</p>
+      <h2>you don&rsquo;t have a sleep problem. you have a phone problem.</h2>
+      <hr class="rule" />
+      <p class="handnote">it&rsquo;s 11pm. you meant to sleep an hour ago. the phone is still in your hand.</p>
+      <p class="lede2">
+        willpower loses to an infinite feed every single night. the apps are built to
+        keep you scrolling, and &ldquo;i&rsquo;ll stop after this one&rdquo; is a promise your
+        tired brain can&rsquo;t keep.
+      </p>
+      <p class="lede2" style="color:var(--text-low)">
+        screen-time limits are a tap away from off. you need a curfew that holds, paired
+        with something better to do than stare at a blocked screen.
+      </p>
+    </div>
+    <div class="col-art">
+      <div class="phone float">
+        <div class="screen shield">
+          <p class="ph-kicker" style="color:var(--danger)">00:58 · still scrolling</p>
+          <div style="display:flex;flex-direction:column;gap:9px;width:100%;margin-top:14px">
+            <div class="glass" style="height:34px;border-radius:10px"></div>
+            <div class="glass" style="height:34px;border-radius:10px"></div>
+            <div class="glass" style="height:34px;border-radius:10px"></div>
+            <div class="glass" style="height:34px;border-radius:10px"></div>
+            <div class="glass" style="height:34px;border-radius:10px"></div>
+          </div>
+          <div class="ph-body" style="margin-top:auto">one more, then sleep. (you said that 40 minutes ago.)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── THE SHIELD (peak) ───────── -->
+<section id="features" class="sec reveal" style="scroll-margin-top:80px">
+  <div class="lo-wrap two rev">
+    <div>
+      <p class="kicker" style="color:var(--sand)">the shield</p>
+      <h2>this is what your phone shows at bedtime.</h2>
+      <hr class="rule" />
+      <p class="lede2">
+        when your curfew starts, the distracting apps go quiet behind a calm shield. no
+        feed, no autoplay, no rabbit hole. just the moon, the time you&rsquo;ll be free, and
+        a breath if you need one.
+      </p>
+      <ul class="notlist" style="grid-template-columns:1fr;margin-top:28px;gap:12px">
+        <li><span class="x">✦</span><span>blocks the apps you choose, on a schedule you set</span></li>
+        <li><span class="x">✦</span><span>night-allowed apps (kindle, alarms, calls) always get through</span></li>
+        <li><span class="x">✦</span><span>need a moment? &ldquo;request 10 min&rdquo; after five slow breaths</span></li>
+        <li><span class="x">✦</span><span>by day, the same shield runs your focus blocks</span></li>
+      </ul>
+    </div>
+    <div class="col-art">
+      <div class="phone float">
+        <div class="screen shield">
+          <div class="moon-wrap breathe" style="margin-bottom:6px">
+            <svg width="92" height="92" viewBox="0 0 140 140" fill="none" aria-hidden="true">
+              <circle cx="70" cy="70" r="66" fill="url(#mg)"/>
+              <circle cx="70" cy="70" r="44" fill="url(#ms)"/>
+              <circle cx="58" cy="62" r="4" fill="#D9C7A0" fill-opacity="0.16"/>
+              <circle cx="80" cy="78" r="2.5" fill="#D9C7A0" fill-opacity="0.14"/>
+              <circle cx="84" cy="58" r="2" fill="#D9C7A0" fill-opacity="0.12"/>
+            </svg>
+          </div>
+          <div class="ph-title">your phone, but only<br/>for sleeping.</div>
+          <div class="ph-body">lights out ends at 7:00 am. you&rsquo;ve got this.</div>
+          <div class="ph-btns">
+            <div class="ph-btn primary">close</div>
+            <div class="ph-btn ghost">request 10 min</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── WHAT IT DOES ───────── -->
+<section class="sec reveal">
+  <div class="lo-wrap">
+    <p class="kicker">what it does</p>
+    <h2 style="max-width:24ch">four quiet things, done well.</h2>
+    <hr class="rule" />
+    <ul class="grid2" style="list-style:none">
+      <li class="feat"><span class="n">01</span><h3>a curfew that holds</h3><p>pick your bedtime and the apps to put away. when the lights go out, they stay out, behind a shield that doesn&rsquo;t have an easy off switch.</p></li>
+      <li class="feat"><span class="n">02</span><h3>a wind-down worth opening</h3><p>nine sleep protocols, from 4-7-8 breathing to a 22-minute sleep story. a breathing moon to follow, screen dimming itself as you drift.</p></li>
+      <li class="feat"><span class="n">03</span><h3>focus by daylight</h3><p>the same gentle blocking runs your work hours and app limits. one tool for the whole day, not another thing to manage.</p></li>
+      <li class="feat"><span class="n">04</span><h3>truly yours, truly offline</h3><p>no account. no cloud. no analytics, no crash reports, no trackers. your nights live on your phone. uninstall and they&rsquo;re gone.</p></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ───────── WIND-DOWN ───────── -->
+<section id="how" class="sec reveal" style="scroll-margin-top:80px">
+  <div class="lo-wrap two">
+    <div>
+      <p class="kicker">the wind-down</p>
+      <h2>blocking is the easy half. this is the rest.</h2>
+      <hr class="rule" />
+      <p class="lede2">
+        a blocked phone you just stare at isn&rsquo;t sleep. so every curfew opens into a
+        wind-down session: a protocol with real research behind it, a breathing moon to
+        pace you, and a screen that quietly dims itself.
+      </p>
+      <div class="protos">
+        <span class="proto"><b>long exhale</b> · 4-7-8</span>
+        <span class="proto"><b>tucked in</b> · sleep story</span>
+        <span class="proto"><b>deep rest</b> · NSDR</span>
+        <span class="proto"><b>shuffle</b> · cognitive</span>
+        <span class="proto"><b>slow release</b> · PMR</span>
+        <span class="proto"><b>two-minute drop</b></span>
+      </div>
+      <p class="handnote" style="margin-top:30px">no streaks to keep. no badge for showing up. just a softer way down.</p>
+    </div>
+    <div class="col-art">
+      <div class="phone float">
+        <div class="screen session">
+          <p class="ph-kicker">wind-down · deep rest</p>
+          <div class="breath" style="margin:24px 0;width:150px">
+            <span class="ring"></span><span class="ring"></span><span class="ring"></span>
+            <span class="core" style="width:54px"></span>
+          </div>
+          <div class="ph-title" style="font-size:17px">let your body get heavy.</div>
+          <div class="ph-body" style="margin-top:10px">non-sleep deep rest · 15 min</div>
+          <div class="ph-kicker" style="margin-top:auto">screen dimming…</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── HOW IT WORKS (3) ───────── -->
+<section class="sec reveal">
+  <div class="lo-wrap">
+    <p class="kicker">a night with lights out</p>
+    <h2 style="max-width:22ch">set it once. then just go to bed.</h2>
+    <hr class="rule" />
+    <div class="steps">
+      <div class="step"><div class="card glass">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D9C7A0" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2" stroke-linecap="round"/></svg></div>
+        <p class="n">01</p><h3>set your curfew</h3><p>choose a bedtime, the days, and which apps to put away. takes about a minute, once.</p>
+      </div></div>
+      <div class="step"><div class="card glass">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D9C7A0" stroke-width="1.4"><path d="M20 13a8 8 0 1 1-8.5-8 6 6 0 0 0 8.5 8Z" stroke-linejoin="round"/></svg></div>
+        <p class="n">02</p><h3>lights out</h3><p>at bedtime the shield lifts. open the wind-down, follow the moon, let the screen dim itself.</p>
+      </div></div>
+      <div class="step"><div class="card glass">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D9C7A0" stroke-width="1.4"><circle cx="12" cy="13" r="4"/><path d="M12 3v2M12 21v-1M4 13H2M22 13h-2M6 7 5 6M18 7l1-1" stroke-linecap="round"/></svg></div>
+        <p class="n">03</p><h3>good morning</h3><p>your phone unlocks with the dawn and tells you how long the curfew held. log the night if you like.</p>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── PRIVACY PROMISE ───────── -->
+<section id="privacy" class="sec reveal" style="scroll-margin-top:80px">
+  <div class="lo-wrap">
+    <div class="promise glass">
+      <p class="kicker" style="color:var(--sand)">a promise, before anything else</p>
+      <p class="big">
+        your sleep stays on this phone. there is no lights out server to send it to.
+        <span class="accent">that&rsquo;s the whole deal.</span>
+      </p>
+      <p class="small">no account. no cloud. no analytics. no crash reports. no third-party trackers. the only thing that ever leaves your phone is your purchase receipt, to the app store, so we know your subscription is active. that is the entire list.</p>
+      <p class="small">(full details in the <a href="/apps/lightsout/privacy">privacy policy</a>.)</p>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── WHAT IT'S NOT ───────── -->
+<section class="sec reveal">
+  <div class="lo-wrap">
+    <p class="kicker">what lights out is not</p>
+    <h2 style="max-width:24ch">a list of things we left out.</h2>
+    <hr class="rule" />
+    <ul class="notlist">
+      <li><span class="x">✕</span><span>no shame. no &ldquo;you failed your goal last night&rdquo;.</span></li>
+      <li><span class="x">✕</span><span>no streaks to defend, no badges to chase.</span></li>
+      <li><span class="x">✕</span><span>no account, no email, no password, no cloud.</span></li>
+      <li><span class="x">✕</span><span>no analytics, no crash reports, no trackers.</span></li>
+      <li><span class="x">✕</span><span>no ads, ever. you&rsquo;re the customer, not the product.</span></li>
+      <li><span class="x">✕</span><span>no harsh lock you&rsquo;ll come to resent. it bends when you truly need it.</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ───────── VOICES ───────── -->
+<section class="sec reveal">
+  <div class="lo-wrap">
+    <p class="kicker">the conversations this app is built around</p>
+    <hr class="rule" />
+    <div class="voices">
+      <div class="voice">
+        <p class="q">&ldquo;i know i should put it down. i just don&rsquo;t.&rdquo;</p>
+        <p class="a">so the shield decides for you. at bedtime the apps go quiet, no willpower required.</p>
+      </div>
+      <div class="voice">
+        <p class="q">&ldquo;a blocked phone just makes me anxious and bored.&rdquo;</p>
+        <p class="a">so every curfew opens into a wind-down. a breathing moon, a sleep protocol, a screen that dims itself.</p>
+      </div>
+      <div class="voice">
+        <p class="q">&ldquo;i don&rsquo;t want another app harvesting my data.&rdquo;</p>
+        <p class="a">so there is no server. nothing about your nights ever leaves your phone. we couldn&rsquo;t sell it if we wanted to.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── PRICING ───────── -->
+<section id="pricing" class="sec reveal" style="scroll-margin-top:80px">
+  <div class="lo-wrap price-grid">
+    <div>
+      <p class="kicker">pricing</p>
+      <h2 style="max-width:18ch">one price. a real free trial.</h2>
+      <hr class="rule" />
+      <p class="lede2">
+        yearly with a 3-day free trial, or pay once and own it for life. waitlist members
+        get the launch discount and a heads-up the day it lands.
+      </p>
+    </div>
+    <div>
+      <p class="price-big">$29.99<span style="font-size:.26em;font-style:normal;font-family:var(--mono);color:var(--text-low)"> /yr</span></p>
+      <p class="lede2" style="margin-top:18px">3-day free trial. or $59.99 once, forever. monthly also available. indicative launch pricing.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── FAQ ───────── -->
+<section id="faq" class="sec reveal" style="scroll-margin-top:80px">
+  <div class="lo-wrap">
+    <p class="kicker">questions you might be asking</p>
+    <hr class="rule" />
+    <div class="faq">
+      <details><summary>who is lights out for? <span class="plus">+</span></summary>
+        <p>anyone whose phone is the last thing they touch at night and the reason they&rsquo;re still awake. people doing revenge bedtime procrastination, doomscrollers, shift workers, and anyone who&rsquo;s tried screen-time limits and tapped straight past them. it doubles as a daytime focus blocker too.</p></details>
+      <details><summary>how is this different from a screen-time limit or opal? <span class="plus">+</span></summary>
+        <p>two things. first, the shield is built to actually hold at night, not to be dismissed in one tap. second, lights out is a bedtime app first: every curfew opens into a real wind-down, built on CBT-I, not just a blocked screen. and it&rsquo;s fully offline, with no account.</p></details>
+      <details><summary>what&rsquo;s CBT-I? <span class="plus">+</span></summary>
+        <p>cognitive behavioural therapy for insomnia, the first-line, evidence-based treatment for sleeplessness. lights out is built on its four pillars: stimulus control, a consistent wind-down, a kinder relationship with the bed, and gentle daytime structure. there&rsquo;s a short learn section in the app for each.</p></details>
+      <details><summary>is my data really only on my phone? <span class="plus">+</span></summary>
+        <p>yes. there is no lights out server. your schedules, your sleep logs, your journal, all of it lives in a local database on your phone. there&rsquo;s no cloud because there is no cloud, and no analytics or crash reporting either. the only thing that leaves your phone is your purchase receipt, to the app store. that&rsquo;s the entire list.</p></details>
+      <details><summary>will there be iphone and android? <span class="plus">+</span></summary>
+        <p>yes, both at launch. the blocking uses each platform&rsquo;s native screen-time controls, so it works the same on either.</p></details>
+      <details><summary>how much will it cost? <span class="plus">+</span></summary>
+        <p>yearly at $29.99 with a 3-day free trial, a lifetime unlock at $59.99 paid once, or a monthly option. waitlist members get the launch discount. pricing is indicative until launch.</p></details>
+      <details><summary>when does it launch? <span class="plus">+</span></summary>
+        <p>app store and play store submission is in 2026. waitlist members get one quiet email when it goes live. no newsletter, no drip sequence. one email, then your address is removed unless you ask otherwise.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── FINAL CTA ───────── -->
+<section class="final reveal">
+  <div class="lo-wrap">
+    <p class="kicker">one last thing</p>
+    <h2 style="margin-inline:auto">the best night&rsquo;s sleep starts <span class="accent glow-text">by putting it down.</span></h2>
+    <div class="waitlist" style="margin:40px auto 0">
+      <form onsubmit="return loSignup(event)">
+        <input type="email" required placeholder="you@email.com" aria-label="email" />
+        <button class="pill" type="submit">join the waitlist</button>
+      </form>
+      <p class="ok">you&rsquo;re on the list. sleep well.</p>
+    </div>
+    <div class="moon-wrap breathe" style="margin:56px auto 0">
+      <svg width="96" height="96" viewBox="0 0 140 140" fill="none" aria-hidden="true">
+        <circle cx="70" cy="70" r="66" fill="url(#mg)"/>
+        <path d="M 86 28 C 64 32, 48 50, 48 72 C 48 94, 64 110, 86 114 C 70 116, 50 112, 38 96 C 26 80, 26 60, 38 44 C 50 28, 70 26, 86 28 Z" fill="url(#ms)"/>
+        <circle cx="46" cy="64" r="2.5" fill="#D9C7A0" fill-opacity="0.18"/>
+        <circle cx="54" cy="84" r="1.6" fill="#D9C7A0" fill-opacity="0.14"/>
+      </svg>
+    </div>
+    <p class="serif" style="font-size:18px;color:var(--text-low);margin-top:18px">good night.</p>
+  </div>
+</section>
+
+<!-- ───────── FOOTER ───────── -->
+<footer class="lo-foot">
+  <div class="lo-wrap row">
+    <div>
+      <a class="lo-brand" href="#top" style="font-size:18px;margin-bottom:10px">
+        <svg width="22" height="22" viewBox="0 0 140 140" fill="none" aria-hidden="true"><circle cx="70" cy="70" r="66" fill="url(#mg)"/><path d="M 86 28 C 64 32, 48 50, 48 72 C 48 94, 64 110, 86 114 C 70 116, 50 112, 38 96 C 26 80, 26 60, 38 44 C 50 28, 70 26, 86 28 Z" fill="url(#ms)"/></svg>
+        <span>lights&nbsp;<b>out</b></span>
+      </a>
+      <div style="margin-top:6px">
+        <a href="/apps/lightsout/privacy">privacy</a>
+        <a href="/apps/lightsout/support">support</a>
+        <a href="/apps">more apps</a>
+      </div>
+    </div>
+    <p class="copy">a johnnybuildstech app · © 2026</p>
+  </div>
+</footer>
+
+<script>
+function loSignup(e){
+  e.preventDefault();
+  e.target.closest('.waitlist').classList.add('done');
+  e.target.reset();
+  return false;
+}
+// scroll reveal
+(function(){
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal:not(.in)').forEach(function(el){ io.observe(el); });
+})();
+</script>
+</body>
+</html>
