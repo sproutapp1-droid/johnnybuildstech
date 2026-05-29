@@ -525,7 +525,7 @@ function PhoneTray({ app }: { app: AppEntry }) {
         className="mt-3 text-right font-mono text-[10px] uppercase tracking-[0.22em]"
         style={{ color: 'var(--color-gold-dim)' }}
       >
-        {app.name.toLowerCase()} · in the wild
+        {app.name.toLowerCase()} · {app.status === 'waitlist' ? 'mockup' : 'in the wild'}
       </div>
     </div>
   );

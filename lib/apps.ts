@@ -171,7 +171,7 @@ export const APPS: AppEntry[] = [
     audience:
       'Revenge bedtime procrastinators · doomscrollers · shift workers · anyone who has tapped past a screen-time limit',
     web: 'https://johnnybuildstech.com/apps/lightsout',
-    shots: [],
+    shots: ['/apps/lightsout/01.png', '/apps/lightsout/02.png', '/apps/lightsout/03.png'],
     accent: '#D9C7A0',
     status: 'waitlist',
     waitlistHref: '/apps/lightsout#waitlist',

@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@1,6..72,300;1,6..72,400&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg:#04050c; --sand:#D9C7A0; --sand-glow:rgba(217,199,160,0.42);
+    --moonlight:#7891C7; --high:#E8E4DA; --med:rgba(232,228,218,0.72); --low:rgba(232,228,218,0.48);
+    --serif:'Newsreader',Georgia,serif; --sans:'Geist',system-ui,sans-serif; --mono:'Geist Mono',monospace;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#222; display:flex; gap:24px; padding:24px; flex-wrap:wrap; }
+  .screen { width:430px; height:932px; position:relative; overflow:hidden; font-family:var(--sans);
+    color:var(--high); display:flex; flex-direction:column; align-items:center; }
+  /* status bar */
+  .status { width:100%; display:flex; justify-content:space-between; align-items:center;
+    padding:18px 34px 0; font-family:var(--mono); font-size:15px; font-weight:500; color:var(--high); }
+  .status .ico { display:flex; gap:6px; align-items:center; opacity:.9; }
+  .status .ico span { display:inline-block; }
+  .bars { width:18px; height:11px; background:
+      linear-gradient(to right, currentColor 0 3px, transparent 3px 4px, currentColor 4px 7px, transparent 7px 8px, currentColor 8px 11px, transparent 11px 12px, currentColor 12px 18px); border-radius:1px; }
+  .batt { width:24px; height:12px; border:1.5px solid currentColor; border-radius:3px; position:relative; }
+  .batt::after { content:''; position:absolute; inset:2px; right:6px; background:currentColor; border-radius:1px; }
+  .batt::before { content:''; position:absolute; right:-3px; top:3px; width:2px; height:6px; background:currentColor; border-radius:0 1px 1px 0; }
+
+  .kick { font-family:var(--mono); font-size:13px; letter-spacing:.22em; text-transform:uppercase; color:var(--low); }
+  .title { font-family:var(--serif); font-style:italic; font-weight:300; line-height:1.1; }
+
+  /* SHIELD */
+  #s1 { background:radial-gradient(120% 65% at 50% 18%, rgba(120,145,199,0.18), transparent 60%), var(--bg); }
+  #s1 .body-wrap { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:0 46px; gap:26px; }
+  #s1 .moon { filter:drop-shadow(0 0 60px var(--sand-glow)); }
+  #s1 .title { font-size:40px; color:var(--high); }
+  #s1 .sub { font-size:18px; color:var(--med); line-height:1.5; max-width:26ch; }
+  #s1 .btns { width:100%; padding:0 34px 64px; display:flex; flex-direction:column; gap:14px; }
+  .btn { width:100%; text-align:center; padding:18px 0; border-radius:999px; font-size:18px; font-weight:500; }
+  .btn.primary { background:var(--sand); color:#1a160c; }
+  .btn.ghost { background:transparent; color:var(--med); border:1px solid rgba(232,228,218,0.18); }
+
+  /* SESSION */
+  #s2 { background:radial-gradient(85% 55% at 50% 44%, rgba(217,199,160,0.12), transparent 70%), var(--bg); }
+  #s2 .body-wrap { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; gap:30px; padding:0 40px; }
+  #s2 .breath { position:relative; width:260px; height:260px; display:grid; place-items:center; }
+  #s2 .ring { position:absolute; border-radius:50%; border:1.5px solid var(--sand); }
+  #s2 .ring.r1 { inset:0; opacity:.4; } #s2 .ring.r2 { inset:34px; opacity:.28; } #s2 .ring.r3 { inset:72px; opacity:.18; }
+  #s2 .core { width:104px; height:104px; border-radius:50%; background:radial-gradient(circle at 40% 35%, var(--sand), rgba(217,199,160,0.4)); box-shadow:0 0 60px var(--sand-glow); }
+  #s2 .title { font-size:30px; color:var(--high); }
+  #s2 .cue { font-size:17px; color:var(--med); letter-spacing:.02em; }
+  #s2 .timer { font-family:var(--mono); font-size:14px; letter-spacing:.2em; color:var(--low); text-transform:uppercase; padding-bottom:64px; }
+
+  /* MORNING */
+  #s3 { background:linear-gradient(180deg, #14112a 0%, #2c2140 30%, #7a5a6e 64%, #d9a06a 100%); }
+  #s3 .body-wrap { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; gap:22px; padding:0 44px; }
+  #s3 .sun { width:120px; height:120px; border-radius:50%; background:radial-gradient(circle at 50% 50%, #ffe7b8, #f3b76b 70%, rgba(243,183,107,0.2)); box-shadow:0 0 80px rgba(245,200,130,0.6); margin-bottom:10px; }
+  #s3 .title { font-size:48px; color:#fdf3e6; }
+  #s3 .dur { font-size:20px; color:rgba(253,243,230,0.86); line-height:1.5; max-width:24ch; }
+  #s3 .dur b { color:#fff; font-weight:500; }
+  #s3 .btns { width:100%; padding:0 34px 60px; display:flex; flex-direction:column; gap:12px; align-items:center; }
+  #s3 .btn.primary { background:#1c1630; color:#fdf3e6; }
+  #s3 .link { font-family:var(--serif); font-style:italic; font-size:16px; color:rgba(28,22,48,0.7); }
+</style>
+</head>
+<body>
+  <!-- 01 · SHIELD -->
+  <div class="screen" id="s1">
+    <div class="status"><span>9:41</span><span class="ico"><span class="bars"></span><span class="batt"></span></span></div>
+    <div class="body-wrap">
+      <svg class="moon" width="150" height="150" viewBox="0 0 140 140" fill="none">
+        <defs>
+          <radialGradient id="mg" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#D9C7A0" stop-opacity="0.32"/><stop offset="60%" stop-color="#7891C7" stop-opacity="0.08"/><stop offset="100%" stop-color="#D9C7A0" stop-opacity="0"/></radialGradient>
+          <radialGradient id="ms" cx="40%" cy="40%" r="50%"><stop offset="0%" stop-color="#D9C7A0" stop-opacity="1"/><stop offset="80%" stop-color="#D9C7A0" stop-opacity="0.85"/><stop offset="100%" stop-color="#7891C7" stop-opacity="0.55"/></radialGradient>
+        </defs>
+        <circle cx="70" cy="70" r="66" fill="url(#mg)"/>
+        <circle cx="70" cy="70" r="44" fill="url(#ms)"/>
+        <circle cx="58" cy="62" r="4" fill="#D9C7A0" fill-opacity="0.16"/>
+        <circle cx="80" cy="78" r="2.6" fill="#D9C7A0" fill-opacity="0.14"/>
+        <circle cx="84" cy="58" r="2" fill="#D9C7A0" fill-opacity="0.12"/>
+        <circle cx="62" cy="84" r="1.7" fill="#D9C7A0" fill-opacity="0.14"/>
+      </svg>
+      <div class="title">your phone, but only<br/>for sleeping.</div>
+      <div class="sub">lights out ends at 7:00 am. you&rsquo;ve got this.</div>
+    </div>
+    <div class="btns">
+      <div class="btn primary">close</div>
+      <div class="btn ghost">request 10 min</div>
+    </div>
+  </div>
+
+  <!-- 02 · WIND-DOWN -->
+  <div class="screen" id="s2">
+    <div class="status"><span>10:58</span><span class="ico"><span class="bars"></span><span class="batt"></span></span></div>
+    <div class="body-wrap">
+      <div class="kick">wind-down &middot; long exhale</div>
+      <div class="breath">
+        <span class="ring r1"></span><span class="ring r2"></span><span class="ring r3"></span>
+        <span class="core"></span>
+      </div>
+      <div class="title">breathe out, slowly.</div>
+      <div class="cue">4 in &middot; 7 hold &middot; 8 out</div>
+    </div>
+    <div class="timer">06:32 left</div>
+  </div>
+
+  <!-- 03 · MORNING -->
+  <div class="screen" id="s3">
+    <div class="status" style="color:#fdf3e6"><span>7:02</span><span class="ico"><span class="bars"></span><span class="batt"></span></span></div>
+    <div class="body-wrap">
+      <div class="sun"></div>
+      <div class="title">good morning.</div>
+      <div class="dur">your phone curfew lasted <b>8h 12m</b>. the longest this week.</div>
+    </div>
+    <div class="btns">
+      <div class="btn primary">open the day</div>
+      <div class="link">log last night</div>
+    </div>
+  </div>
+</body>
+</html>
