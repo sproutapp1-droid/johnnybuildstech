@@ -149,7 +149,7 @@ export const APPS: AppEntry[] = [
     audience:
       'Chronically ill adults · ADHD/AuDHD brains · carers tracking on behalf · anyone who has bounced off Bearable',
     web: 'https://johnnybuildstech.com/apps/pebble',
-    shots: [],
+    shots: ['/apps/pebble/01.png', '/apps/pebble/02.png', '/apps/pebble/03.png'],
     accent: '#C66A4E',
     status: 'waitlist',
     waitlistHref: '/apps/pebble#waitlist',

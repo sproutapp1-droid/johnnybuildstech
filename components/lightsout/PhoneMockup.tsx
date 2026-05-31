@@ -1,80 +1,51 @@
-/* CSS/SVG phone mockups for the Lights Out page. No real screenshots
- * yet — these render the brand's actual surfaces (shield, wind-down
- * session, the late-night scroll) so the page reads true to the app.
- * Swap in real captures later by replacing the per-variant screen. */
+/* Phone mockups for the Lights Out page. The shield, the wind-down
+ * session and the protocol chooser are real device captures, shown full
+ * bleed inside the brand's phone bezel so they read as the actual app.
+ * The late-night scroll stays a CSS surface — it illustrates the
+ * problem, not an app screen, so there's nothing real to capture. */
 
-import { Moon } from './Moon';
-
-function Breath({ core = 46, width = 122 }: { core?: number; width?: number }) {
-  return (
-    <span className="breath" style={{ width }}>
-      <span className="ring" />
-      <span className="ring" />
-      <span className="ring" />
-      <span className="core" style={{ width: core }} />
-    </span>
-  );
-}
+import Image from 'next/image';
 
 type Variant = 'shield' | 'shield-sm' | 'session' | 'deep-rest' | 'scroll';
 
+/* raw captures live in /public/apps/lightsout, 912x2048 */
+const SHOTS: Partial<Record<Variant, { src: string; alt: string }>> = {
+  shield: {
+    src: '/apps/lightsout/screen-shield.jpg',
+    alt: 'the lights out shield: your phone, but only for sleeping',
+  },
+  'shield-sm': {
+    src: '/apps/lightsout/screen-shield.jpg',
+    alt: 'the lights out shield: your phone, but only for sleeping',
+  },
+  session: {
+    src: '/apps/lightsout/screen-winddown.jpg',
+    alt: 'the 4-7-8 wind-down: breathe in for four, hold for seven, exhale for eight',
+  },
+  'deep-rest': {
+    src: '/apps/lightsout/screen-chooser.jpg',
+    alt: 'the wind-down chooser: how would you like to fall asleep',
+  },
+};
+
 export function PhoneMockup({ variant, float }: { variant: Variant; float?: boolean | 'b' }) {
   const floatClass = float ? `float${float === 'b' ? ' b' : ''}` : '';
+  const shot = SHOTS[variant];
 
+  if (shot) {
+    return (
+      <div className={`phone${floatClass ? ` ${floatClass}` : ''}`}>
+        <div className="screen shot">
+          <Image src={shot.src} alt={shot.alt} width={912} height={2048} sizes="244px" />
+        </div>
+      </div>
+    );
+  }
+
+  /* the late-night scroll — a representation of the problem, not an app
+   * screen, so it stays a CSS surface. */
   return (
     <div className={`phone${floatClass ? ` ${floatClass}` : ''}`}>
-      {variant === 'shield' || variant === 'shield-sm' ? (
-        <div className="screen shield">
-          <Moon size={variant === 'shield' ? 92 : 76} phase="full" breathe />
-          <div className="ph-title">
-            your phone, but only
-            <br />
-            for sleeping.
-          </div>
-          <div className="ph-body">lights out ends at 7:00 am. you&rsquo;ve got this.</div>
-          <div className="ph-btns">
-            <div className="ph-btn primary">close</div>
-            <div className="ph-btn ghost">request 10 min</div>
-          </div>
-        </div>
-      ) : null}
-
-      {variant === 'session' ? (
-        <div className="screen session">
-          <p className="ph-kicker">wind-down · long exhale</p>
-          <div style={{ margin: '18px 0' }}>
-            <Breath width={120} />
-          </div>
-          <div className="ph-title" style={{ fontSize: 16 }}>
-            breathe out, slowly.
-          </div>
-          <div className="ph-body" style={{ marginTop: 8 }}>
-            4 in · 7 hold · 8 out
-          </div>
-          <p className="ph-kicker" style={{ marginTop: 'auto' }}>
-            06:32 left
-          </p>
-        </div>
-      ) : null}
-
-      {variant === 'deep-rest' ? (
-        <div className="screen session">
-          <p className="ph-kicker">wind-down · deep rest</p>
-          <div style={{ margin: '24px 0' }}>
-            <Breath width={150} core={54} />
-          </div>
-          <div className="ph-title" style={{ fontSize: 17 }}>
-            let your body get heavy.
-          </div>
-          <div className="ph-body" style={{ marginTop: 10 }}>
-            non-sleep deep rest · 15 min
-          </div>
-          <p className="ph-kicker" style={{ marginTop: 'auto' }}>
-            screen dimming&hellip;
-          </p>
-        </div>
-      ) : null}
-
       {variant === 'scroll' ? (
         <div className="screen shield">
           <p className="ph-kicker danger">00:58 · still scrolling</p>

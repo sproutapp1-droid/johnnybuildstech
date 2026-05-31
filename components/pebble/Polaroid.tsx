@@ -3,7 +3,9 @@
  * a hand-lettered title, pencil-line sliders, a tiny Pebble in the
  * corner. Looks intentional, not "image missing". */
 
+import Image from 'next/image';
 import { Pebble } from './Pebble';
+import { PEBBLE_SHOTS } from './shots';
 
 /* Seeded RNG so waveform/receipt geometry is identical between SSR
  * and the client (no hydration mismatch). */
@@ -59,6 +61,7 @@ type Props = {
 };
 
 export function Polaroid({ variant, rotation = 0, caption }: Props) {
+  const shot = PEBBLE_SHOTS[variant];
   return (
     <figure
       className="polaroid relative inline-block"
@@ -99,20 +102,26 @@ export function Polaroid({ variant, rotation = 0, caption }: Props) {
           borderRadius: 22,
         }}
       >
-        <PhoneSketch variant={variant} />
+        {shot ? (
+          <Image src={shot.src} alt={shot.alt} fill sizes="232px" style={{ objectFit: 'cover' }} />
+        ) : (
+          <>
+            <PhoneSketch variant={variant} />
 
-        {/* faint dot grid inside */}
-        <div
-          aria-hidden
-          className="absolute inset-0"
-          style={{
-            backgroundImage:
-              'radial-gradient(circle at 1px 1px, rgba(28,26,24,0.08) 1px, transparent 1.5px)',
-            backgroundSize: '14px 14px',
-            pointerEvents: 'none',
-            opacity: 0.6,
-          }}
-        />
+            {/* faint dot grid inside */}
+            <div
+              aria-hidden
+              className="absolute inset-0"
+              style={{
+                backgroundImage:
+                  'radial-gradient(circle at 1px 1px, rgba(28,26,24,0.08) 1px, transparent 1.5px)',
+                backgroundSize: '14px 14px',
+                pointerEvents: 'none',
+                opacity: 0.6,
+              }}
+            />
+          </>
+        )}
       </div>
 
       {caption && (

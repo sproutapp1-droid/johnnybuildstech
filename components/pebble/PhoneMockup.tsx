@@ -10,6 +10,7 @@
 
 import Image from 'next/image';
 import { motion, useReducedMotion } from 'motion/react';
+import { PEBBLE_SHOTS } from './shots';
 import {
   TodaySketch,
   BriefSketch,
@@ -65,6 +66,7 @@ export function PhoneMockup({
 }: Props) {
   const reduce = useReducedMotion();
   const dims = SIZE_MAP[size];
+  const shot = PEBBLE_SHOTS[variant];
 
   return (
     <motion.div
@@ -122,51 +124,57 @@ export function PhoneMockup({
           }}
         />
 
-        {variant === 'splash' && <SplashScreen size={size} />}
-        {variant === 'today' && (
-          <div className="h-full w-full">
-            <TodaySketch />
-          </div>
-        )}
-        {variant === 'brief' && (
-          <div className="h-full w-full">
-            <BriefSketch />
-          </div>
-        )}
-        {variant === 'history' && (
-          <div className="h-full w-full">
-            <HistorySketch />
-          </div>
-        )}
-        {variant === 'brief-voice' && (
-          <div className="h-full w-full">
-            <BriefVoiceSketch />
-          </div>
-        )}
-        {variant === 'voice-recording' && (
-          <div className="h-full w-full">
-            <VoiceRecordingSketch />
-          </div>
-        )}
-        {variant === 'day-detail-moments' && (
-          <div className="h-full w-full">
-            <DayDetailMomentsSketch />
-          </div>
-        )}
-        {variant === 'symptom-picker' && (
-          <div className="h-full w-full">
-            <SymptomPickerSketch />
-          </div>
-        )}
-        {variant === 'body-map-front' && (
-          <div className="h-full w-full">
-            <BodyMapFrontSketch />
-          </div>
-        )}
-        {variant === 'body-map-back' && (
-          <div className="h-full w-full">
-            <BodyMapBackSketch />
-          </div>
+        {shot ? (
+          <Image src={shot.src} alt={shot.alt} fill sizes={`${dims.width}px`} style={{ objectFit: 'cover' }} />
+        ) : (
+          <>
+            {variant === 'splash' && <SplashScreen size={size} />}
+            {variant === 'today' && (
+              <div className="h-full w-full">
+                <TodaySketch />
+              </div>
+            )}
+            {variant === 'brief' && (
+              <div className="h-full w-full">
+                <BriefSketch />
+              </div>
+            )}
+            {variant === 'history' && (
+              <div className="h-full w-full">
+                <HistorySketch />
+              </div>
+            )}
+            {variant === 'brief-voice' && (
+              <div className="h-full w-full">
+                <BriefVoiceSketch />
+              </div>
+            )}
+            {variant === 'voice-recording' && (
+              <div className="h-full w-full">
+                <VoiceRecordingSketch />
+              </div>
+            )}
+            {variant === 'day-detail-moments' && (
+              <div className="h-full w-full">
+                <DayDetailMomentsSketch />
+              </div>
+            )}
+            {variant === 'symptom-picker' && (
+              <div className="h-full w-full">
+                <SymptomPickerSketch />
+              </div>
+            )}
+            {variant === 'body-map-front' && (
+              <div className="h-full w-full">
+                <BodyMapFrontSketch />
+              </div>
+            )}
+            {variant === 'body-map-back' && (
+              <div className="h-full w-full">
+                <BodyMapBackSketch />
+              </div>
+            )}
+          </>
         )}
       </div>
 
