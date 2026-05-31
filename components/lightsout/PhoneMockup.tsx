@@ -47,18 +47,40 @@ export function PhoneMockup({ variant, float }: { variant: Variant; float?: bool
   return (
     <div className={`phone${floatClass ? ` ${floatClass}` : ''}`}>
       {variant === 'scroll' ? (
-        <div className="screen shield">
-          <p className="ph-kicker danger">00:58 · still scrolling</p>
-          <div className="ph-rows">
-            <span className="ph-row" />
-            <span className="ph-row" />
-            <span className="ph-row" />
-            <span className="ph-row" />
-            <span className="ph-row" />
+        <div className="screen scroll-feed">
+          <div className="feed-top">
+            <span className="ph-kicker danger">00:58 · still scrolling</span>
           </div>
-          <div className="ph-body" style={{ marginTop: 'auto' }}>
+          <div className="feed" aria-hidden>
+            {[true, false, true, true].map((media, i) => (
+              <div className="post" key={i}>
+                <div className="post-head">
+                  <span className="av" />
+                  <span className="meta">
+                    <span className="l l1" />
+                    <span className="l l2" />
+                  </span>
+                </div>
+                {media ? (
+                  <span className="post-media" />
+                ) : (
+                  <span className="post-text">
+                    <span className="l w90" />
+                    <span className="l w80" />
+                    <span className="l w55" />
+                  </span>
+                )}
+                <div className="post-acts">
+                  <span />
+                  <span />
+                  <span />
+                </div>
+              </div>
+            ))}
+          </div>
+          <p className="ph-body feed-caption">
             one more, then sleep. (you said that 40 minutes ago.)
-          </div>
+          </p>
         </div>
       ) : null}
     </div>

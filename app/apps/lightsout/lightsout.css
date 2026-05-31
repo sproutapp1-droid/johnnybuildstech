@@ -191,6 +191,24 @@
 .ph-rows { display: flex; flex-direction: column; gap: 9px; width: 100%; margin-top: 14px; }
 .ph-row { height: 34px; border-radius: 10px; background: var(--surface); border: 1px solid var(--hairline); }
 
+/* the late-night feed — a generic, endless scroll that fades into the
+ * dark. not an app screen: it's the problem the shield interrupts. */
+.phone .screen.scroll-feed { padding: 0; align-items: stretch; justify-content: flex-start; background: radial-gradient(120% 55% at 50% 0%, rgba(120, 145, 199, 0.1), transparent 55%), #04050c; }
+.scroll-feed .feed-top { display: flex; justify-content: center; padding: 32px 0 12px; }
+.scroll-feed .feed { display: flex; flex-direction: column; gap: 16px; padding: 2px 16px 0; }
+.scroll-feed .post { display: flex; flex-direction: column; gap: 9px; }
+.scroll-feed .post-head { display: flex; align-items: center; gap: 9px; }
+.scroll-feed .av { width: 22px; height: 22px; border-radius: 50%; background: var(--surface-2); border: 1px solid var(--hairline); flex: none; }
+.scroll-feed .meta { display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.scroll-feed .post-text { display: flex; flex-direction: column; gap: 7px; }
+.scroll-feed .l { height: 6px; border-radius: 3px; background: var(--surface-2); }
+.scroll-feed .l1 { width: 54%; } .scroll-feed .l2 { width: 32%; opacity: 0.6; }
+.scroll-feed .w90 { width: 92%; } .scroll-feed .w80 { width: 78%; } .scroll-feed .w55 { width: 55%; opacity: 0.6; }
+.scroll-feed .post-media { height: 78px; border-radius: 10px; background: linear-gradient(135deg, rgba(232, 228, 218, 0.07), rgba(232, 228, 218, 0.02)); border: 1px solid var(--hairline); }
+.scroll-feed .post-acts { display: flex; gap: 16px; }
+.scroll-feed .post-acts span { width: 13px; height: 13px; border-radius: 4px; background: var(--surface-2); }
+.scroll-feed .feed-caption { position: absolute; left: 0; right: 0; bottom: 0; margin: 0; max-width: none; padding: 40px 18px 18px; text-align: center; color: var(--text-med); background: linear-gradient(to top, #04050c 32%, rgba(4, 5, 12, 0.92) 58%, transparent); }
+
 /* breath circle */
 .breath { position: relative; display: grid; place-items: center; width: 122px; aspect-ratio: 1; }
 .breath .ring { position: absolute; inset: 0; border-radius: 50%; border: 1px solid var(--sand); animation: lo-pulse 8s ease-in-out infinite; }
