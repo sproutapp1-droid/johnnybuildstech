@@ -571,6 +571,19 @@ function StoreBadges({ app }: { app: AppEntry }) {
           <span aria-hidden>↗</span>
         </motion.a>
       )}
+      {/* iOS live but Android not yet — keep the Android waitlist alongside. */}
+      {!app.playStore && app.waitlistHref && (
+        <motion.a
+          href={app.waitlistHref}
+          whileHover={{ y: -2, x: 2 }}
+          transition={{ duration: 0.2, ease }}
+          className="inline-flex items-center gap-2 rounded-full border px-4 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-ink transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
+          style={{ borderColor: 'rgba(44, 29, 18, 0.2)' }}
+        >
+          android · waitlist
+          <span aria-hidden>→</span>
+        </motion.a>
+      )}
       {app.web && (
         <motion.a
           href={app.web}

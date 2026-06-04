@@ -124,7 +124,7 @@ const FAQS = [
   },
   {
     q: 'will there be android and iphone?',
-    a: 'yes. both at launch.',
+    a: 'iphone is live now on the app store. android is on the way — join the waitlist and you’ll get one quiet email the day it lands.',
   },
   {
     q: 'how much will it cost?',
@@ -132,7 +132,7 @@ const FAQS = [
   },
   {
     q: 'when does it launch?',
-    a: 'app store + play store submission is in early 2026. waitlist members get the launch discount and a quiet email when it goes live. nothing in between.',
+    a: 'pebble is live now on the app store for iphone. android follows later — waitlist members get a quiet email the day it goes live. nothing in between.',
   },
   {
     q: 'i don’t want to subscribe to your emails forever. is the waitlist email-spam-y?',
@@ -1018,8 +1018,8 @@ export default function PebbleLanding() {
               className="pebble-serif mt-8 max-w-[40ch] text-[17px] leading-[1.6]"
               style={{ color: 'var(--pebble-ink)' }}
             >
-              lifetime unlock at launch. the doctor brief itself is free for
-              everyone, forever. waitlist members get the launch discount.
+              lifetime unlock, paid once. the doctor brief itself is free for
+              everyone, forever.
             </p>
           </div>
           <div>
@@ -1033,7 +1033,7 @@ export default function PebbleLanding() {
               className="pebble-serif mt-4 text-[16px] italic"
               style={{ color: 'var(--pebble-ink-muted)' }}
             >
-              indicative launch price. monthly + yearly also available.
+              one-time lifetime unlock. monthly + yearly also available.
             </p>
           </div>
         </div>

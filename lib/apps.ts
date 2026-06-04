@@ -151,7 +151,9 @@ export const APPS: AppEntry[] = [
     web: 'https://johnnybuildstech.com/apps/pebble',
     shots: ['/apps/pebble/01.png', '/apps/pebble/02.png', '/apps/pebble/03.png'],
     accent: '#C66A4E',
-    status: 'waitlist',
+    // iPhone is live on the App Store; Android is still on the waitlist.
+    appStore: 'https://apps.apple.com/us/app/pebble-symptom-tracker/id6772501410',
+    status: 'live',
     waitlistHref: '/apps/pebble#waitlist',
   },
   {
