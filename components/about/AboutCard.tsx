@@ -128,7 +128,7 @@ export function AboutCard() {
               }}
             >
               <span>filed · 2026</span>
-              <span>johnnybuildstech · sole prop.</span>
+              <span>johnnybuildstech · Betterdays Studio</span>
             </div>
           </div>
         </motion.div>

@@ -2,8 +2,8 @@
 
 > Bespoke, hand-coded websites for UK small businesses, consultants, clinicians,
 > coaches, and indie founders. Built on Vercel with £0/month hosting. Run by
-> Jonathan, an independent designer-developer working from the studio as
-> johnnybuildstech.
+> Jonathan, an independent designer-developer. johnnybuildstech is the studio
+> site of Betterdays Studio, based in the United Kingdom.
 
 ## What I do
 

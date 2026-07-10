@@ -35,6 +35,11 @@ export default function AboutPage() {
             url: 'https://johnnybuildstech.com/about',
             image: 'https://johnnybuildstech.com/about/johnny.jpg',
             jobTitle: 'Bespoke website designer & developer',
+            worksFor: {
+              '@type': 'Organization',
+              name: 'Betterdays Studio',
+              url: 'https://johnnybuildstech.com',
+            },
             knowsAbout: [
               'Next.js',
               'Vercel',

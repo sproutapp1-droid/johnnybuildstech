@@ -28,12 +28,13 @@ export default function PebblePrivacy() {
 
       <h2>who we are</h2>
       <p>
-        Pebble is built and operated by <strong>johnnybuildstech</strong> (a sole
-        trader based in the United Kingdom). Contact:{' '}
+        Pebble is published by <strong>Betterdays Studio</strong>, the app
+        studio behind <strong>johnnybuildstech</strong> (a sole trader based in
+        the United Kingdom). Contact:{' '}
         <a href="mailto:pebble.symptom.app@gmail.com">pebble.symptom.app@gmail.com</a>.
       </p>
       <p>
-        For UK GDPR purposes, johnnybuildstech is the data controller for the
+        For UK GDPR purposes, Betterdays Studio is the data controller for the
         small amount of personal data described below. There is no data
         processor for your symptom data because that data never leaves your
         device.
@@ -261,7 +262,7 @@ export default function PebblePrivacy() {
       <p>
         This privacy policy covers the Pebble mobile app. The marketing site
         you are reading this on (<a href="https://johnnybuildstech.com">johnnybuildstech.com</a>)
-        is operated by the same developer and uses:
+        is operated by the same studio, Betterdays Studio, and uses:
       </p>
       <ul>
         <li>Vercel for hosting and page-view analytics (no cookies, no cross-site tracking)</li>

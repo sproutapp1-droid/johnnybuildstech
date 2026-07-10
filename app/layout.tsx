@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   applicationName: 'johnnybuildstech',
   authors: [{ name: 'Jonathan', url: 'https://johnnybuildstech.com/about' }],
   creator: 'Jonathan',
-  publisher: 'johnnybuildstech',
+  publisher: 'Betterdays Studio',
   keywords: [
     'bespoke website designer',
     'hand-coded websites',
@@ -128,6 +128,29 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             gtag('config', 'G-05CDSZMDR4');
           `}
         </Script>
+        {/* JSON-LD Organization */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: 'Betterdays Studio',
+              alternateName: 'johnnybuildstech',
+              url: 'https://johnnybuildstech.com',
+              logo: 'https://johnnybuildstech.com/icon.png',
+              founder: {
+                '@type': 'Person',
+                name: 'Jonathan',
+                url: 'https://johnnybuildstech.com/about',
+              },
+              address: {
+                '@type': 'PostalAddress',
+                addressCountry: 'GB',
+              },
+            }),
+          }}
+        />
       </body>
     </html>
   );

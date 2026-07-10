@@ -18,13 +18,14 @@ export default function PebbleTerms() {
     <LegalPage
       eyebrow={`effective ${EFFECTIVE} · updated ${UPDATED}`}
       title="terms of use"
-      intro="These terms are the agreement between you and johnnybuildstech for using Pebble. They are written to be read, not skimmed. The short version: Pebble is a private diary that helps you walk into appointments prepared — it is not a doctor, and it is not a medical device."
+      intro="These terms are the agreement between you and Betterdays Studio for using Pebble. They are written to be read, not skimmed. The short version: Pebble is a private diary that helps you walk into appointments prepared — it is not a doctor, and it is not a medical device."
     >
       <p>
         By downloading or using Pebble (the &ldquo;app&rdquo;), you agree to
         these terms. If you do not agree, please do not use the app. This
-        agreement is between you and <strong>johnnybuildstech</strong>, a sole
-        trader based in the United Kingdom (&ldquo;we&rdquo;, &ldquo;us&rdquo;).
+        agreement is between you and <strong>Betterdays Studio</strong>, the
+        app studio behind johnnybuildstech, run as a sole trader based in the
+        United Kingdom (&ldquo;we&rdquo;, &ldquo;us&rdquo;).
         It is not an agreement with Apple or Google.
       </p>
 
@@ -161,7 +162,7 @@ export default function PebbleTerms() {
       <h2>intellectual property</h2>
       <p>
         The app, its design, the Pebble name and mascot, and its underlying
-        software are owned by johnnybuildstech and protected by intellectual
+        software are owned by Betterdays Studio and protected by intellectual
         property law. These terms do not transfer any ownership to you. The
         content you create in Pebble (your logs, notes, and Briefs) remains
         yours.
@@ -180,7 +181,7 @@ export default function PebbleTerms() {
 
       <h2>limitation of liability</h2>
       <p>
-        To the fullest extent permitted by law, johnnybuildstech will not be
+        To the fullest extent permitted by law, Betterdays Studio will not be
         liable for any indirect, incidental, or consequential loss, or for any
         decision you make about your health based on the app. Nothing in these
         terms limits liability that cannot be limited by law — including
@@ -212,7 +213,7 @@ export default function PebbleTerms() {
         applies:
       </p>
       <ul>
-        <li>this agreement is between you and johnnybuildstech only, not Apple, and Apple is not responsible for the app or its content</li>
+        <li>this agreement is between you and Betterdays Studio only, not Apple, and Apple is not responsible for the app or its content</li>
         <li>Apple has no obligation to provide any maintenance or support for the app</li>
         <li>if the app fails to conform to any applicable warranty, you may notify Apple and Apple will refund the purchase price (if any); to the maximum extent permitted by law, Apple has no other warranty obligation for the app</li>
         <li>Apple is not responsible for addressing any claims relating to the app, including product-liability, legal/regulatory, or consumer-protection claims</li>

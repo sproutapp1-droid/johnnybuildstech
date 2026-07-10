@@ -69,7 +69,7 @@ export default function LightsOutPrivacy() {
 
       <h2>who makes lights out</h2>
       <p>
-        lights out is published by <strong>Better Days Studio</strong>, the app studio behind{' '}
+        lights out is published by <strong>Betterdays Studio</strong>, the app studio behind{' '}
         <Link href="/apps">johnnybuildstech</Link>, based in the united kingdom.
       </p>
 

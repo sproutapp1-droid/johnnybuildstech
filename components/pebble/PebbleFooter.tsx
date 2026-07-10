@@ -95,7 +95,7 @@ export function PebbleFooter() {
         className="pebble-mono mt-14 text-center text-[11px] uppercase"
         style={{ letterSpacing: '0.2em', color: 'var(--pebble-ink-muted)' }}
       >
-        © {year} pebble · a Better Days Studio app · made with care by{' '}
+        © {year} pebble · a Betterdays Studio app · made with care by{' '}
         <Link
           href="/"
           className="underline-offset-2 hover:underline hover:text-[var(--pebble-terracotta)]"

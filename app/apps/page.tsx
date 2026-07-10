@@ -125,6 +125,11 @@ export default function AppsPage() {
                 operatingSystem: 'iOS, Android',
                 url: app.web,
                 description: app.solution,
+                author: {
+                  '@type': 'Organization',
+                  name: 'Betterdays Studio',
+                  url: 'https://johnnybuildstech.com',
+                },
                 ...(app.appStore ? { downloadUrl: app.appStore } : {}),
               },
             })),
