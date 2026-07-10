@@ -18,7 +18,7 @@ export function LightsOutFooter() {
             <Link href="/apps">more apps</Link>
           </div>
         </div>
-        <p className="copy">a johnnybuildstech app · © 2026</p>
+        <p className="copy">a Better Days Studio app · johnnybuildstech · © 2026</p>
       </div>
     </footer>
   );

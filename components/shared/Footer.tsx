@@ -114,7 +114,7 @@ export function Footer() {
           style={{ borderTop: '1px solid rgba(44, 29, 18, 0.12)' }}
         >
           <span>
-            © {year} · <span className="text-ink">johnnybuildstech</span>
+            © {year} · <span className="text-ink">johnnybuildstech</span> · Better Days Studio
           </span>
           <span>est. 2026 · built in the open</span>
         </div>

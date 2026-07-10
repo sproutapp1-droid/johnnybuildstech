@@ -67,6 +67,12 @@ export default function LightsOutPrivacy() {
         the current version always lives here.
       </p>
 
+      <h2>who makes lights out</h2>
+      <p>
+        lights out is published by <strong>Better Days Studio</strong>, the app studio behind{' '}
+        <Link href="/apps">johnnybuildstech</Link>, based in the united kingdom.
+      </p>
+
       <h2>contact</h2>
       <p>
         questions? the <Link href="/apps/lightsout/support">support page</Link> has the best way to
