@@ -154,6 +154,23 @@ export default function LightsOutLanding() {
 
       {/* ── HERO ── */}
       <section id="top" className="hero">
+        {/* Painted night-sky backdrop: still for reduced motion / first
+            paint, ambient video (clouds drift, moon glow breathes) over
+            it, veil keeps the headline legible and fades into --bg. */}
+        <div className="hero-sky" aria-hidden>
+          <img src="/apps/lightsout/hero-sky.webp" alt="" loading="eager" />
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            poster="/apps/lightsout/hero-sky.webp"
+          >
+            <source src="/apps/lightsout/hero-sky.mp4" type="video/mp4" />
+          </video>
+          <div className="hero-sky-veil" />
+        </div>
         <div className="lo-wrap hero-grid">
           <HeroReveal>
             <p className="kicker">a phone curfew for sleep · launching 2026</p>
