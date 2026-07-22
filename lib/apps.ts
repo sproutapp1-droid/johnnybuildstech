@@ -42,27 +42,6 @@ export const APPS: AppEntry[] = [
     accent: '#2f7a3a',
   },
   {
-    slug: 'payoff',
-    name: 'Payoff',
-    subtitle: 'Smart debt planner · AI coach, snowball & tracker',
-    problem:
-      'Debt is a solved maths problem with a completely unsolved emotional one. Most finance apps want your bank login, bury you in charts, and treat a £12k credit card balance like a spreadsheet instead of a weight on your chest.',
-    solution:
-      "A personal debt coach in your pocket. Pick a strategy (Snowball, Avalanche, Dave Ramsey's Baby Steps and four more), watch a debt-free countdown, and hit Focus Mode when the balances get too loud to look at.",
-    features: [
-      'AI debt coach tailored to your balances — no bank access required',
-      '7 payoff strategies including Snowball, Avalanche, Dave Ramsey',
-      'Focus Mode hides balances when you need to just keep going',
-      'Partner Mode for couples sharing debts and a shared AI coach',
-    ],
-    audience:
-      'Credit card, student loan, car loan & BNPL payers · couples tackling debt together',
-    web: 'https://www.payoffdebtplanner.com',
-    appStore: 'https://apps.apple.com/us/app/payoff-smart-debt-planner/id6761310986',
-    shots: ['/apps/payoff/01.png', '/apps/payoff/02.png', '/apps/payoff/03.png'],
-    accent: '#143226',
-  },
-  {
     slug: 'tidywell',
     name: 'Tidywell',
     subtitle: 'Household planner · ADHD-friendly tools for every brain',
@@ -83,6 +62,49 @@ export const APPS: AppEntry[] = [
     playStore: 'https://play.google.com/store/apps/details?id=com.tidywell.app',
     shots: ['/apps/tidywell/01.png', '/apps/tidywell/02.png', '/apps/tidywell/03.png'],
     accent: '#2e3a27',
+  },
+  {
+    slug: 'glaze',
+    name: 'Glaze',
+    subtitle: 'Skin tracker · progress photos, your shelf & what works',
+    problem:
+      "You've spent a small fortune on skincare and still can't say what actually works. Progress is invisible day to day, so you judge your skin in bad mirrors on bad days, buy on hype, and your bathroom fills with half-used bottles you will never finish.",
+    solution:
+      'A calm skin tracker that keeps the receipts. A smart face outline lines up every check-in so your weekly photos genuinely compare, your shelf holds every product with a keeper, still-trying or cut verdict read from your own ratings, and empties show cost per use so you only rebuy what earned it. It tracks. It never diagnoses and never sells you products.',
+    features: [
+      'Smart face outline lines up the same photo every week, so progress is real, not remembered',
+      'Track your whole shelf in one place: keeper, still trying, or cut, read from your own ratings',
+      'Empties and refills with cost per use, so you only repurchase what actually worked',
+      'A shareable before-and-after and a monthly "skin wrapped", no product recs, ever',
+    ],
+    audience:
+      'Skincare spenders · acne, texture & routine trackers · anyone tired of buying on hype',
+    web: 'https://glazeskintracker.com',
+    shots: ['/apps/glaze/01.png', '/apps/glaze/03.png', '/apps/glaze/05.png'],
+    accent: '#6E5AC8',
+    status: 'waitlist',
+    waitlistHref: 'https://glazeskintracker.com',
+  },
+  {
+    slug: 'payoff',
+    name: 'Payoff',
+    subtitle: 'Smart debt planner · AI coach, snowball & tracker',
+    problem:
+      'Debt is a solved maths problem with a completely unsolved emotional one. Most finance apps want your bank login, bury you in charts, and treat a £12k credit card balance like a spreadsheet instead of a weight on your chest.',
+    solution:
+      "A personal debt coach in your pocket. Pick a strategy (Snowball, Avalanche, Dave Ramsey's Baby Steps and four more), watch a debt-free countdown, and hit Focus Mode when the balances get too loud to look at.",
+    features: [
+      'AI debt coach tailored to your balances — no bank access required',
+      '7 payoff strategies including Snowball, Avalanche, Dave Ramsey',
+      'Focus Mode hides balances when you need to just keep going',
+      'Partner Mode for couples sharing debts and a shared AI coach',
+    ],
+    audience:
+      'Credit card, student loan, car loan & BNPL payers · couples tackling debt together',
+    web: 'https://www.payoffdebtplanner.com',
+    appStore: 'https://apps.apple.com/us/app/payoff-smart-debt-planner/id6761310986',
+    shots: ['/apps/payoff/01.png', '/apps/payoff/02.png', '/apps/payoff/03.png'],
+    accent: '#143226',
   },
   {
     slug: 'lapsed',

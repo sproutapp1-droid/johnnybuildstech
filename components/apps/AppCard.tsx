@@ -188,10 +188,14 @@ function CopyColumn({
 /* Waitlist pill — replaces store badges for pre-launch apps   */
 /* ────────────────────────────────────────────────────────── */
 function WaitlistPill({ app }: { app: AppEntry }) {
+  const href = app.waitlistHref ?? `/apps/${app.slug}`;
+  const external = /^https?:\/\//.test(href);
   return (
     <div className="flex flex-wrap items-center gap-3">
       <motion.a
-        href={app.waitlistHref ?? `/apps/${app.slug}`}
+        href={href}
+        target={external ? '_blank' : undefined}
+        rel={external ? 'noreferrer' : undefined}
         whileHover={{ y: -2, x: 2 }}
         transition={{ duration: 0.2, ease }}
         className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 font-mono text-[11px] uppercase tracking-[0.18em]"
@@ -200,14 +204,18 @@ function WaitlistPill({ app }: { app: AppEntry }) {
         join the waitlist
         <span aria-hidden>→</span>
       </motion.a>
-      <Link
-        href={`/apps/${app.slug}`}
-        className="inline-flex items-center gap-2 rounded-full border px-4 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-ink transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
-        style={{ borderColor: 'rgba(44, 29, 18, 0.2)' }}
-      >
-        read more
-        <span aria-hidden>↗</span>
-      </Link>
+      {/* Only offer "read more" when there's an on-site detail page to read
+          (the waitlist target is an internal route, not an external site). */}
+      {!external && (
+        <Link
+          href={`/apps/${app.slug}`}
+          className="inline-flex items-center gap-2 rounded-full border px-4 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-ink transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
+          style={{ borderColor: 'rgba(44, 29, 18, 0.2)' }}
+        >
+          read more
+          <span aria-hidden>↗</span>
+        </Link>
+      )}
     </div>
   );
 }
@@ -525,7 +533,7 @@ function PhoneTray({ app }: { app: AppEntry }) {
         className="mt-3 text-right font-mono text-[10px] uppercase tracking-[0.22em]"
         style={{ color: 'var(--color-gold-dim)' }}
       >
-        {app.name.toLowerCase()} · {app.status === 'waitlist' ? 'mockup' : 'in the wild'}
+        {app.name.toLowerCase()} · {app.status === 'waitlist' ? 'waitlist' : 'in the wild'}
       </div>
     </div>
   );
