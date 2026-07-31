@@ -204,6 +204,25 @@ function WaitlistPill({ app }: { app: AppEntry }) {
         join the waitlist
         <span aria-hidden>→</span>
       </motion.a>
+      {/* A pre-launch app can still have a real marketing site of its own
+          (Cowsmic does). Without this the card's only outbound link was the
+          waitlist form, and the site it belongs to was unreachable.
+          Skipped when the site IS the waitlist target, as it is for Glaze —
+          otherwise the card grows two pills pointing at one URL. */}
+      {external && app.web && app.web !== href && (
+        <motion.a
+          href={app.web}
+          target="_blank"
+          rel="noreferrer"
+          whileHover={{ y: -2, x: 2 }}
+          transition={{ duration: 0.2, ease }}
+          className="inline-flex items-center gap-2 rounded-full border px-4 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-ink transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
+          style={{ borderColor: 'rgba(44, 29, 18, 0.2)' }}
+        >
+          visit site
+          <span aria-hidden>↗</span>
+        </motion.a>
+      )}
       {/* Only offer "read more" when there's an on-site detail page to read
           (the waitlist target is an internal route, not an external site). */}
       {!external && (

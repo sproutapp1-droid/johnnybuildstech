@@ -1,18 +1,21 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { APPS } from '@/lib/apps';
+import { APPS, APPS_COUNT, SHIPPED_COUNT, ordinal, word } from '@/lib/apps';
 import { AppsHero } from '@/components/apps/AppsHero';
 import { AppCard } from '@/components/apps/AppCard';
 
+const shipped = word(SHIPPED_COUNT);
+/** The next one to build, not the count of what exists. */
+const next = ordinal(APPS_COUNT + 1);
+
 export const metadata: Metadata = {
-  title: 'Apps — five shipped iOS & Android apps by johnnybuildstech',
+  title: `Apps — ${shipped} shipped iOS & Android apps by johnnybuildstech`,
   description:
     "A small stable of hand-built mobile apps for ADHD brains, debt-crushers, smart shoppers, household teams and anyone who wants to track how long it's been. Each one solves a problem I had myself.",
   alternates: { canonical: 'https://johnnybuildstech.com/apps' },
   openGraph: {
     title: 'The apps — johnnybuildstech',
-    description:
-      'Five mobile apps, shipped solo on iOS and Android. Each one scratches a real itch.',
+    description: `${shipped.charAt(0).toUpperCase()}${shipped.slice(1)} mobile apps, shipped solo on iOS and Android. Each one scratches a real itch.`,
     type: 'website',
   },
 };
@@ -47,7 +50,7 @@ export default function AppsPage() {
                 className="font-mono text-[11px] uppercase tracking-[0.24em]"
                 style={{ color: 'var(--color-gold)' }}
               >
-                ─ the sixth one
+                ─ the {next} one
               </p>
               <h2 className="mt-4 font-serif text-[36px] font-medium leading-[0.98] tracking-[-0.02em] md:text-[64px]">
                 got an idea for{' '}
@@ -60,7 +63,7 @@ export default function AppsPage() {
                     transform: 'rotate(-4deg)',
                   }}
                 >
-                  number six
+                  number {word(APPS_COUNT + 1)}
                 </span>
                 ?
               </h2>

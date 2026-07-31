@@ -223,3 +223,31 @@ export const APPS: AppEntry[] = [
     waitlistHref: 'https://tally.so/r/Ekr1kq',
   },
 ];
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Counts, derived.
+
+   The page used to say "five shipped apps" in four places and invite ideas for
+   "number six". By the time Cowsmic landed there were nine apps and six of them
+   shipped, so every one of those numbers was wrong — in the <title>, which is
+   what search results show. Numbers written by hand go stale the next time a
+   row is added to the array above, so they are computed from it instead.
+   ────────────────────────────────────────────────────────────────────────── */
+
+/** Apps actually on a store. Waitlist entries are built, not shipped. */
+export const SHIPPED_COUNT = APPS.filter((a) => a.status !== 'waitlist').length;
+export const APPS_COUNT = APPS.length;
+
+const WORDS = [
+  'zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight',
+  'nine', 'ten', 'eleven', 'twelve',
+];
+const ORDINALS = [
+  'zeroth', 'first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh',
+  'eighth', 'ninth', 'tenth', 'eleventh', 'twelfth',
+];
+
+/** Spelled out, because "6 shipped apps" reads like a spec sheet. Falls back to
+ *  the digits past the end of the table rather than throwing on app thirteen. */
+export const word = (n: number) => WORDS[n] ?? String(n);
+export const ordinal = (n: number) => ORDINALS[n] ?? `${n}th`;

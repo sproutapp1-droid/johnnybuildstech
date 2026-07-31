@@ -2,10 +2,16 @@
 
 import { motion } from 'motion/react';
 
+import { SHIPPED_COUNT, word } from '@/lib/apps';
+
 const ease = [0.16, 1, 0.3, 1] as const;
 
+/** Counted from the apps table, never typed by hand — see lib/apps.ts. */
+const shipped = word(SHIPPED_COUNT);
+const Shipped = `${shipped.charAt(0).toUpperCase()}${shipped.slice(1)}`;
+
 const STATS = [
-  '5 apps shipped',
+  `${SHIPPED_COUNT} apps shipped`,
   'ios + android',
   'designed + built solo',
   'problem-first, always',
@@ -31,7 +37,7 @@ export function AppsHero() {
           the stable
         </span>
         <span className="inline-flex items-center gap-2">
-          five shipped apps · ios + android
+          {shipped} shipped apps · ios + android
           <span
             className="inline-block h-px w-8"
             style={{ background: 'var(--color-gold)' }}
@@ -84,7 +90,7 @@ export function AppsHero() {
         Every app here started as a problem I actually had — a brain that
         wouldn&rsquo;t stick to a to-do list, a debt that wouldn&rsquo;t shrink,
         a jacket I didn&rsquo;t need. I couldn&rsquo;t find an app that solved
-        it kindly, so I built one. Five of them, now.{' '}
+        it kindly, so I built one. {Shipped} of them, now.{' '}
         <span className="text-ink">
           Each one is small, focused, and built to be used on the days you
           don&rsquo;t feel like using an app.
