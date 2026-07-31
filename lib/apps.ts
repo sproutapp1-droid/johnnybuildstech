@@ -200,4 +200,26 @@ export const APPS: AppEntry[] = [
     status: 'waitlist',
     waitlistHref: '/apps/lightsout#waitlist',
   },
+  {
+    slug: 'cowsmic',
+    name: 'Cowsmic',
+    subtitle: 'learn french before the invasion · a real game, not flashcards',
+    problem:
+      "Every language app is the same deal: a streak, a stack of flashcards, and a green owl asking if you're still there. You do it for eleven days, you learn the word for apple, and you quit — because none of it is a thing you actually want to do at 9pm.",
+    solution:
+      'A 3D arcade game where French is how you aim. The mothership orders a specimen in French, you fly the saucer and beam up the right one before the farmers reach you. Get the wrong cow and it is a wrong answer, so the language is the game rather than a quiz bolted onto one. Five places, forty missions, and a scrambled-transmission puzzle for word order.',
+    features: [
+      'Orders spoken in real French by the mothership, not a translated word list',
+      'Optional push-to-talk: say the specimen back over the radio for a bonus, or stay quiet and it is the same game',
+      'A jam decoder that rebuilds scrambled sentences, so word order is played rather than drilled',
+      'Free forever: the tutorial, the first mission and the whole lunar training range',
+    ],
+    audience:
+      'French beginners · people who bounced off Duolingo · anyone who would rather play than revise',
+    web: 'https://cowsmic.com',
+    shots: ['/apps/cowsmic/01.png', '/apps/cowsmic/02.png', '/apps/cowsmic/03.png'],
+    accent: '#e8b464',
+    status: 'waitlist',
+    waitlistHref: 'https://tally.so/r/Ekr1kq',
+  },
 ];
