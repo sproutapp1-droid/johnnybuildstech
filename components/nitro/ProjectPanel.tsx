@@ -12,7 +12,7 @@ type ProjectPanelProps = {
   headerOffset?: number;
 };
 
-export function ProjectPanel({ project, index, total, headerOffset = 48 }: ProjectPanelProps) {
+export function ProjectPanel({ project, index, headerOffset = 48 }: ProjectPanelProps) {
   const topOffset = index * headerOffset;
 
   return (

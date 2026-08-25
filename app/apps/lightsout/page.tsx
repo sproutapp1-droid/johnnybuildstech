@@ -158,6 +158,11 @@ export default function LightsOutLanding() {
             paint, ambient video (clouds drift, moon glow breathes) over
             it, veil keeps the headline legible and fades into --bg. */}
         <div className="hero-sky" aria-hidden>
+          {/* Deliberately a raw <img>, not next/image: this is a decorative
+              aria-hidden backdrop sized by .hero-sky CSS and sitting behind the
+              ambient video. It has to paint on first frame, and next/image
+              would wrap it in a positioned span that fights the layering. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/apps/lightsout/hero-sky.webp" alt="" loading="eager" />
           <video
             autoPlay

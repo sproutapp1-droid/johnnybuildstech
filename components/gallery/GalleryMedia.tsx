@@ -14,7 +14,7 @@ type Props = {
  * card in the gallery deck. Others render the poster still. Respects
  * prefers-reduced-motion by never playing.
  */
-export function GalleryMedia({ src, poster, alt, index }: Props) {
+export function GalleryMedia({ src, poster, alt }: Props) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
   const [reducedMotion, setReducedMotion] = useState(false);
