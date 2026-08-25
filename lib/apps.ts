@@ -174,10 +174,9 @@ export const APPS: AppEntry[] = [
     web: 'https://johnnybuildstech.com/apps/pebble',
     shots: ['/apps/pebble/01.png', '/apps/pebble/02.png', '/apps/pebble/03.png'],
     accent: '#C66A4E',
-    // iPhone is live on the App Store; Android is still on the waitlist.
+    // Both stores as of 2026-08-25. Android was the last waitlist on this page.
     appStore: 'https://apps.apple.com/us/app/pebble-symptom-tracker/id6772501410',
-    status: 'live',
-    waitlistHref: '/apps/pebble#waitlist',
+    playStore: 'https://play.google.com/store/apps/details?id=app.pebble.tracker',
   },
   {
     slug: 'lightsout',

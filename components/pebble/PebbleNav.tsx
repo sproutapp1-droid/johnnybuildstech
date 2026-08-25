@@ -90,11 +90,11 @@ export function PebbleNav() {
 
         {/* right — CTA */}
         <a
-          href={isLanding ? '#waitlist' : '/apps/pebble#waitlist'}
+          href={isLanding ? '#get' : '/apps/pebble#get'}
           className="pointer-events-auto pebble-hand inline-flex items-center text-[22px] leading-none transition-colors"
           style={{ color: 'var(--pebble-terracotta)' }}
         >
-          join the waitlist
+          get pebble
         </a>
       </div>
     </header>

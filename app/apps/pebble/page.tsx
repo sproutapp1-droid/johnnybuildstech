@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { WaitlistForm } from '@/components/pebble/WaitlistForm';
+import { StoreButtons } from '@/components/pebble/StoreButtons';
 import { Receipt } from '@/components/pebble/Receipt';
 import { Polaroid } from '@/components/pebble/Polaroid';
 import { Pebble } from '@/components/pebble/Pebble';
@@ -124,7 +124,7 @@ const FAQS = [
   },
   {
     q: 'will there be android and iphone?',
-    a: 'iphone is live now on the app store. android is on the way — join the waitlist and you’ll get one quiet email the day it lands.',
+    a: 'both. pebble is live on the app store and on google play, and the two are the same app with the same on-device promise.',
   },
   {
     q: 'how much will it cost?',
@@ -132,11 +132,7 @@ const FAQS = [
   },
   {
     q: 'when does it launch?',
-    a: 'pebble is live now on the app store for iphone. android follows later — waitlist members get a quiet email the day it goes live. nothing in between.',
-  },
-  {
-    q: 'i don’t want to subscribe to your emails forever. is the waitlist email-spam-y?',
-    a: 'one email at launch. that is all. no newsletter, no drip sequence, no "we noticed you didn\'t click last time". one email. then your address is deleted from the list a month after launch unless you tell us otherwise.',
+    a: 'it already has. iphone came first and android followed in august 2026, so whichever phone you are holding, pebble is there now.',
   },
 ];
 
@@ -209,8 +205,8 @@ export default function PebbleLanding() {
               actually reads.
             </p>
 
-            <div id="waitlist" className="mt-12 max-w-[460px] scroll-mt-32">
-              <WaitlistForm surface="hero" />
+            <div id="get" className="mt-12 max-w-[460px] scroll-mt-32">
+              <StoreButtons surface="hero" />
             </div>
 
             {/* margin note */}
@@ -1083,7 +1079,7 @@ export default function PebbleLanding() {
           </span>
         </h2>
         <div className="mt-12 flex justify-center">
-          <WaitlistForm surface="footer" />
+          <StoreButtons surface="footer" />
         </div>
         <div className="mt-16 flex justify-center">
           <Pebble size={88} state="idle" />

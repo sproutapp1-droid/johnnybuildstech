@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Script from 'next/script';
 import { Source_Serif_4, Caveat, IBM_Plex_Mono } from 'next/font/google';
 import { PebbleNav } from '@/components/pebble/PebbleNav';
 import { PebbleFooter } from '@/components/pebble/PebbleFooter';
@@ -59,11 +58,6 @@ export default function PebbleLayout({ children }: { children: React.ReactNode }
       <PebbleNav />
       <main className="relative z-10">{children}</main>
       <PebbleFooter />
-      {/* Tally widget — used by WaitlistForm to open the form popup */}
-      <Script
-        src="https://tally.so/widgets/embed.js"
-        strategy="afterInteractive"
-      />
     </div>
   );
 }

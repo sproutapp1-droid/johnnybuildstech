@@ -267,10 +267,9 @@ export default function PebblePrivacy() {
       <ul>
         <li>Vercel for hosting and page-view analytics (no cookies, no cross-site tracking)</li>
         <li>
-          Resend to handle the waitlist signup form and contact form. If you
-          submit your email, it is stored in Resend&rsquo;s audience list to
-          send you one launch update. You can unsubscribe at any time using the
-          link in any email we send.
+          Resend to handle the contact form. If you write to us, your email
+          address and message pass through Resend so we can reply. We do not
+          add you to a mailing list and there is nothing to unsubscribe from.
         </li>
       </ul>
       <p>That&rsquo;s the full list. No Google Analytics on the Pebble pages, no Facebook Pixel, no ad networks.</p>
