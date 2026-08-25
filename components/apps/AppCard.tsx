@@ -204,11 +204,13 @@ function WaitlistPill({ app }: { app: AppEntry }) {
         join the waitlist
         <span aria-hidden>→</span>
       </motion.a>
-      {/* A pre-launch app can still have a real marketing site of its own
-          (Cowsmic does). Without this the card's only outbound link was the
-          waitlist form, and the site it belongs to was unreachable.
-          Skipped when the site IS the waitlist target, as it is for Glaze —
-          otherwise the card grows two pills pointing at one URL. */}
+      {/* A pre-launch app can still have a real marketing site of its own.
+          Without this the card's only outbound link was the waitlist form, and
+          the site it belongs to was unreachable. Skipped when the site IS the
+          waitlist target, otherwise the card grows two pills on one URL.
+          Both apps this was written for (Cowsmic, Glaze) have since shipped,
+          so nothing exercises it today: Lights Out's waitlist is an internal
+          route. Kept because the next pre-launch app will want it. */}
       {external && app.web && app.web !== href && (
         <motion.a
           href={app.web}

@@ -80,10 +80,10 @@ export const APPS: AppEntry[] = [
     audience:
       'Skincare spenders · acne, texture & routine trackers · anyone tired of buying on hype',
     web: 'https://glazeskintracker.com',
+    appStore: 'https://apps.apple.com/us/app/glaze-skin-acne-tracker/id6779920687',
+    playStore: 'https://play.google.com/store/apps/details?id=com.glazeapp.glaze',
     shots: ['/apps/glaze/01.png', '/apps/glaze/03.png', '/apps/glaze/05.png'],
     accent: '#6E5AC8',
-    status: 'waitlist',
-    waitlistHref: 'https://glazeskintracker.com',
   },
   {
     slug: 'payoff',
@@ -103,6 +103,7 @@ export const APPS: AppEntry[] = [
       'Credit card, student loan, car loan & BNPL payers · couples tackling debt together',
     web: 'https://www.payoffdebtplanner.com',
     appStore: 'https://apps.apple.com/us/app/payoff-smart-debt-planner/id6761310986',
+    playStore: 'https://play.google.com/store/apps/details?id=com.payoffplanner.app',
     shots: ['/apps/payoff/01.png', '/apps/payoff/02.png', '/apps/payoff/03.png'],
     accent: '#143226',
   },
@@ -217,10 +218,10 @@ export const APPS: AppEntry[] = [
     audience:
       'French beginners · people who bounced off Duolingo · anyone who would rather play than revise',
     web: 'https://cowsmic.com',
+    appStore: 'https://apps.apple.com/us/app/learn-french-game-cowsmic/id6799401666',
+    playStore: 'https://play.google.com/store/apps/details?id=com.cowsmicgame.french',
     shots: ['/apps/cowsmic/01.png', '/apps/cowsmic/02.png', '/apps/cowsmic/03.png'],
     accent: '#e8b464',
-    status: 'waitlist',
-    waitlistHref: 'https://tally.so/r/Ekr1kq',
   },
 ];
 

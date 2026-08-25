@@ -133,7 +133,13 @@ export default function AppsPage() {
                   name: 'Betterdays Studio',
                   url: 'https://johnnybuildstech.com',
                 },
-                ...(app.appStore ? { downloadUrl: app.appStore } : {}),
+                // Both stores, not just Apple: operatingSystem above says
+                // 'iOS, Android', so naming one download was the half that
+                // disagreed with it. Omitted entirely for a pre-launch app.
+                ...(() => {
+                  const urls = [app.appStore, app.playStore].filter(Boolean);
+                  return urls.length ? { downloadUrl: urls } : {};
+                })(),
               },
             })),
           }),
